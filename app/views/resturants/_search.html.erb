@@ -1,0 +1,9 @@
+<%= form_tag search_resturants_path, method: :get do %>
+  <div class="input-group">
+    <%= text_field_tag :search, params[:query], placeholder: "City name", value: "", class: "form-control" %>
+  </div>
+  <div class="input-group">
+    <%= text_field_tag :resturant_name, params[:resturant_name], placeholder: "Resturant name", value: "", class: "form-control" %>
+  </div>
+  <%= submit_tag "Search", class: "btn btn-outline-warning" %>
+<% end %>

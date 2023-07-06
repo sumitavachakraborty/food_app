@@ -1,0 +1,34 @@
+<div class="container text-center mb-3">
+    <%= render 'shared/flash' %>
+    <h2 class="text-center my-4"> <strong>MENU :</strong></h2>
+    <% if logged_in?%>
+        <%= link_to 'Add Food Items' , new_resturant_food_path, class: "btn btn-success "%>
+    <%end%>
+    <% @food.each do |food| %>
+     <div class="container">
+         <div class="row justify-content-center">
+             <div class="col-8 mt-4">
+                 <div class="card text-center shadow p-3 mb-2 bg-white rounded">
+                    <div class="card-header fst-italic"> <strong> Food name : </strong> <%= food.food_name%></div>
+                    <div class="resturant_cover">
+                        <%if(food.food_image.present?)%>
+                            <%= image_tag food.food_image, style: "height: auto; width: 50%"%>
+                            <%else%>
+                            <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
+                        <%end%>
+                    </div>
+                    <div class="card-body"> 
+                        <div class="card-text text-center mb-1"><strong>Food Price :  </strong> Rs.<%= food.food_price %></div>
+                    </div>
+                    <div class="btn-group">
+                        <% if logged_in? && (current_user.admin?) %>
+                        <a href="#"><%= link_to 'Edit', edit_resturant_food_path(@resturant,food), class: "btn btn-outline-success"%></a>
+                        <a href="#"><%= link_to 'Delete', resturant_food_path(@resturant,food),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
+                    <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% end%>
+</div>

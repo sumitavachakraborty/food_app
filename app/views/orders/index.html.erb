@@ -1,0 +1,129 @@
+<div class="container text-center">
+    <h2 class="text-center my-4"> <strong>Food Items</strong></h2>
+    <%= render 'shared/flash' %>
+    
+     <div class="container d-flex " >
+        <div class="card container col-4" id="submit-cart" style="display:none">
+            <div class="card-header">
+                <strong>Cart items</strong> 
+            </div>
+            <div id="cart-items" class="list-group list-group-flush"> </div>
+            <div class="btn btn-success mb-2" id="checkout">order items</div>
+        </div>
+
+        <div class="foodlist">
+            <% @food.each do |food| %>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div class="card shadow p-3 mb-2 bg-white rounded">
+                        <div class="card-header fst-italic">Food name : <%= link_to food.food_name, resturant_food_path(@resturant,food)%></div>
+                        <div class="resturant_cover">
+                            <%if(food.food_image.present?)%>
+                                <%= image_tag food.food_image, style: "height: auto; width: 50%"%>
+                                <%else%>
+                                <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
+                            <%end%>
+                        </div>
+                            <div class="card-body order-item">
+                                <p class="restid" style="display:none"><%= @resturant.id %></p>
+                                <strong>Food Price : Rs.</strong><span class="card-text text-center mb-1 mx-2" value="<%= food.food_price %>"><%= food.food_price %></span>
+                                <span class="foodname" style="display:none" value="<%= @resturant.id%>"><%= food.food_name %></span>
+                                <input type="number" class="order-quantity col-1" value="1" min="0" >
+                                <button class="submit-order btn btn-warning btn-sm" value="<%= food.id %>" type="button">Add to Cart</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% end%>
+
+        </div>
+    
+     </div>
+    
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+
+<script>
+
+var cart = {}
+let restid = 0
+    $('.submit-order').click(function() {
+        console.log('hhh');
+        $('#submit-cart').removeAttr("style");
+
+        var orderitem = $(this).closest('.order-item');
+        
+        var quantity = orderitem.find('.order-quantity').val();
+        var id = orderitem.find('.submit-order').val();
+        var price = orderitem.find('.card-text').text();
+        var name = orderitem.find('.foodname').text();
+        var resturantid = orderitem.find('.restid').text();
+        
+        restid = resturantid
+        // console.log(restid);
+
+        var item ={
+            q: quantity,
+            p: price,
+            n: name
+        }
+
+        cart[id]=item
+
+        console.log(cart);
+        updateCart();
+        // req(resturantid);
+    })
+
+    function updateCart() {
+    // Save cart items in local storage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Update cart display
+        $('#cart-items').empty();
+        var totalQuantity = 0;
+        var totalPrice = 0;
+
+        Object.keys(cart).forEach(item => {
+        var itemPrice = cart[item].q * cart[item].p;
+        totalQuantity += cart[item].q;
+        totalPrice += itemPrice;
+
+        var cartItemHtml = '<div class="cart-item">' +
+            '<li class="list-group-item">Food Name: ' + cart[item].n + '</li>' +
+            '<li class="list-group-item">Quantity: ' + cart[item].q + '</li>' +
+            '<li class="list-group-item">Price: $' + itemPrice+ '</li>' +
+            '</div>';
+
+        $('#cart-items').append(cartItemHtml);
+        
+        });
+
+        $('#total-quantity').text(totalQuantity);
+        $('#total-price').text('$' + totalPrice.toFixed(2));
+    } 
+    
+    // function req(resid){
+    //     console.log(resid);
+        $('#checkout').click(function() {
+            localStorage.removeItem('cart');
+            console.log(restid);
+            $.ajax({
+            url: '/resturants/'+restid+'/orders',
+            method: 'POST',
+            data: { cart_items: cart,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+            success: function(response) {
+                // Handle the success response if needed
+            },
+            error: function(xhr, status, error) {
+                // Handle the error if needed
+            }
+            });
+        });
+    // }
+
+</script>

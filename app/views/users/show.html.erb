@@ -1,0 +1,63 @@
+
+<h1 class="text-center mt-4">Welcome <%= @user.username %></h1>
+<div class="container text-center">
+    <div class="mb-2">
+    <%# binding.pry %>
+        <%if(@user.images.present?)%>
+        <%= image_tag @user.images,  style: "height: 200px; width: 200px; border-radius: 15px"%>
+        <%else%>
+        <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
+        <%end%>
+        <%= form_with model: User.new, local: true ,url: image_path do |f| %>
+        <div class="input-group mb-3">
+        <%= f.file_field :images ,{style: "display:none",id: "take_pic"}%>
+        </div>
+        <div class="profile-pic-add" id="change_pic">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+        </div>
+        <%= f.submit "", class: "btn btn-primary m-auto",id: "submit_btn",style: "display:none" %>
+        <% end %>
+    </div>
+    <%#= image_tag @user.images , style: "height: 200px; width: 200px; border-radius: 15px"%>
+    <span class="mb-3" style="display:block">User Type :
+    <% if logged_in? && current_user.admin? %>
+        <span class="btn btn-danger">ADMIN</span>
+    <% else %>
+        <span class="btn btn-warning">Consumer</span>
+    <% end %>
+    </span>
+    
+    <p class="">Address -  <%= @user.city %> </p>
+
+    <% if logged_in? && @user == current_user %>
+    <%= link_to 'Edit Profile', edit_user_path(@user), class: "btn btn-outline-success"%>
+    <%= link_to 'Delete Profile', user_path(current_user), class: "btn btn-outline-danger" , data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }%>
+    <% end %>
+</div>
+
+<h2 class="text-center mt-4"><%= @user.username %>'s Order History</h2>
+<div class="container">
+    <div class="row">
+        <% @user.orders.each do |order| %>
+        <div class="col-3 mb-3">
+            <div class="card bg-light" style="width: 18rem;">
+                <div class="card-header">
+                Ordered at: <%= time_ago_in_words(order.created_at) %>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                <strong>Food items :</strong>
+                    <% order.foodname_array.each do |foodname| %>
+                        <%= foodname %>
+                    <% end %>
+                </li>
+                <li class="list-group-item">
+                    <strong>Total Price :</strong> <%= order.total %>
+                </li>
+                <li class="list-group-item"> <strong> Delivery Address :</strong> <%= order.delivery_address %></li>
+                </ul>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>

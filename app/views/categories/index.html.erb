@@ -1,0 +1,11 @@
+<div class="container text-center mx-auto">
+  <h2 class="text-center my-4"><strong>Categories Items</strong></h2>
+  <%= render 'shared/flash' %>
+  <div class="d-flex flex-row justify-content-center">
+    <% @categories.each do |category| %>
+      <div class="card shadow p-3 mb-2 bg-white rounded col-4">
+        <%= category.category_name %>
+      </div>
+    <% end %>
+  </div>
+</div>
