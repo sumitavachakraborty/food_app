@@ -2,13 +2,13 @@
     <h2 class="text-center my-4"> <strong>Food Items</strong></h2>
     <%= render 'shared/flash' %>
     
-     <div class="container d-flex " >
+     <div class="container d-flex" >
         <div class="card container col-4" id="submit-cart" style="display:none">
             <div class="card-header">
                 <strong>Cart items</strong> 
             </div>
             <div id="cart-items" class="list-group list-group-flush"> </div>
-            <div class="btn btn-success mb-2" id="checkout">order items</div>
+            <div class="btn btn-success mb-2" id="checkout">order items </div>
         </div>
 
         <div class="foodlist">
@@ -30,7 +30,7 @@
                                 <strong>Food Price : Rs.</strong><span class="card-text text-center mb-1 mx-2" value="<%= food.food_price %>"><%= food.food_price %></span>
                                 <span class="foodname" style="display:none" value="<%= @resturant.id%>"><%= food.food_name %></span>
                                 <input type="number" class="order-quantity col-1" value="1" min="0" >
-                                <button class="submit-order btn btn-warning btn-sm" value="<%= food.id %>" type="button">Add to Cart</button>
+                                <button class="submit-order btn btn-warning btn-sm" value="<%= food.id %>" type="button">Add to Cart <i class='fa-solid fa-cart-shopping'></i></button>
                             </div>
                     </div>
                 </div>
@@ -94,9 +94,9 @@ let restid = 0
         totalPrice += itemPrice;
 
         var cartItemHtml = '<div class="cart-item">' +
-            '<li class="list-group-item">Food Name: ' + cart[item].n + '</li>' +
+            '<li class="list-group-item">Food Name: <strong>' + cart[item].n + '</strong></li>' +
             '<li class="list-group-item">Quantity: ' + cart[item].q + '</li>' +
-            '<li class="list-group-item">Price: $' + itemPrice+ '</li>' +
+            '<li class="list-group-item"> <strong> Price: Rs.' + itemPrice+ '</strong></li>' +
             '</div>';
 
         $('#cart-items').append(cartItemHtml);
