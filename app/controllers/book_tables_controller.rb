@@ -7,8 +7,8 @@ class BookTablesController < ApplicationController
   end
   
   def new
-    @book_table = BookTable.new
-    @book_tables = @resturant.book_tables
+    @book_tables = BookTable.new
+    @all_tables = @resturant.book_tables
   end 
 
   def create
@@ -17,7 +17,7 @@ class BookTablesController < ApplicationController
     @book_tables.user_id = current_user.id
     if @book_tables.save
       flash[:success] = "Table Booked successfully"
-      redirect_to resturant_book_table_path(@resturant,@book_tables)
+      redirect_to resturant_book_tables_path(@resturant)
     else
       render :new
     end

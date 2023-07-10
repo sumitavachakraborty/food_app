@@ -4,18 +4,21 @@
             <%= render 'search' %>
         </div>
     </div>
-    <h2 class="text-center mt-4"> All Resturants </h2>
     <%= render 'shared/flash' %>
     <% if logged_in? && current_user.admin? %>
         <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-success mt-4"%>
     <%end%>
-    <h2 class="text-center mt-4"> Resturants near - <strong><%= @query.upcase %></strong></h2>
+    <h2 class="text-center mt-4"> Resturants near - <strong><%= @location.upcase %></strong></h2>
     <% @nearby_location.each do |resturant,distance| %>
      <div class="container">
          <div class="row justify-content-center">
              <div class="col-8 mt-4">
                  <div class="card text-center shadow p-3 mb-5 bg-white rounded">
-                    <div class="card-header fst-italic">Resturant name : <%= link_to resturant.name, resturant_path(resturant)%></div>
+                    <div class="card-header fst-italic d-flex justify-content-around"> <span>  Resturant name : <%= link_to resturant.name, resturant_path(resturant)%> </span>
+                        <% if resturant.category_id.present? %>
+                            <span> <strong>Category  : </strong> <%= Category.find(resturant.category_id).category_name %> </span>
+                        <% end %>
+                    </div>
                     <div class="resturant_cover">
                         <%if(resturant.cover_image.first.present?)%>
                             <%= link_to image_tag(resturant.cover_image.first,style: "height: auto; width: 50%"),resturant_path(resturant)%>
@@ -32,7 +35,7 @@
                     </div>
                         
                     <div class="card-footer text-body-secondary">
-                       <strong>Distance from <%= @query.upcase %> : - </strong> <%= distance %> Kilometer
+                       <strong>Distance from <%= @location.upcase %> : - </strong> <%= distance %> Kilometer
                     </div>
                 </div>
             </div>

@@ -1,9 +1,12 @@
-<%= form_tag search_resturants_path, method: :get do %>
+<%= form_with(url: search_resturants_path, method: :get) do |form| %>
   <div class="input-group">
-    <%= text_field_tag :search, params[:query], placeholder: "City name", value: "", class: "form-control" %>
+    <%= form.label :Location, class: "col-2 col-form-label" %>
+    <%= form.text_field :search, placeholder: "City name", value: params[:search], class: "form-control" %>
   </div>
   <div class="input-group">
-    <%= text_field_tag :resturant_name, params[:resturant_name], placeholder: "Resturant name", value: "", class: "form-control" %>
+    <%= form.label :category_id, class: "col-2 col-form-label" %>
+    <%= form.collection_select :category_id, Category.all, :id, :category_name, { prompt: "Select a category" }, { class: "form-control" } %>  
   </div>
-  <%= submit_tag "Search", class: "btn btn-outline-warning" %>
+  
+  <%= form.submit "Search", class: "btn btn-outline-warning" %>
 <% end %>

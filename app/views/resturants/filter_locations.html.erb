@@ -14,7 +14,11 @@
          <div class="row justify-content-center">
              <div class="col-8 mt-4">
                  <div class="card text-center shadow p-3 mb-5 bg-white rounded">
-                    <div class="card-header fst-italic">Resturant name : <%= link_to resturant.name, resturant_path(resturant)%></div>
+                    <div class="card-header fst-italic d-flex justify-content-around"> <span>  Resturant name : <%= link_to resturant.name, resturant_path(resturant)%> </span>
+                        <% if resturant.category_id.present? %>
+                            <span> <strong>Category  : </strong> <%= Category.find(resturant.category_id).category_name %> </span>
+                        <% end %>
+                    </div>
                     <div class="resturant_cover">
                         <%if(resturant.cover_image.first.present?)%>
                             <%= link_to image_tag(resturant.cover_image.first,style: "height: auto; width: 50%"),resturant_path(resturant)%>

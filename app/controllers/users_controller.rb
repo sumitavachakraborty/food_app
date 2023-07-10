@@ -9,12 +9,6 @@ class UsersController < ApplicationController
     end
   
     def show
-        # NotificationsChannel.broadcast_to(current_user, notification)
-        # binding.pry  
-      # cookies.signed[:user_id] = @user.id
-      # if notification.save
-      #   NotificationsChannel.broadcast_to(@user, {data: notification})
-      # end
     end
   
     def new
@@ -78,11 +72,8 @@ class UsersController < ApplicationController
     end
 
     def makeadmin
-
       @tempuser = User.find(params[:id])
       @tempuser.toggle!(:admin)
-      # puts @tempuser
-      # redirect_to users_path
       
       respond_to do |format|
         format.js

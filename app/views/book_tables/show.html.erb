@@ -6,7 +6,7 @@
         <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
             <div class="card-body ">
                 <h5 class="card-title"> <strong>Book Date :</strong> <%= table.book_date.strftime('%Y-%m-%d') %> </h5>
-                <h6 class="card-subtitle mb-2 text-muted"> <strong>Book time :</strong> <%= table.book_time.strftime('%H:%M:%S') %> </h6>
+                <h6 class="card-subtitle mb-2 text-muted"> <strong>Book time :</strong> <%= table.book_time.strftime('%H:%M') %> </h6>
                 <p class="card-text"> <strong> Head Count :</strong> <%= table.head_count %> </p>
                 <a href="#" class="card-link"> <%= link_to @resturant.name, resturant_path(@resturant),class: "card-link" %> </a>
             </div>

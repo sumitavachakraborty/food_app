@@ -61,7 +61,7 @@ class OrdersController < ApplicationController
     @resturant = Resturant.find(params[:resturant_id])
     if @order.update(params_order)
       flash[:info] = "Order placed successfully"
-      OrderMailer.order_confirmation(current_user,@order).deliver_later
+      OrderMailer.order_confirmation(current_user,@order).deliver_now
       Notification.create(user_id: current_user.id,message: 'Order placed, Please provide rating',resturant_id: @resturant.id)
       redirect_to resturant_orders_path(@resturant)
     else

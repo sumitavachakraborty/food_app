@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-danger">
   <div class="container-fluid">
-    <%= link_to "Zomato APP", root_path , class: "navbar-brand", id: "logo" %>
+    <%= link_to "ZOMZOM", root_path , class: "navbar-brand", id: "logo" %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -52,11 +52,12 @@
           </ul>
         <% end %>
       </div>
-
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">Search</button>
-      </form>
+      <%=  form_with(url: search_resturants_path, method: :get) do |form| %>
+        <div class="input-group">
+          <%= form.text_field :resturant_name, value: params[:resturant_name], placeholder: "Resturant name", class: "form-control" %>
+          <%= form.submit "Search", class: "btn btn-outline-warning" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </nav>

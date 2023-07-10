@@ -3,12 +3,6 @@ class ResturantsController < ApplicationController
   before_action :require_user, except: [:show]
   
   def show
-    # @user = current_user
-    # NotificationsChannel.broadcast_to(
-    #   current_user,
-    #   title: 'New things!',
-    #   body: 'All the news fit to print'
-    # )
   end
 
   def index
@@ -69,30 +63,70 @@ class ResturantsController < ApplicationController
   end
 
   def search 
-    if params[:resturant_name].present?
-      @city_name = params[:resturant_name]
-      @resturant = Resturant.where("LOWER(name) LIKE ?", "%#{@city_name.downcase}%")
-      render :filter_locations 
+    if params[:category_id].present? && params[:search].present?
+      @resturant = Category.search_category(Category.find(params[:category_id]).category_name).records
+      @location = params[:search]
+      @currentlocation = Geocoder.search(@location)
+      if @currentlocation.first.present?
+        reference_latitude = @currentlocation.first.latitude
+        reference_longitude = @currentlocation.first.longitude
+        
+        max_distance = 0 
+        @nearby_location = @resturant.map do |res|
+          distance = distance_between(res.latitude, res.longitude,reference_latitude, reference_longitude)
+          max_distance = max_distance.nil? ? distance : [max_distance, distance].max
+          [res, distance]
+        end
+        if max_distance > 200
+          flash[:danger] = "Location very far away, more than 10 k.m"
+          redirect_to resturants_path
+        else
+          @nearby_location.sort_by! { |res, distance| distance }
+        # @resturant = Resturant.where("LOWER(name) LIKE ?", "%#{@location.downcase}%")
+          render 'search'
+        end 
+      else
+        flash[:danger] = "Search another location"
+        render :filter_locations
+      end
+    elsif params[:category_id].present?
+      @resturant = Category.search_category(Category.find(params[:category_id]).category_name).records
+      render :filter_locations
+    elsif params[:resturant_name].present?
+      @resturant_name = params[:resturant_name]
+      @resturant = Resturant.search_res(@resturant_name.downcase).records
+      if @resturant.size<1
+        flash[:warning] = "Resturant not found"
+        redirect_to resturants_path
+      else
+        render :filter_locations
+      end
     else  
       if params[:search].blank?
         redirect_to resturants_path
       else
-        @query = params[:search]
-        @currentlocation = Geocoder.search(@query)
+        @location = params[:search]
+        @currentlocation = Geocoder.search(@location)
         if @currentlocation.first.present?
           reference_latitude = @currentlocation.first.latitude
           reference_longitude = @currentlocation.first.longitude
           
-          
+          max_distance = 0 
           @nearby_location = Resturant.all.map do |res|
             distance = distance_between(res.latitude, res.longitude,reference_latitude, reference_longitude)
+            max_distance = max_distance.nil? ? distance : [max_distance, distance].max
             [res, distance]
           end
-          @nearby_location.sort_by! { |res, distance| distance }
-          # @resturant = Resturant.where("LOWER(name) LIKE ?", "%#{@query.downcase}%")
-          render 'search' 
+          if max_distance > 200
+            flash[:danger] = "Location very far away, more than 10 k.m"
+            redirect_to resturants_path
+          else
+            @nearby_location.sort_by! { |res, distance| distance }
+          # @resturant = Resturant.where("LOWER(name) LIKE ?", "%#{@location.downcase}%")
+            render 'search'
+          end 
         else
-          flash[:success] = "search another"
+          flash[:danger] = "Search another location"
           redirect_to resturants_path
         end
       end
@@ -110,19 +144,14 @@ class ResturantsController < ApplicationController
     userlat_rad = to_radians(userlat)
     userlong_rad = to_radians(userlong)
   
-    # Earth radius in kilometers
     earth_radius = 6371
-  
-    # Difference of latitudes and longitudes
     d_lat = userlat_rad - reslat_rad
     d_lon = userlong_rad - reslong_rad
   
-    # Haversine formula
     a = Math.sin(d_lat / 2) ** 2 + Math.cos(reslat_rad) * Math.cos(userlat_rad) * Math.sin(d_lon / 2) ** 2
     c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     distance = earth_radius * c
-    distance.round(2)  # Rounded to 2 decimal places
-    
+    distance.round(2)
   end
 
   def markread

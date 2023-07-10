@@ -1,12 +1,11 @@
 <div class="container text-center mb-3">
-    <%= render 'shared/flash' %>
+<%= render 'shared/flash' %>
     <div class="container row justify-content-center my-2">
         <div class="col-5 text-center">
             <%= render 'search' %>
         </div>
     </div>
     <h2 class="text-center mt-4"> All Resturants </h2>
-    <%= render 'shared/flash' %>
     <% if logged_in? && current_user.admin? %>
         <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-success mt-4"%>
         <%= link_to 'Add new Category' , new_category_path , class: "btn btn-success mt-4"%>
