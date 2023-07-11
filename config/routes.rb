@@ -16,12 +16,15 @@ Rails.application.routes.draw do
     resources :reviews
     post 'approve' , to: 'reviews#approve' 
     # post 'new' , to: 'orders#new'
+    get '/gallery' , to: 'resturants#gallery'
     resources :book_tables
     collection do
       get 'search'
       get 'filter_locations'
     end
+    post 'image', to: 'resturants#attach_image'
   end
 
   post 'image', to: 'users#image'
+  
 end

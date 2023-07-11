@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-10" >
-      <%#= render 'shared/errors', obj: @food%>
+      <%= render 'shared/errors', obj: @food%>
       <%= render 'shared/flash' %>
       <%= form_with(model: [@resturant,@food],class: "shadow p-3 mb-5 bg-white rounded" ,local: true) do |f| %>
 

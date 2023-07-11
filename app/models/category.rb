@@ -3,7 +3,10 @@ class Category < ApplicationRecord
     include Elasticsearch::Model::Callbacks
     has_many :resturants
     validates :category_name, presence: true
-    
+    def self.index_data
+      self.__elasticsearch__.create_index! force: true
+      self.__elasticsearch__.import
+    end
     settings do
       mappings dynamic: false do
         indexes :category_name, type: :text
@@ -32,4 +35,5 @@ class Category < ApplicationRecord
         category_ids = search_results.map { |result| result['_id'] }
         Resturant.where(category_id: category_ids)
     end
+    index_data
 end

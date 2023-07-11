@@ -5,7 +5,7 @@
     <div class="w-100 ">
         <div class="container col-12">
          <div class="row justify-content-center">
-             <div class="col-7 mt-4">
+             <div class="col-8 mt-4">
                  <div class="card text-center shadow p-3 mb-5 bg-white rounded">
                     <div class="card-header fst-italic "></span>
                         <% if @resturant.category_id.present? %>
@@ -46,8 +46,8 @@
                         <%= link_to 'Menu', resturant_foods_path(@resturant), class: "btn btn-outline-danger"%>
                         <%= link_to 'Add Review', new_resturant_review_path(@resturant), class: "btn btn-outline-primary"%>
                         <%= link_to 'Book Table', new_resturant_book_table_path(@resturant), class: "btn btn-outline-success" %>
-                    </div>
-                        
+                        <%= link_to 'Photos', resturant_gallery_path(@resturant), class: "btn btn-outline-success" %>
+                    </div>             
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
         
         <%= link_to '[ Back to Resturants listing ]', resturants_path, class: "text-center text-warning" %>
 
-        <div class="container col-7">
+        <div class="container col-8">
             <h2 class="text-center mt-4">Reviews</h2>
             <%= render 'reviews/show' %>
         </div>

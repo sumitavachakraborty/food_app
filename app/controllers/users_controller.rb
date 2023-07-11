@@ -9,6 +9,9 @@ class UsersController < ApplicationController
     end
   
     def show
+      if @user.orders.present?
+        @orders = @user.orders.order(created_at: :asc).page(params[:page]).per(5)
+      end
     end
   
     def new

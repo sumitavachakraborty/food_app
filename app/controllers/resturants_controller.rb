@@ -15,6 +15,7 @@ class ResturantsController < ApplicationController
       [res, distance]
     end
     @nearest_locations.sort_by! { |res, distance| distance }
+    @nearest_locations = Kaminari.paginate_array(@nearest_locations).page(params[:page]).per(5)
   end
 
   def new
@@ -72,7 +73,7 @@ class ResturantsController < ApplicationController
         reference_longitude = @currentlocation.first.longitude
         
         max_distance = 0 
-        @nearby_location = @resturant.map do |res|
+        @nearest_locations = @resturant.map do |res|
           distance = distance_between(res.latitude, res.longitude,reference_latitude, reference_longitude)
           max_distance = max_distance.nil? ? distance : [max_distance, distance].max
           [res, distance]
@@ -81,17 +82,21 @@ class ResturantsController < ApplicationController
           flash[:danger] = "Location very far away, more than 10 k.m"
           redirect_to resturants_path
         else
-          @nearby_location.sort_by! { |res, distance| distance }
-        # @resturant = Resturant.where("LOWER(name) LIKE ?", "%#{@location.downcase}%")
-          render 'search'
+          @nearest_locations.sort_by! { |res, distance| distance }
+          @nearest_locations = Kaminari.paginate_array(@nearest_locations).page(params[:page]).per(2)
+          category = Category.find(params[:category_id])
+          params[:category_name] = category.category_name
+          render 'search', params: { category_name: category.category_name }
         end 
       else
         flash[:danger] = "Search another location"
-        render :filter_locations
+        render 'filter_locations'
       end
     elsif params[:category_id].present?
       @resturant = Category.search_category(Category.find(params[:category_id]).category_name).records
-      render :filter_locations
+      category = Category.find(params[:category_id])
+      params[:category_name] = category.category_name
+      render 'filter_locations', params: { category_name: category.category_name }
     elsif params[:resturant_name].present?
       @resturant_name = params[:resturant_name]
       @resturant = Resturant.search_res(@resturant_name.downcase).records
@@ -112,7 +117,7 @@ class ResturantsController < ApplicationController
           reference_longitude = @currentlocation.first.longitude
           
           max_distance = 0 
-          @nearby_location = Resturant.all.map do |res|
+          @nearest_locations = Resturant.all.map do |res|
             distance = distance_between(res.latitude, res.longitude,reference_latitude, reference_longitude)
             max_distance = max_distance.nil? ? distance : [max_distance, distance].max
             [res, distance]
@@ -121,8 +126,8 @@ class ResturantsController < ApplicationController
             flash[:danger] = "Location very far away, more than 10 k.m"
             redirect_to resturants_path
           else
-            @nearby_location.sort_by! { |res, distance| distance }
-          # @resturant = Resturant.where("LOWER(name) LIKE ?", "%#{@location.downcase}%")
+            @nearest_locations.sort_by! { |res, distance| distance }
+            @nearest_locations = Kaminari.paginate_array(@nearest_locations).page(params[:page]).per(2)
             render 'search'
           end 
         else
@@ -134,20 +139,16 @@ class ResturantsController < ApplicationController
   end
 
   def distance_between(reslat, reslong, userlat, userlong)
-    # Convert degrees to radians
     def to_radians(degrees)
       degrees.to_f * Math::PI / 180
     end
-
     reslat_rad = to_radians(reslat)
     reslong_rad = to_radians(reslong)
     userlat_rad = to_radians(userlat)
-    userlong_rad = to_radians(userlong)
-  
+    userlong_rad = to_radians(userlong)  
     earth_radius = 6371
     d_lat = userlat_rad - reslat_rad
     d_lon = userlong_rad - reslong_rad
-  
     a = Math.sin(d_lat / 2) ** 2 + Math.cos(reslat_rad) * Math.cos(userlat_rad) * Math.sin(d_lon / 2) ** 2
     c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     distance = earth_radius * c
@@ -159,10 +160,23 @@ class ResturantsController < ApplicationController
     @tempuser.notifications.update_all(read: true)
     @notification = @tempuser.notifications.all
     @notification.delete_all
-    # binding.pry
     respond_to do |format|
       format.js
     end
+  end
+
+  def gallery
+    @resturant = Resturant.find(params[:resturant_id])
+  end
+
+  def attach_image
+    @resturant = Resturant.find(params[:resturant_id])
+    if params[:cover_image].present?
+      @resturant.cover_image.attach(params[:cover_image])
+    else
+      flash[:warning] = "Please select a image"
+    end
+    redirect_to resturant_gallery_path(@resturant)
   end
 
   private 

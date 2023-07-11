@@ -30,6 +30,7 @@ gem 'elasticsearch-model', '~> 7.2', '>= 7.2.1'
 gem 'elasticsearch-rails', '~> 7.2', '>= 7.2.1'
 
 gem 'prawn'
+gem 'kaminari'
 
 gem 'httparty'
 # Use Active Storage variant

@@ -1,6 +1,8 @@
 class Resturant < ApplicationRecord
+  paginates_per 3
     include Elasticsearch::Model
     include Elasticsearch::Model::Callbacks
+    
     def self.index_data
       self.__elasticsearch__.create_index! force: true
       self.__elasticsearch__.import
@@ -34,14 +36,6 @@ class Resturant < ApplicationRecord
                         boost: 1.0
                       }
                     }
-                  },
-                  {
-                    wildcard: {
-                      city: {
-                        value: "*#{query}*",
-                        boost: 0.5
-                      }
-                    }
                   }
                 ]
               }
@@ -63,4 +57,19 @@ class Resturant < ApplicationRecord
     validates :name, presence: true, length: {minimum: 3, maximum: 45}
     validates :latitude, presence: true
     validates :longitude, presence: true
+    
+    validate :validate_image_format
+
+    def validate_image_format
+      if cover_image.attached?
+        cover_image.each do |image|
+          unless image.content_type.in?(%w(image/jpeg image/png))
+            errors.add(:cover_image, 'must be a JPEG or PNG image')
+          end
+        end
+      else
+        errors.add(:cover_image, "must be present")
+      end
+    end 
+
 end

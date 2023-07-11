@@ -10,7 +10,7 @@
         <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-success mt-4"%>
         <%= link_to 'Add new Category' , new_category_path , class: "btn btn-success mt-4"%>
     <%end%>
-    
+        <%= paginate @nearest_locations %>
     <% @nearest_locations.each do |resturant,distance| %>
      <div class="container">
          <div class="row justify-content-center">
@@ -45,4 +45,6 @@
         </div>
     </div>
     <% end%>
+
+    <%= paginate @nearest_locations %>
 </div>
