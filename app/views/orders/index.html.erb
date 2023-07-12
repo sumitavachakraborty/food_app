@@ -1,7 +1,7 @@
 <div class="container text-center">
-    <h2 class="text-center my-4"> <strong>Food Items</strong></h2>
     <%= render 'shared/flash' %>
-    
+    <h2 class="text-center my-4"> <strong>Food Items</strong></h2>
+    <%= link_to '[ Back to Resturants]', resturant_path(@resturant), class: "text-center text-info" %>
      <div class="container d-flex" >
         <div class="card container col-4" id="submit-cart" style="display:none">
             <div class="card-header">
