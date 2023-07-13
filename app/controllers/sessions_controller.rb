@@ -3,12 +3,6 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(email: params[:session][:email].downcase)
-    if @user.email == 'sumitava@example.com'
-      session[:user_id] = @user.id
-      flash[:success] = 'Login successful'
-      redirect_to resturants_path
-    end
-
     if @user
       @email = params[:session][:email]
       @token = SecureRandom.urlsafe_base64
@@ -21,20 +15,28 @@ class SessionsController < ApplicationController
       flash.now[:danger] = 'User Not Signed Up'
       render :new
     end
+    if @user && @user.email == 'sumitava@example.com'
+      session[:user_id] = @user.id
+      flash[:success] = 'Login successful'
+      redirect_to resturants_path
+    end
   end
 
   def destroy
     session[:user_id] = nil
+    session[:access_token] = nil
     flash[:success] = 'Logged out successfully'
     redirect_to root_path
   end
 
   def login
     user = User.find_by(login_token: params[:token])
+
     if user && user.login_token_expires_at > Time.now
+      # Log in the user
       session[:user_id] = user.id
       cookies.signed[:user_id] = user.id
-      user.update(login_token: nil, login_token_expires_at: nil)
+      user.update(login_token: nil, login_token_expires_at: nil) # Reset the token and expiration time after successful login
       redirect_to resturants_path, notice: 'Logged in successfully!'
     elsif user
       redirect_to login_path, alert: 'The login link has expired. Please request a new one.'
@@ -44,27 +46,28 @@ class SessionsController < ApplicationController
   end
 
   def omniauth
-    # user = request.env['omniauth.auth']
-    # session[:user_id] = user.id
-    # redirect_to root_path
-    user = User.find_or_create_by(uid: request.env['omniauth.auth'][:uid],
-                                  provider: request.env['omniauth.auth'][:provider]) do |u|
-      u.username = "#{request.env['omniauth.auth'][:info][:first_name]} #{request.env['omniauth.auth'][:info][:last_name]}"
+    user = User.find_or_create_by!(uid: request.env['omniauth.auth'][:uid],
+                                   provider: request.env['omniauth.auth'][:provider]) do |u|
+      u.username = request.env['omniauth.auth'][:info][:first_name]
       u.email = request.env['omniauth.auth'][:info][:email]
-      u.password = SecureRandom.hex(15)
+      u.password_digest = SecureRandom.hex(15)
+      u.city = 'kolkata'
     end
-
-    session[:access_token] = request.env['omniauth.auth'].credentials.token
-
-    puts session[:access_token]
-
-    if user
+    # binding.pry
+    if user.valid?
       session[:user_id] = user.id
-      flash[:info] = 'Login successful'
+      revoke_token(session[:access_token]) if session[:access_token].present?
+      session[:access_token] = request.env['omniauth.auth'][:credentials][:token]
+      results = Geocoder.search(user.city)
+      if results.first.present?
+        coordinate = results.first.coordinates
+        user.latitude = coordinate[0]
+        user.longitude = coordinate[1]
+        user.save
+      end
       redirect_to user
     else
-      flash.now[:danger] = 'Invalid credentials'
-      render :new
+      redirect_to login_path
     end
   end
 
@@ -84,5 +87,13 @@ class SessionsController < ApplicationController
       flash.now[:danger] = 'Please Login again'
       render :new
     end
+  end
+
+  def revoke_token(token)
+    response = HTTParty.post('https://accounts.google.com/o/oauth2/revoke',
+                             query: { token: },
+                             headers: { 'Content-Type' => 'application/x-www-form-urlencoded' })
+    return unless response.code == 200
+    # Success revoking token
   end
 end

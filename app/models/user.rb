@@ -5,11 +5,12 @@ class User < ApplicationRecord
                        uniqueness: { case_sensitive: false }, length: { minimum: 3, maximum: 25 }
   validates :email, presence: true, uniqueness: { case_sensitive: false }, length: { maximum: 110 },
                     format: { with: VALID_EMAIL_REGEX }
+  validates :city, presence: true
   has_secure_password
 
   has_one_attached :images
-  has_many :orders, dependent: :destroy
+  has_many :orders
   has_many :reviews
-  has_many :notifications
-  has_many :book_tables, dependent: :destroy
+  has_many :notifications, dependent: :destroy
+  has_many :book_tables
 end

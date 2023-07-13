@@ -29,7 +29,7 @@ class Resturant < ApplicationRecord
       query: {
         bool: {
           should: [
-            { wildcard: { name: { value: "*#{query}*", boost: 1.0 } } }
+            { wildcard: { name: { value: "*#{query}*"} } }
           ]
         }
       }
@@ -37,18 +37,16 @@ class Resturant < ApplicationRecord
   end
   index_data
 
-  # before_save { self.name = name.downcase}
+  has_one :category
   has_many_attached :cover_image
   has_many :foods, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :reviews, dependent: :destroy
-  has_one :category
   has_many :book_tables, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 3, maximum: 45 }
   validates :latitude, presence: true
   validates :longitude, presence: true
-
   validate :validate_image_format
 
   def validate_image_format

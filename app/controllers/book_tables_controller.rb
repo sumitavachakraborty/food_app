@@ -1,22 +1,22 @@
 class BookTablesController < ApplicationController
   before_action :require_user
   before_action :get_resturant, except: [:create]
-  
+
   def index
     @book_tables = @resturant.book_tables.all
   end
-  
+
   def new
     @book_tables = BookTable.new
     @all_tables = @resturant.book_tables
-  end 
+  end
 
   def create
     @resturant = Resturant.find(params[:resturant_id])
     @book_tables = @resturant.book_tables.new(table_params)
     @book_tables.user_id = current_user.id
     if @book_tables.save
-      flash[:success] = "Table Booked successfully"
+      flash[:success] = 'Table Booked successfully'
       redirect_to resturant_book_tables_path(@resturant)
     else
       render :new
@@ -24,7 +24,7 @@ class BookTablesController < ApplicationController
   end
 
   def show
-    @book_table = BookTable.find(params[:id]) 
+    @book_table = BookTable.find(params[:id])
   end
 
   private
@@ -34,6 +34,6 @@ class BookTablesController < ApplicationController
   end
 
   def table_params
-    params.require(:book_table).permit(:book_date,:book_time,:head_count)
+    params.require(:book_table).permit(:book_date, :book_time, :head_count)
   end
 end

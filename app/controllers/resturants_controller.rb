@@ -16,6 +16,9 @@ class ResturantsController < ApplicationController
       @resturant = Resturant.all
     end
     @nearest_locations = find_nearest_distance(@resturant, current_user.latitude, current_user.longitude)
+    if @nearest_locations == 0
+      render 'filter_locations'
+    end
   end
 
   def new
@@ -81,7 +84,7 @@ class ResturantsController < ApplicationController
         flash[:danger] = 'Location very far away, more than 10 k.m'
         redirect_to resturants_path
       end
-      render 'filter_locations' unless params[:search].present?
+      render 'index' unless params[:search].present?
     end
   end
 

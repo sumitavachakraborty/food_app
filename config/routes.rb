@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :users, except: [:new]
+  resources :users, except: [:new] do
+    post 'location', to: 'users#location'
+  end
+
   resources :categories
   root 'pages#home'
   get 'signup' , to: 'users#new'
