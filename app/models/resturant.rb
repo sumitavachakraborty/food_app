@@ -58,4 +58,5 @@ class Resturant < ApplicationRecord
       errors.add(:cover_image, 'must be present')
     end
   end
+  
 end
