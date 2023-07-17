@@ -5,8 +5,7 @@
   </div>
   <div class="input-group">
     <%= form.label :category_id, class: "col-2 col-form-label" %>
-    <%= form.collection_select :category_id, Category.all, :id, :category_name, { prompt: params[:category_name].present? ? params[:category_name] : "Select a category" }, { class: "form-control", selected: params[:category_id] } %> 
+    <%= form.collection_select :category_id, Category.all, :id, :category_name, { prompt: params[:category_name].present? ? params[:category_name] : "Select a category" }, { class: "form-control", selected: params[:category_id] } %>
   </div>
-  
   <%= form.submit "Search", class: "btn btn-outline-warning" %>
 <% end %>

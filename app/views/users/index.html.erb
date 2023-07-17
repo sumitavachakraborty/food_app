@@ -1,19 +1,19 @@
 <div class="container">
   <% if logged_in? && current_user.admin? %>
-  <table class="table">
-        <thead>
-            <tr>
-            <th scope="col">UID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Type of User</th>
-            <th scope="col">Edit profile</th>
-            </tr>
-        </thead>
-        <% i=0 %>
-        <% @user.each do |user| %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">UID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Type of User</th>
+          <th scope="col">Edit profile</th>
+        </tr>
+      </thead>
+      <% i=0 %>
+      <% @user.each do |user| %>
         <tbody>
-            <tr id="<%= user.id %>">
+          <tr id="<%= user.id %>">
             <th scope="row"><%= i=i+1 %></th>
             <td><%= user.username %></td>
             <td><%= user.email %></td>
@@ -31,18 +31,12 @@
               <% end %>
               <% if !user.admin?%>
                 <button class="btn btn-outline-danger make_admin" value="<%= user.id %>" >Make user Admin</button>
-                <%#= link_to 'Make user Admin', edit_user_path(user), class: "btn btn-outline-danger"%>
               <% end %>
             </td>
-            </tr>
+          </tr>
         </tbody>
-        <% end %>
+      <% end %>
     </table>
   <% end %>
-
 </div>
-
-
-<script>
-
-</script>
+<script></script>

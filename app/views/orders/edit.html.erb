@@ -1,94 +1,54 @@
-  
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-10" >
-      <%#= render 'shared/errors', obj: @food%>
+      <%= render 'shared/errors', obj: @order%>
       <%= render 'shared/flash' %>
       <%= form_with(model: [@resturant,@order],class: "shadow p-3 mb-5 bg-white rounded",local: true) do |f| %>
-
-
-
         <div class="d-flex justify-content-center">
-        
           <div class="name form-group row">
             <% @order.foodname_array.each_with_index do |food_name, index| %>
               <%= f.fields_for :foodname_array, index: index do |ff| %>
                 <div class="form-group">
-                  <%= ff.label :food_name, "Food Name :- " %> 
+                  <%= ff.label :food_name, "Food Name :- " %>
                   <span><strong><%= food_name.upcase %></strong></span>
                   <div class ="col-10">
                     <p class="price d-inline text-center"> Price : Rs.<%= @order.food_price_array[index] %> </p>
                   </div>
                 </div>
               <% end %>
-            <% end %>          
+            <% end %>
           </div>
-
-          <div class="quantity form-group row">
+          <div class="quantity form-group row mx-3">
             <% @order.foodquantity_array.each_with_index do |food_quantity, index| %>
               <%= f.fields_for :foodquantity_array, index: index do |ff| %>
                 <div class="form-group">
                   <%= ff.label :food_quantity, "Food quantity" %>
-                  <div class ="col-2">
+                  <div class ="col-3">
                     <%= ff.number_field :food_quantity, value: food_quantity, class: "form-control", max: 10%>
-                    <%= ff.hidden_field :food_price, value: @order.food_price_array[index], data: { price: @order.food_price_array[index] }, class: "newprice" %>  
+                    <%= ff.hidden_field :food_price, value: @order.food_price_array[index], data: { price: @order.food_price_array[index] }, class: "newprice" %>
                   </div>
                 </div>
               <% end %>
-            <% end %>  
+            <% end %>
           </div>
-
         </div>
-
-        
         <div class="form-group row my-3">
           <%= f.label "Total :", class: "col-3 col-form-label" %>
           <div class ="col-2">
             <%= f.number_field :total, class: "col-2 form-control total"%>
           </div>
         </div>
-
         <div class="form-group row my-3">
           <%= f.label "Delivery Address :", class: "col-3 col-form-label" %>
           <div class ="col-10">
             <%= f.text_field :delivery_address, class: "col-10 form-control total"%>
           </div>
         </div>
-
-
         <div class="d-flex justify-content-center">
-          <%= f.submit 'Place Order',class: "btn btn-outline-success btn-lg me-2"%>  
+          <%= f.submit 'Place Order',class: "btn btn-outline-success btn-lg me-2"%>
           <%= link_to 'Cancel Order', resturant_order_path(@resturant,@order),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-lg"%>
         </div>
-
-        
-
       <% end %>
     </div>
-
   </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-
-<script>
-  $(document).ready(function() {
-    var initialquantity = $('.quantity input[type="number"]');
-    var initialinput = $('input[name="order[total]"]');
-    var initalprice = $('.quantity .newprice');
-
-    initialquantity.on('change', function() {
-      updateTotal();
-    });
-    
-    function updateTotal() {
-      var total = 0;
-      initialquantity.each(function(index) {
-        var quantity = parseInt($(this).val());
-        var price = parseFloat(initalprice.eq(index).data('price'));
-        total += quantity * price;
-      });
-      initialinput.val(total.toFixed(2));
-    }
-  });
-</script>

@@ -10,31 +10,30 @@
           <%= link_to 'Resturants', resturants_path, class: "nav-link"  %>
         </li>
         <% if logged_in? && current_user.admin? %>
-        <li class="nav-item">
-          <%= link_to 'Admin Panel', users_path, class: "nav-link"  %>
-        </li>
+          <li class="nav-item">
+            <%= link_to 'Admin Panel', users_path, class: "nav-link"  %>
+          </li>
         <% end %>
-       <% if logged_in? %>
+        <% if logged_in? %>
           <li class="nav-item">
             <% if current_user.admin? %>
-                <%= link_to current_user.username, user_path(current_user) , class: "btn btn-outline-light"%>
-              <% else %>
-                <%= link_to current_user.username , user_path(current_user) , class: "nav-link"%>
+              <%= link_to current_user.username, user_path(current_user) , class: "btn btn-outline-light"%>
+            <% else %>
+              <%= link_to current_user.username , user_path(current_user) , class: "nav-link"%>
             <% end %>
           </li>
           <li class="nav-item">
-              <%= link_to 'Logout' , logout_path , class: "nav-link", method: :delete%>
+            <%= link_to 'Logout' , logout_path , class: "nav-link", method: :delete%>
           </li>
         <% else %>
           <li class="nav-item">
-              <%= link_to 'Log in' , login_path , class: "nav-link" %>
+            <%= link_to 'Log in' , login_path , class: "nav-link" %>
           </li>
           <li class="nav-item">
-              <%= link_to 'Sign in' , signup_path , class: "nav-link" %>
+            <%= link_to 'Sign in' , signup_path , class: "nav-link" %>
           </li>
         <% end %>
       </ul>
-
       <div class="dropdown">
         <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fas fa-bell"></i>
@@ -61,18 +60,3 @@
     </div>
   </div>
 </nav>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-
-
-<script>
-  // $('#count').click(function(){
-  //     var notificationCount = $('#notification-count');
-  //       var currentCount = parseInt(notificationCount.text());
-  //       notificationCount.text(currentCount + 1);
-  // })
-  // Get the value of the data-count attribute
-  
-
-
-</script>

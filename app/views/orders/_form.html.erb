@@ -1,31 +1,26 @@
-  
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-10" >
-      <%#= render 'shared/errors', obj: @food%>
+      <%= render 'shared/errors', obj: @order%>
       <%= render 'shared/flash' %>
       <%= form_with(model: [@resturant,@order],class: "shadow p-3 mb-5 bg-white rounded",local: true) do |f| %>
-
         <div class="form-group row mb-3">
           <%= f.label :quantity, class: "col-2 col-form-label" %>
           <div class ="col-10">
             <%= f.number_field :quantity, class: "form-control" %>
           </div>
         </div>
-
         <div class="form-group row mb-3">
           <%= f.label :total, class: "col-2 col-form-label" %>
           <div class ="col-2">
             <%= f.number_field :total, class: "form-control"%>
           </div>
         </div>
-
         <div class="d-flex justify-content-center">
-          <%= f.submit class: "btn btn-outline-success btn-lg"%>  
+          <%= f.submit class: "btn btn-outline-success btn-lg"%>
         </div>
       <% end %>
     </div>
-
-    <%# <%= link_to '[ Back to Foods listing ]', resturant_foods_path(@resturant), class: "text-center" %>
+    <%= link_to '[ Back to Foods listing ]', resturant_foods_path(@resturant), class: "text-center" %>
   </div>
 </div>

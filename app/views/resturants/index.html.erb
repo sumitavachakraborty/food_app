@@ -1,54 +1,53 @@
 <div class="container text-center mb-3">
-<%= render 'shared/flash' %>
-    <div class="container row justify-content-center my-2">
-        <div class="col-5 text-center">
-            <%= render 'search' %>
-        </div>
+  <%= render 'shared/flash' %>
+  <div class="container row justify-content-center my-2">
+    <div class="col-5 text-center">
+      <%= render 'search' %>
     </div>
-    <h2 class="text-center mt-4"> All Resturants </h2>
-    <% if logged_in? && current_user.admin? %>
-        <div class="btn-group" role="group" aria-label="Basic outlined example">
-            <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-outline-success my-4"%>
-            <%= link_to 'Add new Category' , new_category_path , class: "btn btn-outline-success my-4"%>
-        </div>
-    <%end%>    
-    <span class="btn btn-warning disabled my-4"> <strong>Your Location : </strong> <%= current_user.city.upcase %> </span>
-    <%= paginate @nearest_locations %>
-    <% @nearest_locations.each do |resturant,distance| %>
-     <div class="container">
-         <div class="row justify-content-center">
-             <div class="col-8 mt-4">
-                 <div class="card text-center shadow p-3 mb-5 bg-white rounded">
-                    <div class="card-header fst-italic d-flex justify-content-around"> <span>  Resturant name : <%= link_to resturant.name, resturant_path(resturant)%> </span>
-                        <% if resturant.category_id.present? %>
-                            <span> <strong>Category  : </strong> <%= Category.find(resturant.category_id).category_name %> </span>
-                        <% end %>
-                    </div>
-                    <div class="resturant_cover">
-                            <%if(resturant.cover_image.first.present?)%>
-                                <%= link_to image_tag(resturant.cover_image.first,style: "height: 200px; width: 50%"),resturant_path(resturant)%>
-                                <%else%>
-                                <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
-                            <%end%>
-                    </div>
-                    <div class="card-body">
-                        <strong>Address  : </strong> <div class="card-text text-center mb-2"><%= resturant.address%></div>
-                        <% if logged_in? && (current_user.admin?) %>
-                            <a href="#"><%= link_to 'Edit', edit_resturant_path(resturant), class: "btn btn-outline-success"%></a>
-                            <a href="#"><%= link_to 'Delete', resturant_path(resturant),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
-                        <% end %>
-                        <%= link_to 'Order Online', resturant_orders_path(resturant), class: "btn btn-outline-primary"%>
-                        <%= link_to 'Book Table', new_resturant_book_table_path(resturant), class: "btn btn-outline-success" %>
-                    </div>
-                        
-                    <div class="card-footer text-body-secondary">
-                       <strong>Distance from User : - </strong> <%= distance %> Kilometer 
-                    </div>
-                </div>
+  </div>
+  <h2 class="text-center mt-4"> All Resturants </h2>
+  <% if logged_in? && current_user.admin? %>
+    <div class="btn-group" role="group" aria-label="Basic outlined example">
+      <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-outline-success my-4"%>
+      <%= link_to 'Add new Category' , new_category_path , class: "btn btn-outline-success my-4"%>
+    </div>
+  <%end%>
+  <span class="btn btn-warning disabled my-4"> <strong>Your Location : </strong> <%= current_user.city.upcase %> </span>
+  <%= paginate @nearest_locations %>
+  <% @nearest_locations.each do |resturant,distance| %>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-8 mt-4">
+          <div class="card text-center shadow p-3 mb-5 bg-white rounded">
+            <div class="card-header fst-italic d-flex justify-content-around"> <span>  Resturant name : <%= link_to resturant.name, resturant_path(resturant)%> </span>
+              <% if resturant.category_id.present? %>
+                <span> <strong>Category  : </strong> <%= Category.find(resturant.category_id).category_name %> </span>
+              <% end %>
             </div>
+            <div class="resturant_cover">
+              <%if(resturant.cover_image.first.present?)%>
+                <%= link_to image_tag(resturant.cover_image.first,style: "height: 200px; width: 50%"),resturant_path(resturant)%>
+              <%else%>
+                <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
+              <%end%>
+            </div>
+            <div class="card-body">
+              <strong>Address  : </strong> 
+              <div class="card-text text-center mb-2"><%= resturant.address%></div>
+              <% if logged_in? && (current_user.admin?) %>
+                <a href="#"><%= link_to 'Edit', edit_resturant_path(resturant), class: "btn btn-outline-success"%></a>
+                <a href="#"><%= link_to 'Delete', resturant_path(resturant),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
+              <% end %>
+              <%= link_to 'Order Online', resturant_orders_path(resturant), class: "btn btn-outline-primary"%>
+              <%= link_to 'Book Table', new_resturant_book_table_path(resturant), class: "btn btn-outline-success" %>
+            </div>
+            <div class="card-footer text-body-secondary">
+              <strong>Distance from User : - </strong> <%= distance %> Kilometer 
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <% end%>
-
-    <%= paginate @nearest_locations %>
+  <% end%>
+  <%= paginate @nearest_locations %>
 </div>

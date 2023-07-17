@@ -9,7 +9,7 @@ module SessionsHelper
   def mail_set_user
     @email = params[:session][:email]
     @token = SecureRandom.urlsafe_base64
-    @login_link = "#{root_url}/login_verify?token=#{@token}&email=#{@email}"
+    @login_link = "#{root_url}login_verify?token=#{@token}&email=#{@email}"
     @user.login_token = @token
     @user.token_expire = Time.now + 2.minutes
     @user.save

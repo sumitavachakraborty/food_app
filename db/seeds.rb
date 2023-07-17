@@ -275,4 +275,44 @@ foods.each do |food_data|
   Food.create!(food_data)
 end
 
+# db/seeds/reviews.rb
+
+# Create Reviews
+reviews = []
+
+Resturant.all.each do |resturant|
+  2.times do
+    reviews << {
+      comment: 'Great food and service!',
+      approval: true,
+      rating: 2,
+      resturant_id: resturant.id,
+      review_images: 'food/food1.jpg',
+      user_id: 1
+    }
+  end
+  2.times do
+    reviews << {
+      comment: 'Good resturant',
+      approval: false,
+      rating: 2,
+      resturant_id: resturant.id,
+      review_images: 'food/food2.jpg',
+      user_id: 1
+    }
+  end
+end
+
+# Seed Reviews
+reviews.each do |review|
+  review_images = open(Rails.root.join('app', 'assets', 'images', review[:review_images]))
+  review[:review_images] = ActiveStorage::Blob.create_after_upload!(
+    io: review_images,
+    filename: File.basename(review_images),
+    content_type: 'image/jpeg'
+  ).signed_id
+  Review.create(review)
+end
+
+
 # rubocop:enable all
