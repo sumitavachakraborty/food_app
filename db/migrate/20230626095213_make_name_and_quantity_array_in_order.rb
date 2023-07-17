@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# add_column in orders
 class MakeNameAndQuantityArrayInOrder < ActiveRecord::Migration[6.1]
   def change
     add_column :orders, :foodname_array, :text, array: true, default: []

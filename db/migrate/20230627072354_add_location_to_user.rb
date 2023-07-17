@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# add column to user
 class AddLocationToUser < ActiveRecord::Migration[6.1]
   def change
     add_column :users, :city, :string

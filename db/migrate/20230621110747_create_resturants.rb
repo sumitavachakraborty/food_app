@@ -1,3 +1,4 @@
+# rubocop:disable all
 # frozen_string_literal: true
 
 class CreateResturants < ActiveRecord::Migration[6.1]
@@ -10,3 +11,4 @@ class CreateResturants < ActiveRecord::Migration[6.1]
     end
   end
 end
+# rubocop:enable all

@@ -1,3 +1,4 @@
+# rubocop:disable all
 # frozen_string_literal: true
 
 class CreateUsers < ActiveRecord::Migration[6.1]
@@ -17,3 +18,4 @@ class CreateUsers < ActiveRecord::Migration[6.1]
     end
   end
 end
+# rubocop:enable all
