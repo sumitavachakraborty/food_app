@@ -7,10 +7,13 @@
     </div>
     <h2 class="text-center mt-4"> All Resturants </h2>
     <% if logged_in? && current_user.admin? %>
-        <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-success mt-4"%>
-        <%= link_to 'Add new Category' , new_category_path , class: "btn btn-success mt-4"%>
-    <%end%>
-        <%= paginate @nearest_locations %>
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-outline-success my-4"%>
+            <%= link_to 'Add new Category' , new_category_path , class: "btn btn-outline-success my-4"%>
+        </div>
+    <%end%>    
+    <span class="btn btn-warning disabled my-4"> <strong>Your Location : </strong> <%= current_user.city.upcase %> </span>
+    <%= paginate @nearest_locations %>
     <% @nearest_locations.each do |resturant,distance| %>
      <div class="container">
          <div class="row justify-content-center">
@@ -23,7 +26,7 @@
                     </div>
                     <div class="resturant_cover">
                             <%if(resturant.cover_image.first.present?)%>
-                                <%= link_to image_tag(resturant.cover_image.first,style: "height: auto; width: 50%"),resturant_path(resturant)%>
+                                <%= link_to image_tag(resturant.cover_image.first,style: "height: 200px; width: 50%"),resturant_path(resturant)%>
                                 <%else%>
                                 <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
                             <%end%>
@@ -34,7 +37,8 @@
                             <a href="#"><%= link_to 'Edit', edit_resturant_path(resturant), class: "btn btn-outline-success"%></a>
                             <a href="#"><%= link_to 'Delete', resturant_path(resturant),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
                         <% end %>
-                        <a href="#"><%= link_to 'Order Online', resturant_orders_path(resturant), class: "btn btn-outline-primary"%></a>
+                        <%= link_to 'Order Online', resturant_orders_path(resturant), class: "btn btn-outline-primary"%>
+                        <%= link_to 'Book Table', new_resturant_book_table_path(resturant), class: "btn btn-outline-success" %>
                     </div>
                         
                     <div class="card-footer text-body-secondary">

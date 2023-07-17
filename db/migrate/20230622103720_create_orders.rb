@@ -4,7 +4,7 @@ class CreateOrders < ActiveRecord::Migration[6.1]
       t.references :resturant, null: false, foreign_key: true
       t.integer :order_id
       t.float :total
-      t.integer :quantity 
+      t.integer :quantity
       t.references :user, foreign_key: true
       t.timestamps
     end

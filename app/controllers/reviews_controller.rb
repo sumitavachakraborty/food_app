@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Reviews Controller
 class ReviewsController < ApplicationController
   before_action :require_user, except: [:show]
   before_action :set_resturant
@@ -46,9 +49,7 @@ class ReviewsController < ApplicationController
     @review = Review.find(params[:id])
     @review.toggle!(:approval)
 
-    respond_to do |format|
-      format.js
-    end
+    respond_to(&:js)
   end
 
   private

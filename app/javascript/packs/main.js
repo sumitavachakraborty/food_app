@@ -97,7 +97,9 @@ function updateCart() {
 }
 
 $("#checkout").click(function () {
+  console.log(cart);
   localStorage.removeItem("cart");
+  
   $.ajax({
     url: "/resturants/" + restid + "/orders",
     method: "POST",

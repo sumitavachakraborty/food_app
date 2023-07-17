@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
+# Notifications Channel
 class NotificationsChannel < ApplicationCable::Channel
   def subscribed
-    user = User.find(3)
-    stream_for current_user
+    # user = User.find(3)
+    # stream_for current_user
   end
 
   def unsubscribed

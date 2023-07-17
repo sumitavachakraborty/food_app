@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
+# Orders Controller
 class OrdersController < ApplicationController
   before_action :require_user, except: %i[show index]
   before_action :find_resturant
-  # before_action :find_foods, only: [:new, :edit, :create, :update]
   before_action :find_order, only: %i[edit update destroy]
 
   def index
@@ -15,17 +17,13 @@ class OrdersController < ApplicationController
   def create
     cart_items = params[:cart_items]
     add_to_cart(cart_items)
-    @order = Resturant.find(params[:resturant_id]).orders.create(quantity: @total_quantity, total: @total_price,
-                                                                 user_id: current_user.id, foodname_array: @food_name_array,
-                                                                 foodquantity_array: @quantity_array, food_price_array: @price_array)
+    @order = create_order
     @order.delivery_address = current_user.city
     if @order.save!
       flash[:success] = 'Food item created successfully'
       redirect_to edit_resturant_order_path(@resturant, @order)
     end
-    respond_to do |format|
-      format.js
-    end
+    respond_to(&:js)
   end
 
   def edit; end
@@ -68,9 +66,18 @@ class OrdersController < ApplicationController
     end
   end
 
+  def create_order
+    Resturant.find(params[:resturant_id]).orders.create(quantity: @total_quantity, total: @total_price,
+                                                        user_id: current_user.id,
+                                                        foodname_array: @food_name_array,
+                                                        foodquantity_array: @quantity_array,
+                                                        food_price_array: @price_array)
+  end
+
   def params_order
     params.require(:order).permit(:quantity, :total, :user_id, :delivery_address, foodname_array: [],
-                                                                                  foodquantity_array: [], food_price_array: [])
+                                                                                  foodquantity_array: [],
+                                                                                  food_price_array: [])
   end
 
   def find_resturant

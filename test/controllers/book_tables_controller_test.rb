@@ -1,22 +1,22 @@
-require "test_helper"
+require 'test_helper'
 
 class BookTablesControllerTest < ActionDispatch::IntegrationTest
-  test "should get new" do
+  test 'should get new' do
     get book_tables_new_url
     assert_response :success
   end
 
-  test "should get index" do
+  test 'should get index' do
     get book_tables_index_url
     assert_response :success
   end
 
-  test "should get create" do
+  test 'should get create' do
     get book_tables_create_url
     assert_response :success
   end
 
-  test "should get show" do
+  test 'should get show' do
     get book_tables_show_url
     assert_response :success
   end

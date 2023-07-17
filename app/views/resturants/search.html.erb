@@ -8,7 +8,7 @@
     <% if logged_in? && current_user.admin? %>
         <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-success mt-4"%>
     <%end%>
-    <h2 class="text-center mt-4"> Resturants near - <strong><%= @location.upcase %></strong></h2>
+    <h2 class="text-center mt-4"> Resturants near - <strong class=""><%= @location.upcase %></strong></h2>
     <% if params[:category_id].present? %>
         <p class="btn btn-warning disabled">Selected category: <%= Category.find(params[:category_id]).category_name %></p>
     <% end %>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="resturant_cover">
                         <%if(resturant.cover_image.first.present?)%>
-                            <%= link_to image_tag(resturant.cover_image.first,style: "height: auto; width: 50%"),resturant_path(resturant)%>
+                            <%= link_to image_tag(resturant.cover_image.first,style: "height: 250px; width: 50%"),resturant_path(resturant)%>
                         <%else%>
                             <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
                         <%end%>

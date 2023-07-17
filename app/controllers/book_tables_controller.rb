@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
+# BookTables Controller
 class BookTablesController < ApplicationController
   before_action :require_user
-  before_action :get_resturant, except: [:create]
+  before_action :set_resturant
 
   def index
     @book_tables = @resturant.book_tables.all
@@ -12,7 +15,6 @@ class BookTablesController < ApplicationController
   end
 
   def create
-    @resturant = Resturant.find(params[:resturant_id])
     @book_tables = @resturant.book_tables.new(table_params)
     @book_tables.user_id = current_user.id
     if @book_tables.save
@@ -29,7 +31,7 @@ class BookTablesController < ApplicationController
 
   private
 
-  def get_resturant
+  def set_resturant
     @resturant = Resturant.find(params[:resturant_id])
   end
 

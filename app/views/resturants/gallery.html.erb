@@ -2,9 +2,8 @@
 <div class="container">
 <%= render 'shared/flash' %>
 <%= render 'shared/errors', obj: @resturant %>
-     <div class="row justify-content-center">
+    <div class="row justify-content-center">
         <div class="col-4 my-3">
-        <%= render 'shared/errors', obj: @resturant %>
         <%= form_with(url: resturant_image_path, method: :post) do |f| %>
             <div class="input-group">
             <%= f.file_field :cover_image, multiple: true, class: "col-2 form-control" %>
@@ -13,7 +12,9 @@
         <% end %>
         </div>
     </div>
-
+    <div class="container text-center my-3">
+        <%= link_to '[ Back to Resturants listing ]', resturant_path(@resturant), class: "text-center text-warning" %>
+    </div>
     <div class="d-flex flex-row flex-wrap justify-content-center">
         <% @resturant.cover_image.each_with_index do |picture, i| %>
         <div class="card m-2" style="width: 18rem;">
@@ -21,4 +22,6 @@
         </div>
     <% end %>
     </div>
+    
+    
 </div>

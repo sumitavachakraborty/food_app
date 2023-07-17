@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Categories Controller
 class CategoriesController < ApplicationController
   before_action :require_user
 

@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
+# Users Controller
 class UsersController < ApplicationController
+  include ApplicationHelper
   before_action :set_user, only: %i[show edit update destroy]
   before_action :require_user, only: %i[show edit update destroy]
   before_action :same_user, only: %i[edit update]
@@ -26,15 +30,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      results = Geocoder.search(@user.city)
-      if results.first.present?
-        coordinate = results.first.coordinates
-        @user.latitude = coordinate[0]
-        @user.longitude = coordinate[1]
-        @user.save
-      else
-        flash[:notice] = 'enter city not found'
-      end
+      get_coordinates(@user)
       flash[:success] = 'Your account information was updated successfully'
       redirect_to @user
     else
@@ -45,17 +41,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      results = Geocoder.search(@user.city)
-      if results.first.present?
-        coordinate = results.first.coordinates
-        @user.latitude = coordinate[0]
-        @user.longitude = coordinate[1]
-        @user.save
-      else
-        flash[:notice] = 'enter city not found'
-      end
+      get_coordinates(@user)
       session[:user_id] = @user.id
-      session[:type] = 'user'
       flash[:info] = "Welcome to the Zomato, #{@user.username}! You signed in successfully."
       redirect_to resturants_path
     else
@@ -64,11 +51,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    # response = HTTParty.get('https://accounts.google.com/o/oauth2/revoke?token='+session[:access_token].to_s)
-    # puts response
-    # if response.code == 200
-    
-    # end
     @user.destroy
     session[:user_id] = nil if @user == current_user
     flash[:danger] = 'Account deleted successfully'
@@ -84,17 +66,16 @@ class UsersController < ApplicationController
   def makeadmin
     @tempuser = User.find(params[:id])
     @tempuser.toggle!(:admin)
-    respond_to do |format|
-      format.js
-    end
+    respond_to(&:js)
   end
 
   def location
     @user = User.find(params[:user_id])
-    if params[:city].present?
-      @user.update(city: params[:city])
-      redirect_to @user
-    end
+    return unless params[:city].present?
+
+    @user.update(city: params[:city])
+    get_coordinates(@user)
+    redirect_to @user
   end
 
   private
@@ -108,9 +89,9 @@ class UsersController < ApplicationController
   end
 
   def same_user
-    if current_user != @user && !current_user.admin?
-      flash[:danger] = 'Your can edit or delete your review'
-      redirect_to @resturants_path
-    end
+    return unless current_user != @user && !current_user.admin?
+
+    flash[:danger] = 'Your can edit or delete your review'
+    redirect_to root_path
   end
 end

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Category Model
 class Category < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
@@ -24,10 +27,7 @@ class Category < ApplicationRecord
     search_results = __elasticsearch__.search(
       query: {
         match: {
-          category_name: {
-            query:,
-            operator: 'and'
-          }
+          category_name: { query:, operator: 'and' }
         }
       }
     )

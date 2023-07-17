@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# BookTable Model
 class BookTable < ApplicationRecord
   belongs_to :user
   belongs_to :resturant
