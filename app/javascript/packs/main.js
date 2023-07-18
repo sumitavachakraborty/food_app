@@ -1,3 +1,4 @@
+// change picture for user
 $("#change_pic").click(function () {
   console.log("clicked");
   $("#take_pic").trigger("click");
@@ -8,6 +9,7 @@ $("#change_pic").click(function () {
   });
 });
 
+//make admin
 $(".make_admin").click(function () {
   makeadmin($(this).val());
 });
@@ -25,12 +27,14 @@ function makeadmin(idata) {
   });
 }
 
+// auto remove flash
 $(document).ready(function(){
   setTimeout(function(){
     $('#flash').fadeOut();
   }, 2000);
  })
- 
+
+//mark read notifications
 $(".mark-read").click(function () {
   markread($(this).val());
 });
@@ -51,6 +55,7 @@ function markread(idata) {
   });
 }
 
+//adding cart items
 var cart = {};
 let restid = 0;
 $(".submit-order").click(function () {

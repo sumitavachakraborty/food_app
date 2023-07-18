@@ -8,7 +8,6 @@
     <h1>Thankyou <%= @user.username %>, Your order is placed succesfully</h1>
     <h2>Total Price for Order: Rs.<strong><%= @total %></strong></h2>
     <h2>Delivery Address : <strong><%= @address %></strong> </h2>
-    <h2> Please provide ratings and reviews</h2>
-    <%= link_to 'Please provide ratings and reviews' , @review_link %>
+    <h3> Please provide ratings and reviews : <%= link_to 'Provide ratings', @review_link %></h3>
   </body>
 </html>

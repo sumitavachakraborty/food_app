@@ -11,7 +11,7 @@ module SessionsHelper
     @token = SecureRandom.urlsafe_base64
     @login_link = "#{root_url}login_verify?token=#{@token}&email=#{@email}"
     @user.login_token = @token
-    @user.token_expire = Time.now + 2.minutes
+    @user.token_expire = Time.now + 10.minutes
     @user.save
     UserMailer.confirmation_email(@user, @login_link).deliver_later
     redirect_to login_path, success: 'Link has been sent to your email address'
