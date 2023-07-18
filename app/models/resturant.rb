@@ -3,6 +3,41 @@
 # Resturant Model
 class Resturant < ApplicationRecord
   paginates_per 3
+  has_one :category
+  has_many_attached :cover_image
+  has_many :foods, dependent: :destroy
+  has_many :orders, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :book_tables, dependent: :destroy
+
+  validates :name, presence: true, length: { minimum: 3, maximum: 45 }
+  validates :latitude, presence: true
+  validates :longitude, presence: true
+  validate :validate_image_format
+
+  def validate_image_format
+    if cover_image.attached?
+      cover_image.each do |image|
+        errors.add(:cover_image, 'must be a JPEG or PNG image') unless image.content_type.in?(%w[image/jpeg image/png])
+      end
+    else
+      errors.add(:cover_image, 'must be present')
+    end
+  end
+
+  def self.search_all(params)
+    permitted_params = params.permit(:search, :category_id)
+    if permitted_params[:category_id].present?
+      Resturant.find_category(permitted_params[:category_id])
+    else
+      Resturant.all
+    end
+  end
+
+  def self.find_category(category_id)
+    @category = Category.find(category_id)
+    Category.search_category(@category.category_name).records
+  end
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
@@ -39,42 +74,5 @@ class Resturant < ApplicationRecord
         }
       }
     )
-  end
-  index_data
-
-  has_one :category
-  has_many_attached :cover_image
-  has_many :foods, dependent: :destroy
-  has_many :orders, dependent: :destroy
-  has_many :reviews, dependent: :destroy
-  has_many :book_tables, dependent: :destroy
-
-  validates :name, presence: true, length: { minimum: 3, maximum: 45 }
-  validates :latitude, presence: true
-  validates :longitude, presence: true
-  validate :validate_image_format
-
-  def validate_image_format
-    if cover_image.attached?
-      cover_image.each do |image|
-        errors.add(:cover_image, 'must be a JPEG or PNG image') unless image.content_type.in?(%w[image/jpeg image/png])
-      end
-    else
-      errors.add(:cover_image, 'must be present')
-    end
-  end
-
-  def self.search_all(params)
-    permitted_params = params.permit(:search, :category_id)
-    if permitted_params[:category_id].present?
-      Resturant.find_category(permitted_params[:category_id])
-    else
-      Resturant.all
-    end
-  end
-
-  def self.find_category(category_id)
-    @category = Category.find(category_id)
-    Category.search_category(@category.category_name).records
   end
 end
