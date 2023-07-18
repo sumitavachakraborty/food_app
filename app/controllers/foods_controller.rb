@@ -2,11 +2,9 @@
 
 # Foods Controller
 class FoodsController < ApplicationController
-  before_action :set_food, only: %i[show edit update destroy]
-  before_action :require_user, except: %i[show index]
+  before_action :set_food, only: %i[edit update destroy]
+  before_action :require_user, except: %i[index]
   before_action :find_resturant
-
-  def show; end
 
   def index
     @food = @resturant.foods

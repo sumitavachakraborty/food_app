@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   get '/auth/google_oauth2/callback', to: 'sessions#omniauth'
   resources :resturants do
-    resources :foods
+    resources :foods, except: [:show]
     resources :orders
     resources :reviews
     post 'approve', to: 'reviews#approve'

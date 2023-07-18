@@ -19,4 +19,11 @@ class ApplicationController < ActionController::Base
     flash[:danger] = 'You must log in to continue'
     redirect_to login_path
   end
+
+  def admin_user
+    return if current_user.admin?
+
+    flash[:danger] = 'Only admins can access this page'
+    redirect_to resturants_path
+  end
 end

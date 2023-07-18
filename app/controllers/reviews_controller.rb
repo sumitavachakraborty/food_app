@@ -4,7 +4,7 @@
 class ReviewsController < ApplicationController
   before_action :require_user, except: [:show]
   before_action :set_resturant
-  before_action :same_user, only: %i[edit update]
+  before_action :same_user, only: %i[edit update destroy]
 
   def index; end
 
@@ -18,7 +18,7 @@ class ReviewsController < ApplicationController
     @review = @resturant.reviews.new(params.require(:review).permit(:comment, :rating, review_images: []))
     @review.user_id = current_user.id
     if @review.save
-      flash[:success] = 'Review was successfully created will be showed after approval'
+      flash[:success] = 'Review was successfully added, will be visible after approval'
       redirect_to resturant_path(@resturant)
     else
       render :new
@@ -63,9 +63,9 @@ class ReviewsController < ApplicationController
   end
 
   def same_user
-    return unless current_user != @user && !current_user.admin?
+    return unless current_user == @user
 
     flash[:danger] = 'Your can edit or delete your review'
-    redirect_to @resturants_path
+    redirect_to resturant_path(@resturant)
   end
 end
