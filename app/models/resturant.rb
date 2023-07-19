@@ -24,20 +24,6 @@ class Resturant < ApplicationRecord
       errors.add(:cover_image, 'must be present')
     end
   end
-
-  def self.search_all(params)
-    permitted_params = params.permit(:search, :category_id)
-    if permitted_params[:category_id].present?
-      Resturant.find_category(permitted_params[:category_id])
-    else
-      Resturant.all
-    end
-  end
-
-  def self.find_category(category_id)
-    @category = Category.find(category_id)
-    Category.search_category(@category.category_name).records
-  end
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
@@ -74,5 +60,22 @@ class Resturant < ApplicationRecord
         }
       }
     )
+  end
+
+  def self.search_all(params)
+    permitted_params = params.permit(:search, :category_id)
+    return Resturant.all unless permitted_params[:category_id].present?
+
+    @category = Resturant.find_category(permitted_params[:category_id])
+    if @category.empty?
+      @resturant = Resturant.all
+    else
+      @category
+    end
+  end
+
+  def self.find_category(category_id)
+    @category = Category.find(category_id)
+    Category.search_category(@category.category_name).records
   end
 end

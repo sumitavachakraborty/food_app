@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   post 'makeadmin', to: 'users#makeadmin'
   post 'markread', to: 'resturants#markread'
+  post 'count', to: 'resturants#count'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   get 'login_verify', to: 'sessions#verify'
@@ -21,10 +22,8 @@ Rails.application.routes.draw do
     post 'approve', to: 'reviews#approve'
     get '/gallery', to: 'resturants#gallery'
     resources :book_tables
-    collection do
-      get 'search'
-      get 'filter_locations'
-    end
+    get 'search', on: :collection
+    get 'filter_locations', on: :collection
     post 'image', to: 'resturants#attach_image'
   end
   post 'image', to: 'users#image'

@@ -15,7 +15,7 @@ class ResturantsController < ApplicationController
     else
       @resturant = Resturant.all
     end
-
+    check_empty
     @nearest_locations = find_nearest_distance(@resturant, current_user.latitude, current_user.longitude)
     handle_empty_nearest_locations
   end
@@ -57,9 +57,14 @@ class ResturantsController < ApplicationController
 
   def markread
     @tempuser = User.find(params[:id])
-    @tempuser.notifications.update_all(read: true)
     @notification = @tempuser.notifications.all
     @notification.delete_all
+    respond_to(&:js)
+  end
+
+  def count
+    @tempuser = User.find(params[:id])
+    @tempuser.notifications.update_all(read: true)
     respond_to(&:js)
   end
 

@@ -33,7 +33,7 @@ module ResturantsHelper
     return unless @resturant.empty?
 
     flash[:warning] = 'Resturant not found'
-    redirect_to resturants_path
+    @resturant = Resturant.all
   end
 
   def search_and_category_blank?
@@ -55,6 +55,5 @@ module ResturantsHelper
   def search_resturant_by_name
     @resturant_name = params[:resturant_name]
     @resturant = Resturant.search_res(@resturant_name.downcase).records
-    check_empty
   end
 end

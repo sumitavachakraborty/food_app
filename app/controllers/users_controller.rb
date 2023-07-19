@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
   before_action :require_user, only: %i[show edit update destroy]
   before_action :same_user, only: %i[edit update]
+  before_action :admin_user, only: %i[index]
 
   def index
     @user = User.order(created_at: :asc)

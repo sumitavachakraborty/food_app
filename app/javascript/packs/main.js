@@ -44,6 +44,23 @@ function markread(idata) {
   });
 }
 
+$(".notification_count").click(function () {
+  count($(this).attr("value"));
+});
+function count(idata) {
+  console.log(idata);
+  $.ajax({
+    url: "/count",
+    method: "POST",
+    data: {
+      id: idata,
+      authenticity_token: $('meta[name="csrf-token"]').attr("content"),
+    },
+    success: function (data) {},
+    error: function (data) {},
+  });
+}
+
 // order edit
 $(document).ready(function () {
   var initialquantity = $('.quantity input[type="number"]');
