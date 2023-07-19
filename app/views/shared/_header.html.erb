@@ -34,23 +34,25 @@
           </li>
         <% end %>
       </ul>
-      <div class="dropdown notification_count" value="<%= current_user.id %>">
-        <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fas fa-bell"></i>
-          <% if logged_in? && current_user.notifications.where(read: false).count>0 %>
-            <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="0"><%= current_user.notifications.where(read: false).count %></span>
-          <% end %>
-        </a>
-        <% if logged_in? && current_user.notifications.count>0 %>
-          <ul class="dropdown-menu" style="width:300px;height:auto;overflow:auto" id="notification-list" aria-labelledby="dropdownMenuButton1">
-            <button class="btn btn-warning mark-read" value="<%= current_user.id %>">Mark all as read</button>
-            <% current_user.notifications.each do |notification| %>
-              <li class="notification-message"><%=link_to notification.message, new_resturant_review_url(notification.resturant_id)%></li>
-              <div class="dropdown-divider"></div>
+      <% if logged_in? %>
+        <div class="dropdown notification_count" value="<%= current_user.id %>">
+          <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-bell"></i>
+            <% if logged_in? && current_user.notifications.where(read: false).count>0 %>
+              <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="0"><%= current_user.notifications.where(read: false).count %></span>
             <% end %>
-          </ul>
-        <% end %>
-      </div>
+          </a>
+          <% if current_user.notifications.count>0 %>
+            <ul class="dropdown-menu" style="width:300px;height:auto;overflow:auto" id="notification-list" aria-labelledby="dropdownMenuButton1">
+              <button class="btn btn-warning mark-read" value="<%= current_user.id %>">Mark all as read</button>
+              <% current_user.notifications.each do |notification| %>
+                <li class="notification-message"><%=link_to notification.message, new_resturant_review_url(notification.resturant_id)%></li>
+                <div class="dropdown-divider"></div>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
       <%=  form_with(url: resturants_path, method: :get) do |form| %>
         <div class="input-group">
           <%= form.text_field :resturant_name, value: params[:resturant_name], placeholder: "Resturant name", class: "form-control" %>
