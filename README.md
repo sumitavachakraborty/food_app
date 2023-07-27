@@ -3,16 +3,50 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+To run this app on your local machine, follow the subsequent steps:
 
-* Admin_email: sumitava@example.com
+### 1. Install the correct versions of Ruby, Rails, and other dependencies
 
-* Check the ruby version 
+This app was created with:
 
-* bundle install and yarn install
+* *ruby 3.2.1*
 
-* Make sure that elasticsearch is running else, seed file will not be setup properly
+* *rails 6.1.7.3*
 
-* Run rails db:setup
+* *postgresql 15.3-1*
 
-* Rest all added in seeds file
+* *node v16.20.1*
+
+* *yarn 1.22.19*
+
+* *elasticsearch 7.17.7*
+
+Make sure you have the correct versions of the above-mentioned software installed on your local system.
+
+### 3. Install the necessary dependencies
+
+```sh 
+bundle install && yarn install
+```
+
+### 4. Create, migrate, and seed the databases
+
+```sh 
+rails db:setup
+```
+
+### 5. Create the elasticsearch indices
+
+Make sure that elasticsearch is running at `localhost:9200`
+
+Open the rails console:
+
+rails c
+
+Then, inside rails console, run the following commands:
+
+Resturant.import force: true
+
+### 6. Finally, run the server
+
+rails s
