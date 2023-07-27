@@ -50,3 +50,6 @@ Resturant.import force: true
 ### 6. Finally, run the server
 
 rails s
+
+Then for direct login,
+admin_email : sumitava@example.com
