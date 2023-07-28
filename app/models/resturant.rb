@@ -55,6 +55,7 @@ class Resturant < ApplicationRecord
       query: {
         bool: {
           should: [
+            { match_phrase: { name: query } },
             { wildcard: { name: { value: "*#{query}*" } } }
           ]
         }
@@ -62,20 +63,20 @@ class Resturant < ApplicationRecord
     )
   end
 
-  def self.search_all(params)
-    permitted_params = params.permit(:search, :category_id)
-    return Resturant.all unless permitted_params[:category_id].present?
+  # def self.search_all(params)
+  #   permitted_params = params.permit(:search, :category_id)
+  #   return Resturant.all unless permitted_params[:category_id].present?
 
-    @category = Resturant.find_category(permitted_params[:category_id])
-    if @category.empty?
-      @resturant = Resturant.all
-    else
-      @category
-    end
-  end
+  #   @category = Resturant.find_category(permitted_params[:category_id])
+  #   if @category.empty?
+  #     @resturant = Resturant.all
+  #   else
+  #     @category
+  #   end
+  # end
 
-  def self.find_category(category_id)
-    @category = Category.find(category_id)
-    Category.search_category(@category.category_name).records
-  end
+  # def self.find_category(category_id)
+  #   @category = Category.find(category_id)
+  #   Category.search_category(@category.category_name).records
+  # end
 end

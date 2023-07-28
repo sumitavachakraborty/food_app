@@ -27,4 +27,7 @@ Rails.application.routes.draw do
     post 'image', to: 'resturants#attach_image'
   end
   post 'image', to: 'users#image'
+  match '*unmatched', to: 'application#not_found_method', via: :all, constraints: lambda { |req|
+    !req.path.match(%r{\A/rails/active_storage/})
+  }
 end

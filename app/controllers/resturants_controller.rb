@@ -12,12 +12,12 @@ class ResturantsController < ApplicationController
   def index
     if params[:resturant_name].present?
       search_resturant_by_name
+      check_empty
     else
       @resturant = Resturant.all
     end
-    check_empty
     @nearest_locations = find_nearest_distance(@resturant, current_user.latitude, current_user.longitude)
-    handle_empty_nearest_locations
+    check_user_empty_nearest_locations
   end
 
   def new
@@ -85,7 +85,7 @@ class ResturantsController < ApplicationController
   def search
     return redirect_to resturants_path if search_and_category_blank?
 
-    @resturant = Resturant.search_all(params)
+    @resturant = filter_restaurants_by_category
     set_reference_coordinates
     change_coordinates if params[:search].present?
     @nearest_locations = find_nearest_distance(@resturant, @reference_latitude, @reference_longitude)
@@ -107,6 +107,11 @@ class ResturantsController < ApplicationController
   end
 
   def set_resturant
-    @resturant = Resturant.find(params[:id])
+    @resturant = Resturant.find_by(id: params[:id])
+
+    return unless @resturant.nil?
+
+    flash[:danger] = "Resturant with ID #{params[:id]} not found."
+    redirect_to resturants_path
   end
 end

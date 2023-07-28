@@ -1,4 +1,5 @@
 <div class="container">
+  <%= render 'shared/flash' %>
   <% if logged_in? && current_user.admin? %>
     <table class="table">
       <thead>

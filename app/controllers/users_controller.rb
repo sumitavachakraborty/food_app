@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   include ApplicationHelper
   before_action :set_user, only: %i[show edit update destroy]
   before_action :require_user, only: %i[show edit update destroy]
-  before_action :same_user, only: %i[edit update]
+  before_action :same_user, only: %i[show edit update]
   before_action :admin_user, only: %i[index]
 
   def index
@@ -41,6 +41,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.city = 'kolkata'
     if @user.save
       get_coordinates(@user)
       session[:user_id] = @user.id
@@ -71,7 +72,7 @@ class UsersController < ApplicationController
   end
 
   def location
-    @user = User.find(params[:user_id])
+    @user = User.find_by(id: params[:user_id])
     return unless params[:city].present?
 
     @user.update(city: params[:city])
@@ -86,11 +87,15 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
+    return unless @user.nil?
+
+    flash[:danger] = "user with ID #{params[:id]} not found."
+    redirect_to users_path
   end
 
   def same_user
-    return unless current_user != @user && !current_user.admin?
+    return unless current_user != @user
 
     flash[:danger] = 'Your can edit or delete your review'
     redirect_to root_path
