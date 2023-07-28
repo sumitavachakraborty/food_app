@@ -262,6 +262,36 @@ foods = [
     food_name: 'fried rice',
     food_price: 250,
     food_image: 'food/food3.jpg'
+  },
+  {
+    resturant_id: Resturant.find_by(name: 'Grillss N Chillss').id,
+    food_name: 'chilli rice',
+    food_price: 210,
+    food_image: 'food/food2.jpg'
+  },
+  {
+    resturant_id: Resturant.find_by(name: 'dada hindu').id,
+    food_name: 'fried rice',
+    food_price: 250,
+    food_image: 'food/food3.jpg'
+  },
+  {
+    resturant_id: Resturant.find_by(name: 'dada hindu').id,
+    food_name: 'chicken roast',
+    food_price: 200,
+    food_image: 'food/food4.jpg'
+  },
+  {
+    resturant_id: Resturant.find_by(name: 'Havana Cafe').id,
+    food_name: 'goat roast',
+    food_price: 400,
+    food_image: 'food/food5.jpg'
+  },
+  {
+    resturant_id: Resturant.find_by(name: 'Havana Cafe').id,
+    food_name: 'chicken roast',
+    food_price: 300,
+    food_image: 'food/food4.jpg'
   }
 ]
 
