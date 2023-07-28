@@ -13,7 +13,7 @@
         </div>
         <div class="form-group mb-3">
           <%= f.label :head_count, class: "col-2 col-form-label" %>
-          <%= f.number_field :head_count, min: 1, class: "col-4 col-form-control" %>
+          <%= f.number_field :head_count, min: 1,max: 20, class: "col-4 col-form-control" %>
         </div>
         <div class="d-flex justify-content-center">
           <%= f.submit class: "btn btn-outline-success btn-lg"%>

@@ -73,11 +73,15 @@ class UsersController < ApplicationController
 
   def location
     @user = User.find_by(id: params[:user_id])
-    return unless params[:city].present?
 
-    @user.update(city: params[:city])
-    get_coordinates(@user)
-    redirect_to @user
+    if Geocoder.search(params[:city]).first.present?
+      @user.update(city: params[:city])
+      get_coordinates(@user)
+      redirect_to @user
+    else
+      flash[:danger] = 'Enter correct location'
+      redirect_to @user
+    end
   end
 
   private

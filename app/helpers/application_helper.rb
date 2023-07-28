@@ -12,6 +12,7 @@ module ApplicationHelper
       user.save
     else
       flash[:notice] = 'enter city not found'
+      redirect_to user_path(user)
     end
   end
 
