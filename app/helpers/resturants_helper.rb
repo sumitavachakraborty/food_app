@@ -27,6 +27,7 @@ module ResturantsHelper
     else
       flash[:danger] = 'Search another location'
     end
+    redirect_to resturants_path
   end
 
   def check_empty
