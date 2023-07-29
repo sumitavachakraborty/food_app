@@ -89,7 +89,6 @@ class ResturantsController < ApplicationController
     set_reference_coordinates
     change_coordinates if params[:search].present?
     @nearest_locations = find_nearest_distance(@resturant, @reference_latitude, @reference_longitude)
-
     handle_empty_nearest_locations
 
     render 'index' unless params[:search].present?

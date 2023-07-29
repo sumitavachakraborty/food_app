@@ -5,7 +5,7 @@
     <h2 class="text-center my-4">
       <%= current_user.username%>'s Table Bookings
     </h2>
-    <% @resturant.book_tables.each do |table| %>
+    <% @book_tables.each do |table| %>
       <div class="row justify-content-center mb-3">
         <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem">
           <div class="card-body">
@@ -25,6 +25,9 @@
               <%= link_to @resturant.name, resturant_path(@resturant),class:"card-link" %>
             </a>
           </div>
+          <% if logged_in? && (current_user.admin?) %>
+            <%= link_to 'Delete', resturant_book_table_path(@resturant,table),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%>
+          <% end %>
         </div>
       </div>
     <% end %>

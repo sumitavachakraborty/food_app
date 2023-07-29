@@ -2,41 +2,54 @@
   <%= render 'shared/flash' %>
   <h2 class="text-center my-4"> <strong>Food Items</strong></h2>
   <%= link_to '[ Back to Resturants]', resturant_path(@resturant), class: "text-center text-info" %>
-  <div class="container d-flex" >
-    <div class="card container col-4" id="submit-cart" style="display:none">
-      <div class="card-header">
-        <strong>Cart items</strong>
+  <div class="cart-modal m-2">
+    <button class="btn btn-dark btn-lg" id="cart-btn" data-bs-toggle="modal" data-bs-target="#cartModal">
+      Cart <span class="badge bg-danger" id="cart-item-count">0</span>
+    </button>
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cartModalLabel">Cart items</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="cart-items" class="list-group list-group-flush"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="checkout">Order items</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
-      <div id="cart-items" class="list-group list-group-flush"> </div>
-      <div class="btn btn-success mb-2" id="checkout">order items </div>
     </div>
-    <div class="foodlist">
-      <% @food.each do |food| %>
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-8">
-              <div class="card shadow p-3 mb-2 bg-white rounded">
-                <div class="card-header fst-italic">Food name : <%= link_to food.food_name, resturant_food_path(@resturant,food)%></div>
-                <div class="resturant_cover">
-                  <%if(food.food_image.present?)%>
-                    <%= image_tag food.food_image, style: "height: auto; width: 50%"%>
-                  <%else%>
-                    <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
-                  <%end%>
-                </div>
-                <div class="card-body order-item">
-                  <p class="restid" style="display:none"><%= @resturant.id %></p>
-                  <strong>Food Price : Rs.</strong><span class="card-text text-center mb-1 mx-2" value="<%= food.food_price %>"><%= food.food_price %></span>
-                  <span class="foodname" style="display:none" value="<%= @resturant.id%>"><%= food.food_name %></span>
-                  <input type="number" class="order-quantity col-1" value="1" min="0" >
-                  <button class="submit-order btn btn-warning btn-sm" value="<%= food.id %>" type="button">Add to Cart <i class='fa-solid fa-cart-shopping'></i></button>
-                </div>
+  </div>
+  <div class="foodlist">
+    <% @food.each do |food| %>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-10">
+            <div class="card shadow p-2 mb-2 bg-white rounded">
+              <div class="card-header fst-italic">Food name : <%= link_to food.food_name, resturant_food_path(@resturant,food)%></div>
+              <div class="resturant_cover">
+                <% if food.food_image.present? %>
+                  <%= image_tag food.food_image, style: "height: auto; width: 50%" %>
+                <% else %>
+                  <%= image_tag "userimage.jpg", style: "height: 200px; width: 200px; border-radius: 15px" %>
+                <% end %>
+              </div>
+              <div class="card-body order-item">
+                <p class="restid" style="display:none"><%= @resturant.id %></p>
+                <strong>Food Price : Rs.</strong><span class="card-text text-center mb-1 mx-2" value="<%= food.food_price %>"><%= food.food_price %></span>
+                <span class="foodname" style="display:none" value="<%= @resturant.id %>"><%= food.food_name %></span>
+                <input type="number" class="order-quantity col-1" value="1" min="0">
+                <button class="submit-order btn btn-warning btn-sm" value="<%= food.id %>" type="button">Add to Cart <i class='fa-solid fa-cart-shopping'></i></button>
               </div>
             </div>
           </div>
         </div>
-      <% end%>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
 <%= javascript_pack_tag 'add_to_cart', 'data-turbolinks-track': 'reload' %>

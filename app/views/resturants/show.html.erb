@@ -44,7 +44,11 @@
             <%= link_to 'Order Online', resturant_orders_path(@resturant), class: "btn btn-outline-primary"%>
             <%= link_to 'Menu', resturant_foods_path(@resturant), class: "btn btn-outline-danger"%>
             <%= link_to 'Add Review', new_resturant_review_path(@resturant), class: "btn btn-outline-primary"%>
-            <%= link_to 'Book Table', new_resturant_book_table_path(@resturant), class: "btn btn-outline-success" %>
+            <% if @resturant.book_tables.find_by(user_id: current_user.id).present? %>
+              <%= link_to 'Your table bookings', resturant_book_tables_path(@resturant), class: "btn btn-outline-success" %>
+            <% else %>
+              <%= link_to 'Book a Table', new_resturant_book_table_path(@resturant), class: "btn btn-outline-success" %>
+            <% end %>
             <%= link_to 'Photos', resturant_gallery_path(@resturant), class: "btn btn-outline-success" %>
           </div>
         </div>

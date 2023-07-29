@@ -6,9 +6,7 @@ module ApplicationHelper
     get_session(user)
     results = Geocoder.search(user.city)
     if results.first.present?
-      coordinate = results.first.coordinates
-      user.latitude = coordinate[0]
-      user.longitude = coordinate[1]
+      user.latitude, user.longitude = results.first.coordinates
       user.save
     else
       flash[:notice] = 'enter city not found'

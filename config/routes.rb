@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+#rubocop:disable all
 Rails.application.routes.draw do
   resources :users, except: [:new] do
     post 'location', to: 'users#location'
@@ -27,7 +28,9 @@ Rails.application.routes.draw do
     post 'image', to: 'resturants#attach_image'
   end
   post 'image', to: 'users#image'
-  match '*unmatched', to: 'application#not_found_method', via: :all, constraints: lambda { |req|
-    !req.path.match(%r{\A/rails/active_storage/})
-  }
+  # match '*unmatched', to: 'application#not_found_method', via: :all, constraints: lambda { |req|
+  #   !req.path.match(%r{\A/rails/active_storage/})
+  # }
 end
+
+#rubocop:enable all

@@ -13,15 +13,17 @@ class UsersController < ApplicationController
   end
 
   def show
+    @resturant = Resturant.all
+    @book_table = BookTable.where(user_id: current_user.id).page(params[:page])
     return unless @user.orders.present?
 
-    @orders = @user.orders.order(created_at: :asc).page(params[:page]).per(5)
+    @orders = @user.orders.order(created_at: :asc).page(params[:page])
   end
 
   def new
     if logged_in?
       flash[:info] = 'You are already logged in.'
-      redirect_to restaurants_path
+      redirect_to resturants_path
     else
       @user = User.new
     end
@@ -77,11 +79,10 @@ class UsersController < ApplicationController
     if Geocoder.search(params[:city]).first.present?
       @user.update(city: params[:city])
       get_coordinates(@user)
-      redirect_to @user
     else
       flash[:danger] = 'Enter correct location'
-      redirect_to @user
     end
+    redirect_to @user
   end
 
   private

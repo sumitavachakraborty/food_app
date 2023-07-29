@@ -1,11 +1,9 @@
 <%= render 'shared/flash' %>
 <h1 class="text-center mt-4">Welcome <%= @user.username %></h1>
 <div class="container col-3">
-  <%= form_with(url: user_location_path(@user), method: :post) do |f| %>
-    <div class="input-group">
-      <%= f.text_field :city, class: "col-3 form-control border border-dark" %>
-      <%= f.submit "Your current city", class: "btn btn-outline-danger" %>
-    </div>
+  <%= form_with(url: user_location_path(@user), method: :post, class: "input-group") do |f| %>
+    <%= f.text_field :city, class: "form-control border border-dark", placeholder: "Enter your city", required: true %>
+    <button type="submit" class="btn btn-outline-danger">Your current city</button>
   <% end %>
 </div>
 <div class="col-3 container text-center my-2 shadow p-3 mb-5 bg-body rounded">
@@ -38,35 +36,58 @@
     <%= link_to 'Delete Profile', user_path(@user), class: "btn btn-outline-danger" ,method: :delete ,data: {turbo_confirm: "Are you sure?" }%>
   <% end %>
 </div>
-<% if @user.orders.present? %>
-  <h2 class="text-center my-3">List of all your previous orders</h2>
-  <div class="d-flex justify-content-center my-3">
-    <div>
-      <% @orders.each do |order| %>
-        <div class="mb-3">
-          <div class="card bg-light" style="width: 18rem;">
-            <div class="card-header">
-              Ordered at: <%= time_ago_in_words(order.created_at) %> ago
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <strong>Food items :</strong>
-                <% order.foodname_array.each do |foodname| %>
-                  <%= foodname %>
-                <% end %>
-              </li>
-              <li class="list-group-item">
-                <strong>Total Price :</strong> <%= order.total %>
-              </li>
-              <li class="list-group-item">
-                <strong>Delivery Address :</strong> <%= order.delivery_address %>
-              </li>
-            </ul>
+<div class="container d-flex justify-content-center">
+  <div class="container">
+    <div class="d-flex justify-content-center my-3">
+      <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#orderList" aria-expanded="false" aria-controls="orderList">
+        View All Orders <i class="bi bi-caret-down-fill"></i>
+      </button>
+    </div>
+    <div class="collapse" id="orderList">
+      <% if @user.orders.present? %>
+        <h2 class="text-center my-3">List of all your previous orders</h2>
+        <div class="d-flex justify-content-center my-3">
+          <div>
+            <% @orders.each do |order| %>
+              <div class="mb-3">
+                <div class="card bg-light" style="width: 18rem;">
+                  <div class="card-header">
+                    Ordered at: <%= time_ago_in_words(order.created_at) %> ago
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <strong>Food items :</strong>
+                      <% order.foodname_array.each do |foodname| %>
+                        <%= foodname %>
+                      <% end %>
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Total Price :</strong> <%= order.total %>
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Delivery Address :</strong> <%= order.delivery_address %>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            <% end %>
+            <%= paginate @orders %>
           </div>
         </div>
+      <% else %>
+        <h3 class="text-dark text-center my-3"> No orders present</h3>
       <% end %>
-      <%= paginate @orders %>
     </div>
   </div>
-<% end %>
+  <div class="container">
+    <div class="text-center my-3">
+      <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#bookingCollapse" aria-expanded="false" aria-controls="bookingCollapse">
+        Show All Bookings<i class="bi bi-caret-down-fill"></i>
+      </button>
+      <div class="collapse mt-2" id="bookingCollapse">
+        <%= render 'book_tables/show' %>
+      </div>
+    </div>
+  </div>
+</div>
 <%= javascript_pack_tag 'change_profile_photo', 'data-turbolinks-track': 'reload' %>

@@ -29,7 +29,6 @@ $(".mark-read").click(function () {
 });
 
 function markread(idata) {
-  console.log(idata);
   $.ajax({
     url: "/markread",
     method: "POST",
@@ -48,7 +47,6 @@ $(".notification_count").click(function () {
   count($(this).attr("value"));
 });
 function count(idata) {
-  console.log(idata);
   $.ajax({
     url: "/count",
     method: "POST",
@@ -97,9 +95,7 @@ $(".approve").click(function () {
 });
 
 function approvereview(review_id) {
-  console.log(review_id);
   var id = $("#restvalue").attr("value");
-  console.log(id);
   $.ajax({
     url: "/resturants/" + id + "/approve",
     method: "POST",

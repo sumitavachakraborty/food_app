@@ -26,8 +26,8 @@ module ResturantsHelper
       @reference_longitude = @currentlocation.first.longitude
     else
       flash[:danger] = 'Search another location'
+      redirect_to resturants_path
     end
-    redirect_to resturants_path
   end
 
   def check_empty
@@ -49,7 +49,7 @@ module ResturantsHelper
   def handle_empty_nearest_locations
     return unless @nearest_locations.empty?
 
-    flash[:danger] = 'Location very far away, more than 10 k.m'
+    flash[:danger] = 'Location very far away, more than 20 k.m'
     redirect_to resturants_path
   end
 
