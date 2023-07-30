@@ -20,15 +20,14 @@
             <td><%= user.email %></td>
             <td id="adminbutton<%= user.id%>">
               <% if user.admin? %>
-                <span class="btn btn-danger">ADMIN</span>
+                <span class="text-danger">ADMIN</span>
               <% else %>
-                <span class="btn btn-warning">Consumer</span>
+                <span class="text-warning">Consumer</span>
               <% end %>
             </td>
             <td id="makeadminbutton<%= user.id%>">
               <% if user == current_user %>
                 <%= link_to 'Edit Profile', edit_user_path(user), class: "btn btn-outline-success"%>
-                <%= link_to 'Delete Profile', user_path(current_user), class: "btn btn-outline-danger" , data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }%>
               <% end %>
               <% if !user.admin?%>
                 <button class="btn btn-outline-danger make_admin" value="<%= user.id %>" >Make user Admin</button>

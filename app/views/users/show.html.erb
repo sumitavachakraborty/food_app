@@ -25,15 +25,14 @@
   </div>
   <span class="mb-3" style="display:block">User Type :
     <% if logged_in? && current_user.admin? %>
-      <span class="btn btn-danger">ADMIN</span>
+      <span class="text-danger">ADMIN</span>
     <% else %>
-      <span class="btn btn-warning">Consumer</span>
+      <span class="text-warning">Consumer</span>
     <% end %>
   </span>
   <p> <strong>  City -  <%= @user.city.upcase %>  </strong></p>
   <% if logged_in? && @user == current_user %>
     <%= link_to 'Edit Profile', edit_user_path(@user), class: "btn btn-outline-success"%>
-    <%= link_to 'Delete Profile', user_path(@user), class: "btn btn-outline-danger" ,method: :delete ,data: {turbo_confirm: "Are you sure?" }%>
   <% end %>
 </div>
 <div class="container d-flex justify-content-center">
