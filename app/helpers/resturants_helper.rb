@@ -33,7 +33,7 @@ module ResturantsHelper
   def check_empty
     return unless @resturant.empty?
 
-    flash[:danger] = 'Resturant not found'
+    flash.now[:danger] = 'Resturant not found'
     @resturant = Resturant.all
   end
 
