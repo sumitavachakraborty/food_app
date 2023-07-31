@@ -10,7 +10,7 @@ module ResturantsHelper
   def find_nearest_distance(resturant, reference_latitude, reference_longitude)
     @nearest_locations = resturant.map do |res|
       distance = distance_between(res.latitude, res.longitude, reference_latitude, reference_longitude)
-      return [] if distance > 500
+      return [] if distance > 300
 
       [res, distance]
     end
@@ -49,7 +49,7 @@ module ResturantsHelper
   def handle_empty_nearest_locations
     return unless @nearest_locations.empty?
 
-    flash[:danger] = 'Location very far away, more than 20 k.m'
+    flash[:danger] = 'Location very far away, more than 100 k.m'
     redirect_to resturants_path
   end
 

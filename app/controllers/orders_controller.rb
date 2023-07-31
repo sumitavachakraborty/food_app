@@ -2,7 +2,7 @@
 
 # Orders Controller
 class OrdersController < ApplicationController
-  before_action :require_user, except: %i[index]
+  before_action :require_user
   before_action :find_resturant
   before_action :find_order, only: %i[edit update destroy]
 

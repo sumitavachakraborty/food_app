@@ -15,20 +15,4 @@
   text-align: center;
   padding: 10px;
 }
-/* Add this CSS in your stylesheets or in a style block */
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* You can adjust the opacity here */
-}
 
-.content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white; /* Adjust the text color */
-}

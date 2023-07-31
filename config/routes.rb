@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-
-#rubocop:disable all
+# rubocop:disable all
 Rails.application.routes.draw do
-  resources :users, except: [:new] do
+  resources :users, except: %i[new create] do
     post 'location', to: 'users#location'
   end
   resources :categories
   root 'pages#home'
   get 'signup', to: 'users#new'
+  post 'signup', to: 'users#create'
   post 'makeadmin', to: 'users#makeadmin'
   post 'markread', to: 'resturants#markread'
   post 'count', to: 'resturants#count'
@@ -33,4 +33,4 @@ Rails.application.routes.draw do
   # }
 end
 
-#rubocop:enable all
+# rubocop:enable all

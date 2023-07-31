@@ -3,7 +3,7 @@
 <div class="container col-3">
   <%= form_with(url: user_location_path(@user), method: :post, class: "input-group") do |f| %>
     <%= f.text_field :city, class: "form-control border border-dark", placeholder: "Enter your city", required: true %>
-    <button type="submit" class="btn btn-outline-danger">Your current city</button>
+    <button type="submit" class="btn btn-outline-danger">Change city</button>
   <% end %>
 </div>
 <div class="col-3 container text-center my-2 shadow p-3 mb-5 bg-body rounded">
