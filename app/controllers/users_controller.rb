@@ -43,12 +43,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.city = 'kolkata'
     if @user.save
       get_coordinates(@user)
       session[:user_id] = @user.id
-      flash[:info] = "Welcome to the Zomato, #{@user.username}! You signed in successfully."
-      redirect_to resturants_path
+      flash[:info] = "Welcome to the ZomZom, #{@user.username}! You signed in successfully."
+      redirect_to user_path(@user)
     else
       render :new
     end

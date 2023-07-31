@@ -8,7 +8,7 @@ class User < ApplicationRecord
                        length: { minimum: 3, maximum: 25 }
   validates :email, presence: true, uniqueness: { case_sensitive: false }, length: { maximum: 110 },
                     format: { with: VALID_EMAIL_REGEX }
-  validates :city, presence: true
+  # validates :city, presence: true
   has_secure_password
 
   has_one_attached :images
@@ -16,4 +16,16 @@ class User < ApplicationRecord
   has_many :reviews
   has_many :notifications, dependent: :destroy
   has_many :book_tables
+  validate :city_presence
+
+  def city_presence
+    if city.present?
+      location = Geocoder.search(city)
+      return if location.first.present?
+
+      errors.add(:city, 'entered is not valid')
+    else
+      errors.add(:city, 'must be present')
+    end
+  end
 end
