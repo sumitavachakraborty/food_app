@@ -17,7 +17,7 @@
   <% @nearest_locations.each do |resturant,distance| %>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-8 mt-4">
+        <div class="container col-md-6 col-lg-7 ">
           <div class="card text-center shadow p-3 mb-5 bg-white rounded">
             <div class="card-header fst-italic d-flex justify-content-around"> <span>  Resturant name : <%= link_to resturant.name, resturant_path(resturant)%> </span>
               <% if resturant.category_id.present? %>
@@ -26,9 +26,9 @@
             </div>
             <div class="resturant_cover">
               <%if(resturant.cover_image.first.present?)%>
-                <%= link_to image_tag(resturant.cover_image.first,style: "height: 200px; width: 50%"),resturant_path(resturant)%>
+                <%= link_to image_tag(resturant.cover_image.first,style: "width: 400px", class: "img-fluid"),resturant_path(resturant)%>
               <%else%>
-                <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
+                <%= image_tag "userimage.jpg", style: "width: 400px", class: "img-fluid"%>
               <%end%>
             </div>
             <div class="card-body">

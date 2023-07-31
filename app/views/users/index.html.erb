@@ -1,42 +1,43 @@
 <div class="container">
   <%= render 'shared/flash' %>
   <% if logged_in? && current_user.admin? %>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">UID</th>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Type of User</th>
-          <th scope="col">Edit profile</th>
-        </tr>
-      </thead>
-      <% i=0 %>
-      <% @user.each do |user| %>
-        <tbody>
-          <tr id="<%= user.id %>">
-            <th scope="row"><%= i=i+1 %></th>
-            <td><%= user.username %></td>
-            <td><%= user.email %></td>
-            <td id="adminbutton<%= user.id%>">
-              <% if user.admin? %>
-                <span class="text-danger">ADMIN</span>
-              <% else %>
-                <span class="text-warning">Consumer</span>
-              <% end %>
-            </td>
-            <td id="makeadminbutton<%= user.id%>">
-              <% if user == current_user %>
-                <%= link_to 'Edit Profile', edit_user_path(user), class: "btn btn-outline-success"%>
-              <% end %>
-              <% if !user.admin?%>
-                <button class="btn btn-outline-danger make_admin" value="<%= user.id %>" >Make user Admin</button>
-              <% end %>
-            </td>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">UID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Type of User</th>
+            <th scope="col">Edit profile</th>
           </tr>
-        </tbody>
-      <% end %>
-    </table>
+        </thead>
+        <% i = 0 %>
+        <% @user.each do |user| %>
+          <tbody>
+            <tr id="<%= user.id %>">
+              <th scope="row"><%= i = i + 1 %></th>
+              <td><%= user.username %></td>
+              <td><%= user.email %></td>
+              <td id="adminbutton<%= user.id %>">
+                <% if user.admin? %>
+                  <span class="text-danger">ADMIN</span>
+                <% else %>
+                  <span class="text-warning">Consumer</span>
+                <% end %>
+              </td>
+              <td id="makeadminbutton<%= user.id %>">
+                <% if user == current_user %>
+                  <%= link_to 'Edit Profile', edit_user_path(user), class: "btn btn-outline-success btn-sm btn-sm-md" %>
+                <% end %>
+                <% if !user.admin? %>
+                  <button class="btn btn-outline-danger btn-sm btn-sm-md" value="<%= user.id %>">Make user Admin</button>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
   <% end %>
 </div>
-<script></script>
