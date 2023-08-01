@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
   add_flash_types :success, :warning, :danger, :info
   helper_method :current_user, :logged_in?
 
-  # def not_found_method
-  #   render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
-  # end
+  def not_found_method
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
+  end
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
