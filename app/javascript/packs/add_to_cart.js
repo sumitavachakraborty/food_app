@@ -22,6 +22,8 @@ function updateCartItemCount() {
   var cartItemCount = 0;
   if (carts[restid]) {
     cartItemCount = Object.keys(carts[restid]).length;
+    console.log(cartItemCount);
+    console.log(carts[restid]);
   }
   $("#cart-item-count").text(cartItemCount);
 }
@@ -34,9 +36,11 @@ $(".submit-order").click(function () {
   var price = orderItem.find(".card-text").text();
   var name = orderItem.find(".foodname").text();
   restid = orderItem.find(".restid").text();
-
+  console.log(quantity)
+  console.log(restid)
+  console.log(id)
   if (!carts[restid]) {
-    carts[restid] = {};
+    carts[restid]= {};
   }
 
   var item = {
@@ -44,9 +48,12 @@ $(".submit-order").click(function () {
     p: price,
     n: name,
   };
+  console.log(item);
   carts[restid][id] = item;
+  console.log(carts[restid][id])
+  updateCartItemCount();
   updateCart();
-  increaseCartItemCount();
+  
 });
 
 $(document).on("click", ".remove-item", function () {

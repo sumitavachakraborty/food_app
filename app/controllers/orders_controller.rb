@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
   before_action :require_user
   before_action :find_resturant
   before_action :find_order, only: %i[edit update destroy]
+  include OrdersHelper
 
   def index
     @food = @resturant.foods
@@ -45,32 +46,6 @@ class OrdersController < ApplicationController
   end
 
   private
-
-  def add_to_cart(cart)
-    @total_price = 0
-    @quantity_array = []
-    @food_name_array = []
-    @price_array = []
-    @total_quantity = 0
-    cart.each do |_key, value|
-      quantity = value['q'].to_i
-      prices = value['p'].to_f
-      food_names = value['n']
-      @food_name_array << food_names
-      @quantity_array << quantity
-      @price_array << prices
-      @total_price += (quantity * prices)
-      @total_quantity += quantity
-    end
-  end
-
-  def create_order
-    Resturant.find(params[:resturant_id]).orders.create(quantity: @total_quantity, total: @total_price,
-                                                        user_id: current_user.id,
-                                                        foodname_array: @food_name_array,
-                                                        foodquantity_array: @quantity_array,
-                                                        food_price_array: @price_array)
-  end
 
   def params_order
     params.require(:order).permit(:quantity, :total, :user_id, :delivery_address, foodname_array: [],
