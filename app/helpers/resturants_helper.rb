@@ -61,7 +61,7 @@ module ResturantsHelper
   def filter_restaurants_by_category
     return Resturant.all unless params[:category_id].present?
 
-    Resturant.where(category_id: params[:category_id])
+    Resturant.find_category(params[:category_id])
   end
 
   def check_user_empty_nearest_locations

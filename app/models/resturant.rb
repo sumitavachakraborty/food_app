@@ -15,6 +15,8 @@ class Resturant < ApplicationRecord
   validates :longitude, presence: true
   validate :validate_image_format
 
+  scope :find_category, ->(params_id) { where(category_id: params_id) }
+
   def validate_image_format
     if cover_image.attached?
       cover_image.each do |image|
@@ -26,8 +28,6 @@ class Resturant < ApplicationRecord
   end
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
-
-  include ResturantsHelper
 
   def self.index_data
     __elasticsearch__.create_index! force: true

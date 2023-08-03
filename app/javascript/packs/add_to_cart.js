@@ -44,9 +44,7 @@ $(".submit-order").click(function () {
     p: price,
     n: name,
   };
-  console.log(item);
   carts[restid][id] = item;
-  console.log(carts[restid][id])
   updateCartItemCount();
   updateCart();
   
