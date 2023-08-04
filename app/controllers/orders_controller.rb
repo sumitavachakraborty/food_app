@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
     cart_items = params[:cart_items]
     add_to_cart(cart_items)
     @order = create_order
-    @order.delivery_address = current_user.city
+    @order.delivery_address = current_user.address
     if @order.save!
       flash[:success] = 'Food item created successfully'
       redirect_to edit_resturant_order_path(@resturant, @order)

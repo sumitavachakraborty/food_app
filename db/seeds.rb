@@ -19,7 +19,8 @@ users_data = [
     password: 'password123',
     city: 'sodepore',
     latitude: '22.703727',
-    longitude: '88.3853786'
+    longitude: '88.3853786',
+    address: 'Rishra - Khardah ferry service, SK Path, Khardaha, Barrackpore, North 24 Parganas District, West Bengal, 712248, India'
   },
   {
     username: 'sumitava1111',
@@ -28,6 +29,7 @@ users_data = [
     city: 'sodepore',
     latitude: '22.703727',
     longitude: '88.3853786',
+    address: 'Jol Didi House (Sodepore), Old Calcutta Road, Patulia Kalitala, Sodepur, Barrackpore, North 24 Parganas District, West Bengal, 700110, India',
     admin: true
   }
 ]

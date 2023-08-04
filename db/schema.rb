@@ -1,4 +1,3 @@
-# rubocop:disable all
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_05_094537) do
+ActiveRecord::Schema.define(version: 2023_08_04_110450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +136,7 @@ ActiveRecord::Schema.define(version: 2023_07_05_094537) do
     t.string "city"
     t.string "latitude"
     t.string "longitude"
+    t.text "address"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -150,5 +150,3 @@ ActiveRecord::Schema.define(version: 2023_07_05_094537) do
   add_foreign_key "reviews", "resturants"
   add_foreign_key "reviews", "users"
 end
-
-# rubocop:enable all

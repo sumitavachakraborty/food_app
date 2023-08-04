@@ -47,7 +47,7 @@ $(".submit-order").click(function () {
   carts[restid][id] = item;
   updateCartItemCount();
   updateCart();
-  
+  alert('added to cart successfully');
 });
 
 $(document).on("click", ".remove-item", function () {
@@ -107,8 +107,7 @@ $("#checkout").click(function () {
       authenticity_token: $('meta[name="csrf-token"]').attr("content"),
     },
     success: function (response) {
-      alert("Added to cart successfully!");
-      updateCartItemCount();
+      alert("Submitted order successfully!");
       delete carts[restid];
       localStorage.setItem("carts", JSON.stringify(carts));
     },

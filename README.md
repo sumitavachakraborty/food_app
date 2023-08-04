@@ -53,3 +53,8 @@ rails s
 
 Then for direct login,
 admin_email : sumitava@example.com
+
+### 6. To add latitude and longitude in form
+https://www.google.com/maps/preview/@#{latitude},#{longitude},10z
+
+take from here
