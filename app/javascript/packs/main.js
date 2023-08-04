@@ -20,7 +20,7 @@ function makeadmin(idata) {
 $(document).ready(function () {
   setTimeout(function () {
     $("#flash").fadeOut();
-  }, 2000);
+  }, 5000);
 });
 
 //mark read notifications

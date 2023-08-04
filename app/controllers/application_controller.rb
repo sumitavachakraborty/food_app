@@ -30,4 +30,11 @@ class ApplicationController < ActionController::Base
     flash[:danger] = 'Only admins can access this page'
     redirect_to resturants_path
   end
+
+  def check_location
+    return if current_user.address.present?
+
+    flash[:danger] = 'Please enter your address'
+    redirect_to user_path(current_user)
+  end
 end

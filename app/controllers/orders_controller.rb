@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
   before_action :require_user
   before_action :find_resturant
   before_action :find_order, only: %i[edit update destroy]
+  before_action :check_location
   include OrdersHelper
 
   def index

@@ -32,7 +32,9 @@
       <span class="text-warning">Consumer</span>
     <% end %>
   </span>
-  <p class="text-center"> <strong>  Address - </strong><%= @user.address %></p>
+  <% if @user.address.present? %>
+    <p class="text-center"> <strong>  Address - </strong><%= @user.address %></p>
+  <% end %>
   <% if logged_in? && @user == current_user %>
     <%= link_to 'Edit Profile', edit_user_path(@user), class: "btn btn-outline-success"%>
   <% end %>
