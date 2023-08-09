@@ -5,6 +5,7 @@ class ResturantsController < ApplicationController
   before_action :set_resturant, only: %i[show edit update destroy]
   before_action :require_user
   before_action :admin_user, only: %i[edit new update destroy]
+  before_action :check_location
   include ResturantsHelper
 
   def show; end
@@ -85,7 +86,8 @@ class ResturantsController < ApplicationController
   def search
     return redirect_to resturants_path if search_and_category_blank?
 
-    @resturant = filter_restaurants_by_category
+    @resturant = Resturant.all
+    filter_restaurants_by_category
     set_reference_coordinates
     change_coordinates if params[:search].present?
     @nearest_locations = find_nearest_distance(@resturant, @reference_latitude, @reference_longitude)

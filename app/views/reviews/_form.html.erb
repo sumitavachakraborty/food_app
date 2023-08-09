@@ -5,7 +5,7 @@
       <div class="rating-form form-group">
         <%= f.hidden_field :rating, class: "rating", in: 1..5 %>
         <% (1..5).each do |value| %>
-          <span class="bi bi-star" data-value="<%= value %>"></span>
+          <span class="bi bi-star rating-star" data-value="<%= value %>"></span>
         <% end %>
       </div>
       <div class = "form-group">

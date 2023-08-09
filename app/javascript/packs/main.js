@@ -4,6 +4,7 @@ $(".make_admin").click(function () {
 });
 
 function makeadmin(idata) {
+  console.log(idata);
   $.ajax({
     url: "/makeadmin",
     method: "POST",

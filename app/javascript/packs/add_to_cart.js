@@ -1,12 +1,19 @@
 var carts = {};
 var restid = 0;
+var itemAddedToCart = false;
+
 $(document).ready(function () {
+  initializeCarts();
+});
+
+function initializeCarts() {
   if (localStorage.getItem("carts")) {
     carts = JSON.parse(localStorage.getItem("carts"));
     restid = getRestIdFromUrl();
     updateCartItemCount();
+    updateCart();
   }
-});
+}
 
 function getRestIdFromUrl() {
   var urlParts = window.location.pathname.split("/");
@@ -14,40 +21,28 @@ function getRestIdFromUrl() {
   return urlParts[restIdIndex];
 }
 
-$("#cart-btn").click(function () {
-  updateCart();
-});
-
-function updateCartItemCount() {
-  var cartItemCount = 0;
-  if (carts[restid]) {
-    cartItemCount = Object.keys(carts[restid]).length;
-  }
-  $("#cart-item-count").text(cartItemCount);
-}
-
 $(".submit-order").click(function () {
-  $("#submit-cart").removeAttr("style");
   var orderItem = $(this).closest(".order-item");
   var quantity = orderItem.find(".order-quantity").val();
   var id = orderItem.find(".submit-order").val();
-  var price = orderItem.find(".card-text").text();
+  var price = parseFloat(orderItem.find(".card-text").text());
   var name = orderItem.find(".foodname").text();
-  restid = orderItem.find(".restid").text();
 
   if (!carts[restid]) {
-    carts[restid]= {};
+    carts[restid] = {};
   }
 
   var item = {
-    q: quantity,
+    q: parseInt(quantity),
     p: price,
     n: name,
   };
   carts[restid][id] = item;
+
+  itemAddedToCart = true;
   updateCartItemCount();
   updateCart();
-  alert('added to cart successfully');
+  alert("Added to cart successfully");
 });
 
 $(document).on("click", ".remove-item", function () {
@@ -55,6 +50,11 @@ $(document).on("click", ".remove-item", function () {
   delete carts[restid][itemKey];
   updateCart();
 });
+
+function updateCartItemCount() {
+  var cartItemCount = carts[restid] ? Object.keys(carts[restid]).length : 0;
+  $("#cart-item-count").text(cartItemCount);
+}
 
 function updateCart() {
   localStorage.setItem("carts", JSON.stringify(carts));
@@ -78,7 +78,7 @@ function updateCart() {
         item.q +
         "</li>" +
         '<li class="list-group-item"> <strong> Price: Rs.' +
-        itemPrice +
+        itemPrice.toFixed(2) +
         "</strong></li>" +
         '<button class="remove-item btn btn-danger btn-sm" data-item-key="' +
         itemKey +
@@ -90,14 +90,13 @@ function updateCart() {
   }
 
   $("#total-quantity").text(totalQuantity);
-  $("#total-price").text("Rs" + totalPrice.toFixed(2));
+  $("#total-price").text("Rs " + totalPrice.toFixed(2));
 
   updateCartItemCount();
 }
 
 $("#checkout").click(function () {
   localStorage.setItem("carts", JSON.stringify(carts));
-  sessionStorage.removeItem("cart");
 
   $.ajax({
     url: "/resturants/" + restid + "/orders",
@@ -107,9 +106,10 @@ $("#checkout").click(function () {
       authenticity_token: $('meta[name="csrf-token"]').attr("content"),
     },
     success: function (response) {
-      alert("Submitted order successfully!");
       delete carts[restid];
-      localStorage.setItem("carts", JSON.stringify(carts));
+      updateCartItemCount();
+      updateCart();
+      alert("Submitted order successfully!");
     },
     error: function (xhr, status, error) {
       alert("Please add items to the cart");

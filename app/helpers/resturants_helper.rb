@@ -8,11 +8,11 @@ module ResturantsHelper
   end
 
   def find_nearest_distance(resturant, reference_latitude, reference_longitude)
-    @nearest_locations = resturant.map do |res|
+    @nearest_locations = []
+    resturant.each do |res|
       distance = distance_between(res.latitude, res.longitude, reference_latitude, reference_longitude)
-      return [] if distance > 300
 
-      [res, distance]
+      @nearest_locations << [res, distance] if distance < 20
     end
     @nearest_locations.sort_by! { |_res, distance| distance }
     @nearest_locations = Kaminari.paginate_array(@nearest_locations).page(params[:page]).per(5)
@@ -49,7 +49,7 @@ module ResturantsHelper
   def handle_empty_nearest_locations
     return unless @nearest_locations.empty?
 
-    flash[:danger] = 'Location very far away, more than 100 k.m'
+    flash[:danger] = 'No such resturants found in this location'
     redirect_to resturants_path
   end
 
@@ -59,9 +59,11 @@ module ResturantsHelper
   end
 
   def filter_restaurants_by_category
-    return Resturant.all unless params[:category_id].present?
+    @resturant = Resturant.find_category(params[:category_id]) if params[:category_id].present?
+    return unless @resturant.empty?
 
-    Resturant.find_category(params[:category_id])
+    flash.now[:danger] = 'NO resturants found in this category'
+    @resturant = Resturant.all
   end
 
   def check_user_empty_nearest_locations

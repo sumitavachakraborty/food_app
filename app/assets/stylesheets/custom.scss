@@ -10,3 +10,13 @@
   letter-spacing: -1px;
   font-weight: bold;
 }
+
+.rating-star {
+  font-size: 24px;
+  cursor: pointer;
+  color: grey;
+}
+
+.rating-star:hover {
+  color: gold;
+}

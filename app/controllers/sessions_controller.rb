@@ -32,7 +32,6 @@ class SessionsController < ApplicationController
     if find_user_auth(user).empty?
       redirect_to login_path, danger: 'User already signed up, login again'
     else
-      get_coordinates(user)
       user.save!
       redirect_to user
     end

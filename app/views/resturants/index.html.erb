@@ -5,7 +5,7 @@
       <%= render 'search' %>
     </div>
   </div>
-  <h2 class="text-center mt-4"> All Resturants </h2>
+  <h2 class="text-center mt-4"> All Resturants within your 20 k.m </h2>
   <% if logged_in? && current_user.admin? %>
     <div class="btn-group" role="group" aria-label="Basic outlined example">
       <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-outline-success my-4"%>

@@ -45,9 +45,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       get_coordinates(@user)
-      session[:user_id] = @user.id
-      flash[:info] = "Welcome to the ZomZom, #{@user.username}! You signed in successfully."
-      redirect_to user_path(@user)
+      redirect_to login_path, success: "#{@user.username}! You signed in successfully, Please log in to continue"
     else
       render :new
     end
@@ -81,7 +79,7 @@ class UsersController < ApplicationController
     else
       flash[:danger] = 'Enter correct location'
     end
-    redirect_to @user
+    redirect_to @user, success: 'Your city was successfully updated'
   end
 
   private

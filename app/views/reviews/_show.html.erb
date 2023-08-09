@@ -30,8 +30,6 @@
       <div >
         <%if(review.review_images.first.present?)%>
           <%= link_to image_tag(review.review_images.first,style: "height: 80px; width: 150px"),resturant_path(@resturant)%>
-        <%else%>
-          <%= image_tag "userimage.jpg",  style: "height: 80px; width: 100px; border-radius: 15px"%>
         <%end%>
       </div>
     </div>

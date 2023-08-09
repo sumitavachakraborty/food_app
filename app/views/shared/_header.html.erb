@@ -52,12 +52,12 @@
             </ul>
           <% end %>
         </div>
-      <% end %>
-      <%=  form_with(url: resturants_path, method: :get) do |form| %>
-        <div class="input-group">
-          <%= form.text_field :resturant_name, value: params[:resturant_name], placeholder: "Resturant name", class: "form-control" %>
-          <%= form.submit "Search", class: "btn btn-outline-warning" %>
-        </div>
+        <%=  form_with(url: resturants_path, method: :get) do |form| %>
+          <div class="input-group">
+            <%= form.text_field :resturant_name, value: params[:resturant_name], placeholder: "Resturant name", class: "form-control" %>
+            <%= form.submit "Search", class: "btn btn-outline-warning" %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
