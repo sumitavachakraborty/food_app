@@ -23,11 +23,18 @@ This app was created with:
 
 Make sure you have the correct versions of the above-mentioned software installed on your local system.
 
-### 3. Install the necessary dependencies
+## 3. Install the necessary dependencies
+ 
+check the ruby version
+open the zoma project directory and change the ruby version
+from .ruby-version and gem to yout local ruby version
 
-```sh 
-bundle install && yarn install
+then -
+```sh
+bundle install
 ```
+(Do not install any webpacker and dependencies and yarn
+all the node modules are added in github) 
 
 ### 4. Create, migrate, and seed the databases
 
