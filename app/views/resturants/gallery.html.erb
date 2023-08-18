@@ -5,7 +5,7 @@
     <div class="col-4 my-3">
       <%= form_with(url: resturant_image_path, method: :post) do |f| %>
         <div class="input-group">
-          <%= f.file_field :cover_image, multiple: true, class: "col-2 form-control" %>
+          <%= f.file_field :cover_image, multiple: true, class: "col-2 form-control", accept: "image/*" %>
           <%= f.submit "Add Image", class: "btn btn-outline-warning" %>
         </div>
       <% end %>

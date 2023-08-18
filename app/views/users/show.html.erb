@@ -4,7 +4,8 @@
   <%= form_with(url: user_location_path(@user), method: :post, class: "input-group") do |f| %>
     <%= f.text_field :city, class: "form-control border border-dark", placeholder: "Enter your city", pattern: '[A-Za-z\s]+', required: true %>
     <div class="input-group-append">
-      <button type="submit" class="btn btn-outline-danger">Change city</button>
+      <button type="submit" class="btn btn-outline-danger"> <%= @user.address.present? ? "Change city" : "Add city" %>
+ </button>
     </div>
   <% end %>
 </div>
@@ -17,7 +18,7 @@
     <%end%>
     <%= form_with model: User.new, local: true ,url: image_path do |f| %>
       <div class="input-group mb-3">
-        <%= f.file_field :images ,{style: "display:none",id: "take_pic"}%>
+        <%= f.file_field :images ,{style: "display:none",id: "take_pic", accept: "image/*"}%>
       </div>
       <div class="profile-pic-add" id="change_pic">
         <i class="fa-solid fa-cloud-arrow-up"></i>
