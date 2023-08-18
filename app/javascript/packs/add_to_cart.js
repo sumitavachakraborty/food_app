@@ -48,7 +48,8 @@ $(".submit-order").click(function () {
 $(document).on("click", ".remove-item", function () {
   var itemKey = $(this).data("item-key");
   delete carts[restid][itemKey];
-  updateCart();
+  $('#' + itemKey).remove();
+  updateCart()
 });
 
 function updateCartItemCount() {
@@ -70,7 +71,7 @@ function updateCart() {
       totalPrice += itemPrice;
 
       var cartItemHtml =
-        '<div class="cart-item shadow p-3 mb-5 bg-body rounded">' +
+        '<div class="cart-item shadow p-3 mb-5 bg-body rounded" id="'+itemKey+'">' +
         '<li class="list-group-item">Food Name: <strong>' +
         item.n +
         "</strong></li>" +

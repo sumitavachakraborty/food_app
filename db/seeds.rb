@@ -121,7 +121,7 @@ resturants = [
     latitude: '22.7604784',
     longitude: '88.3671125',
     category_id: 1,
-    cover_image: 'food/food10.jpg'
+    cover_image: 'food/food8.jpg'
   },
   {
     name: 'Arsalan',
@@ -330,7 +330,7 @@ Resturant.all.each do |resturant|
       rating: 2,
       resturant_id: resturant.id,
       review_images: 'food/food2.jpg',
-      user_id: 1
+      user_id: 2
     }
   end
 end
