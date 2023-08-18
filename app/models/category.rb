@@ -2,6 +2,6 @@
 
 # Category Model
 class Category < ApplicationRecord
-  has_many :resturants
+  has_many :resturants, dependent: :destroy
   validates :category_name, presence: true
 end

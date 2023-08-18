@@ -8,16 +8,16 @@
   <% @food.each do |food| %>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-8 mt-4">
+        <div class="col-lg-6 col-xxl-5 col-sm-12 mt-4">
           <div class="card text-center shadow p-3 mb-2 bg-white rounded">
             <div class="card-header fst-italic"> <strong> Food name : </strong> <%= food.food_name%></div>
             <div class="resturant_cover">
-              <%if(food.food_image.present?)%>
-                <%= image_tag food.food_image, style: "height: auto; width: 50%"%>
-              <%else%>
-                <%= image_tag "userimage.jpg",  style: "height: 200px; width: 200px; border-radius: 15px"%>
-              <%end%>
-            </div>
+                <% if food.food_image.present? %>
+                  <%= image_tag food.food_image, style: "height: 200px; width: 100%; object-fit: cover;" %>
+                <% else %>
+                  <%= image_tag "userimage.jpg", style: "height: 200px; width: 200px; border-radius: 15px" %>
+                <% end %>
+              </div>
             <div class="card-body">
               <div class="card-text text-center mb-1"><strong>Food Price :  </strong> Rs.<%= food.food_price %></div>
             </div>

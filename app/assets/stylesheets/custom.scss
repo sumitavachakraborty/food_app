@@ -2,6 +2,18 @@
   color: white !important;
 }
 
+body {
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 #logo {
   float: left;
   font-size: 1.7em;
@@ -19,4 +31,22 @@
 
 .rating-star:hover {
   color: gold;
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 223, 0, 0.7);
+  }
+
+  50% {
+    transform: scale(1.10);
+    box-shadow: 0 0 20px rgba(255, 223, 0, 0.7);
+  }
+}
+
+.glow-animation {
+  animation: glow 1s infinite;
 }

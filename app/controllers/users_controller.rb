@@ -33,7 +33,6 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      get_coordinates(@user)
       flash[:success] = 'Your account information was updated successfully'
       redirect_to @user
     else
@@ -44,7 +43,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      get_coordinates(@user)
+      get_coordinates(@user, @user.city)
       redirect_to login_path, success: "#{@user.username}! You signed in successfully, Please log in to continue"
     else
       render :new
@@ -72,14 +71,8 @@ class UsersController < ApplicationController
 
   def location
     @user = User.find_by(id: params[:user_id])
-
-    if Geocoder.search(params[:city]).first.present?
-      @user.update(city: params[:city])
-      get_coordinates(@user)
-    else
-      flash[:danger] = 'Enter correct location'
-    end
-    redirect_to @user, success: 'Your city was successfully updated'
+    get_coordinates(@user, params[:city])
+    redirect_to @user
   end
 
   private

@@ -110,3 +110,4 @@ function approvereview(review_id) {
     error: function (data) {},
   });
 }
+

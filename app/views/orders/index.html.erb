@@ -1,7 +1,7 @@
 <div class="container text-center">
   <%= render 'shared/flash' %>
-  <h2 class="text-center my-4"> <strong>Food Items</strong></h2>
-  <%= link_to '[ Back to Resturants]', resturant_path(@resturant), class: "text-center text-info" %>
+  <h2 class="text-center my-4">Food Items of <strong class="text-danger"> <%= @resturant.name %> </strong></h2>
+  <%= link_to '[ Back to Resturants]', resturant_path(@resturant), class: "text-center text-dark" %>
   <div class="cart-modal m-2">
     <button class="btn btn-dark btn-lg" id="cart-btn" data-bs-toggle="modal" data-bs-target="#cartModal">
       Cart <span class="badge bg-danger" id="cart-item-count">0</span>
@@ -28,12 +28,12 @@
     <% @food.each do |food| %>
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-10">
+          <div class="col-lg-6 col-xxl-5 col-sm-12">
             <div class="card shadow p-2 mb-2 bg-white rounded">
-              <div class="card-header fst-italic">Food name : <%= link_to food.food_name, resturant_food_path(@resturant,food)%></div>
+              <div class="card-header fst-italic">Food name : <strong>  <%= food.food_name%> </strong></div>
               <div class="resturant_cover">
                 <% if food.food_image.present? %>
-                  <%= image_tag food.food_image, style: "height: auto; width: 50%" %>
+                  <%= image_tag food.food_image, style: "height: 200px; width: 100%; object-fit: cover;" %>
                 <% else %>
                   <%= image_tag "userimage.jpg", style: "height: 200px; width: 200px; border-radius: 15px" %>
                 <% end %>
@@ -42,8 +42,14 @@
                 <p class="restid" style="display:none"><%= @resturant.id %></p>
                 <strong>Food Price : Rs.</strong><span class="card-text text-center mb-1 mx-2" value="<%= food.food_price %>"><%= food.food_price %></span>
                 <span class="foodname" style="display:none" value="<%= @resturant.id %>"><%= food.food_name %></span>
-                <input type="number" class="order-quantity col-1" value="1" min="1">
-                <button class="submit-order btn btn-warning btn-sm" value="<%= food.id %>" type="button">Add to Cart <i class='fa-solid fa-cart-shopping'></i></button>
+                <div class="container d-flex col-lg-6 col-sm-8 p-2">
+                  <div class="input-group quantity-input">
+                  <input type="number" class="order-quantity form-control col-1" value="1" min="1" max="20" onkeydown="return false">
+                  <button class="submit-order btn btn-warning btn-sm" value="<%= food.id %>" type="button">
+                    Add to Cart <i class='fa-solid fa-cart-shopping'></i>
+                  </button>
+                </div>
+                </div>
               </div>
             </div>
           </div>

@@ -2,15 +2,15 @@
 
 # Application Helper
 module ApplicationHelper
-  def get_coordinates(user)
-    @results = Geocoder.search(user.city).first
+  def get_coordinates(user, city)
+    @results = Geocoder.search(city).first
     if @results.present?
       user.latitude, user.longitude = @results.coordinates
       user.address = @results.address
       user.save
+      flash[:success] = 'location has been updated'
     else
-      flash[:notice] = 'enter city not found'
-      redirect_to user_path(user)
+      flash[:danger] = 'enter city not found'
     end
   end
 end
