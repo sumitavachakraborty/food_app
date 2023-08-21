@@ -26,6 +26,10 @@ Make sure you have the correct versions of the above-mentioned software installe
 ## 3. Install the necessary dependencies
  
 check the ruby version
+```sh
+change ruby version accordingly 
+in the '.ruby-version' and the 'Gemfile' directories
+```
 open the zoma project directory and change the ruby version
 from .ruby-version and gem to yout local ruby version
 
