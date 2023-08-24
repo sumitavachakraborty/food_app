@@ -38,8 +38,8 @@
         <div class="dropdown notification_count" value="<%= current_user.id %>">
           <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-bell"></i>
-            <% if logged_in? && current_user.notifications.where(read: false).count>0 %>
-              <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="0"><%= current_user.notifications.where(read: false).count %></span>
+            <% if logged_in? && notification_count>0 %>
+              <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="0"><%= notification_count %></span>
             <% end %>
           </a>
           <% if current_user.notifications.count>0 %>

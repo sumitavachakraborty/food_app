@@ -3,7 +3,7 @@
 # Application Controller
 class ApplicationController < ActionController::Base
   add_flash_types :success, :warning, :danger, :info
-  helper_method :current_user, :logged_in?
+  helper_method :current_user, :logged_in?, :notification_count
 
   def not_found_method
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
@@ -36,5 +36,9 @@ class ApplicationController < ActionController::Base
 
     flash[:danger] = 'Please enter your address'
     redirect_to user_path(current_user)
+  end
+
+  def notification_count
+    current_user.notifications.where(read: false).count
   end
 end
