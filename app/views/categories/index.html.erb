@@ -1,10 +1,12 @@
-<div class="container text-center mx-auto">
-  <h2 class="text-center my-4"><strong>Categories Items</strong></h2>
+<div class="container text-center mx-auto mb-4">
   <%= render 'shared/flash' %>
-  <div class="d-flex flex-row flex-wrap justify-content-center">
+  <%= link_to 'Add new Category' , new_category_path , class: "btn btn-outline-success my-4"%>
+  <h2 class="text-center my-4"><strong>Categories Items</strong></h2>
+  <div class="d-flex flex-column align-items-center">
     <% @categories.each do |category| %>
-      <div class="card shadow p-3 mb-2 bg-white rounded col-4">
-        <%= category.category_name %>
+      <div class="card d-flex shadow p-3 mb-2 bg-white rounded col-3">
+        <div class="span pb-3"> <strong> <%= category.category_name.capitalize %></strong> </div>
+        <div class="span"> <%= link_to 'Delete', category_path(category), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger"%></div>
       </div>
     <% end %>
   </div>

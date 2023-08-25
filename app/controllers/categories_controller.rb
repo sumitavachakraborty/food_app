@@ -22,4 +22,10 @@ class CategoriesController < ApplicationController
       render :new
     end
   end
+
+  def destroy
+    @category = Category.find(params[:id])
+    @category.destroy
+    redirect_to categories_path, danger: 'Category deleted successfully'
+  end
 end

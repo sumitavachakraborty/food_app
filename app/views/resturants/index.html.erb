@@ -9,7 +9,7 @@
   <% if logged_in? && current_user.admin? %>
     <div class="btn-group" role="group" aria-label="Basic outlined example">
       <%= link_to 'Add new Resturants' , new_resturant_path , class: "btn btn-outline-success my-4"%>
-      <%= link_to 'Add new Category' , new_category_path , class: "btn btn-outline-success my-4"%>
+      <%= link_to 'All Categories' , categories_path , class: "btn btn-outline-success my-4"%>
     </div>
   <%end%>
   <span class="btn btn-warning disabled my-4"> <strong>Your Location : </strong> <%= current_user.city.upcase %> </span>
