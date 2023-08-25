@@ -26,6 +26,11 @@ class Resturant < ApplicationRecord
       errors.add(:cover_image, 'must be present')
     end
   end
+
+  def check_tables(current_user)
+    book_tables.find_by(user_id: current_user.id).present?
+  end
+
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 

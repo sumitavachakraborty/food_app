@@ -35,7 +35,7 @@
     </div>
   <% end %>
 <% else %>
-  <% @resturant.reviews.where(approval: true).each do |review| %>
+  <% @all_review.each do |review| %>
     <div class="shadow d-flex p-3 bg-white justify-content-center ">
       <div class="container text-start">
         <strong>Review:</strong>

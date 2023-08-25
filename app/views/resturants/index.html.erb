@@ -21,7 +21,7 @@
           <div class="card text-center shadow p-3 mb-5 bg-white rounded">
             <div class="card-header fst-italic d-flex justify-content-around"> <span>  Resturant name : <%= link_to resturant.name, resturant_path(resturant)%> </span>
               <% if resturant.category_id.present? %>
-                <span> <strong>Category  : </strong> <%= Category.find(resturant.category_id).category_name %> </span>
+                <span> <strong>Category  : </strong> <%= Category.category_name(resturant) %> </span>
               <% end %>
             </div>
             <div class="resturant_cover">
@@ -39,7 +39,7 @@
                 <a href="#"><%= link_to 'Delete', resturant_path(resturant),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
               <% end %>
               <%= link_to 'Order Online', resturant_orders_path(resturant), class: "btn btn-outline-primary"%>
-              <% if resturant.book_tables.find_by(user_id: current_user.id).present? %>
+              <% if resturant.check_tables(current_user) %>
                 <%= link_to 'Your table bookings', resturant_book_tables_path(resturant), class: "btn btn-outline-success" %>
               <% else %>
                 <%= link_to 'Book a Table', new_resturant_book_table_path(resturant), class: "btn btn-outline-success" %>
