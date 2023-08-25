@@ -23,8 +23,8 @@
               <%= f.fields_for :foodquantity_array, index: index do |ff| %>
                 <div class="form-group">
                   <%= ff.label :food_quantity, "Food quantity" %>
-                  <div class ="col-6">
-                    <%= ff.number_field :food_quantity, value: food_quantity, class: "form-control", min: 1,max: 20, onkeydown: "return false;" %>
+                  <div class ="col-4">
+                    <%= ff.number_field :food_quantity, value: food_quantity, class: "form-control p-1", min: 1,max: 20, onkeydown: "return false;" %>
                     <%= ff.hidden_field :food_price, value: @order.food_price_array[index], data: { price: @order.food_price_array[index] }, class: "newprice" %>
                   </div>
                 </div>

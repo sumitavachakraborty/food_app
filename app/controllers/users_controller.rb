@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     @book_table = BookTable.where(user_id: current_user.id).page(params[:page])
     return unless @user.orders.present?
 
-    @orders = @user.orders.order(created_at: :asc).page(params[:page])
+    @orders = @user.orders.order(created_at: :desc).page(params[:page])
   end
 
   def new
