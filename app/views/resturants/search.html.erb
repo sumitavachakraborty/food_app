@@ -12,7 +12,6 @@
   <% if params[:category_id].present? %>
     <p class="btn btn-warning disabled">Selected category: <%= Category.find(params[:category_id]).category_name %></p>
   <% end %>
-  <%= paginate @nearest_locations %>
   <% @nearest_locations.each do |resturant,distance| %>
     <div class="container">
       <div class="row justify-content-center">
@@ -52,4 +51,8 @@
       </div>
     </div>
   <% end%>
+  <div class="d-flex justify-content-center">
+    <span><%= paginate @nearest_locations %></span>
+  </div>
 </div>
+

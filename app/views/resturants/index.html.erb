@@ -13,7 +13,6 @@
     </div>
   <%end%>
   <span class="btn btn-warning disabled my-4"> <strong>Your Location : </strong> <%= current_user.city.upcase %> </span>
-  <%= paginate @nearest_locations %>
   <% @nearest_locations.each do |resturant,distance| %>
     <div class="container">
       <div class="row justify-content-center">
@@ -53,5 +52,7 @@
       </div>
     </div>
   <% end%>
-  <%= paginate @nearest_locations %>
+  <div class="d-flex justify-content-center">
+    <span><%= paginate @nearest_locations %></span>
+  </div>
 </div>
