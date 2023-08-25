@@ -1,9 +1,6 @@
 <div class="container text-center mb-3">
   <%= render 'shared/flash' %>
   <h2 class="text-center my-4"> <strong>MENU :</strong></h2>
-  <% if logged_in?%>
-    <%= link_to 'Add Food Items' , new_resturant_food_path, class: "btn btn-success "%>
-  <%end%>
   <%= link_to '[ Back to Resturant ]', resturant_path(@resturant), class: "text-center d-block my-3" %>
   <% @food.each do |food| %>
     <div class="container">
