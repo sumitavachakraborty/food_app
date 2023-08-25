@@ -26,7 +26,7 @@
             </a>
           </div>
           <% if logged_in? && (current_user.admin?) %>
-            <%= link_to 'Delete', resturant_book_table_path(@resturant,table),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%>
+            <%= link_to 'Delete', resturant_book_table_path(@resturant,table),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
           <% end %>
         </div>
       </div>
