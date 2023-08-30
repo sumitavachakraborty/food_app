@@ -1,8 +1,9 @@
 <div class="container">
-  <h1 class="text-center mt-4">Edit user for the blog</h1>
+  <h1 class="text-center mt-4">Edit profile</h1>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-6">
+  <%= link_to '[Back to profile]', @user,class:"text-center text-info" %>
+      <div class="col-lg-6 my-3">
         <div class="card shadow p-3 mb-3 bg-white rounded">
           <div class="card-body">
             <%= render 'shared/errors', obj: @user %>
