@@ -5,9 +5,7 @@
   </div>
   <div class="input-group">
     <%= form.label :category_id, class: "col-2 col-form-label" %>
-    <% selected_category = Category.find_by(id: params[:category_id]) %>
-    <% categories = Category.all.reject { |category| category == selected_category } %>
-    <%= form.collection_select :category_id, categories, :id, :category_name, { prompt: selected_category&.category_name.presence || "Select a category" }, { class: "form-control" } %>
+    <%= form.select :category_id, options_for_select( Category.all.map { |category| [category.category_name,category.id] }, session[:category_id]) , { prompt: "Select a category" }, { class: "form-control" } %>
   </div>
   <%= form.submit "Search", class: "btn btn-outline-warning btn-sm" %>
   <%= link_to "Clear Filter", search_resturants_path, class: "btn btn-outline-danger btn-sm" %>

@@ -49,9 +49,10 @@ class OrdersController < ApplicationController
   private
 
   def params_order
-    params.require(:order).permit(:quantity, :total, :user_id, :delivery_address, foodname_array: [],
-                                                                                  foodquantity_array: [],
-                                                                                  food_price_array: [])
+    params.require(:order).permit(:quantity, :total, :user_id, :delivery_address,
+                                  foodname_array: [],
+                                  foodquantity_array: [],
+                                  food_price_array: [])
   end
 
   def find_resturant

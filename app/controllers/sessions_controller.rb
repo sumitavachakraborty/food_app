@@ -10,13 +10,7 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(email: params[:session][:email].downcase)
-    if @user&.admin?
-      session[:user_id] = @user.id
-      flash[:success] = 'Login successful'
-      redirect_to resturants_path
-    else
-      check_user
-    end
+    check_user
   end
 
   def destroy

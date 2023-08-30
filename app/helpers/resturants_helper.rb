@@ -34,7 +34,6 @@ module ResturantsHelper
     return unless @resturant.empty?
 
     flash.now[:danger] = 'Resturant not found'
-    @resturant = Resturant.all
   end
 
   def search_and_category_blank?
@@ -49,8 +48,7 @@ module ResturantsHelper
   def handle_empty_nearest_locations
     return unless @nearest_locations.empty?
 
-    flash[:danger] = 'No such resturants found in this location'
-    redirect_to resturants_path
+    flash.now[:danger] = 'No such resturants found in this location'
   end
 
   def search_resturant_by_name
@@ -59,10 +57,13 @@ module ResturantsHelper
   end
 
   def filter_restaurants_by_category
-    @resturant = Resturant.find_category(params[:category_id]) if params[:category_id].present?
+    if params[:category_id].present?
+      session[:category_id] = params[:category_id]
+      @resturant = Resturant.find_category(params[:category_id])
+    end
     return unless @resturant.empty?
 
-    flash.now[:danger] = 'NO resturants found in this category'
+    flash.now[:danger] = 'No resturants found in this category'
     @resturant = Resturant.all
   end
 

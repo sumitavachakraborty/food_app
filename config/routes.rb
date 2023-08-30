@@ -3,9 +3,12 @@
 Rails.application.routes.draw do
   resources :users, except: %i[new create] do
     post 'location', to: 'users#location'
+    get 'change_address', to: 'users#change_address'
   end
   resources :categories
   root 'pages#home'
+  get 'admin_login', to: 'users#admin_login'
+  post 'check_admin', to: 'users#check_admin'
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
   post 'makeadmin', to: 'users#makeadmin'

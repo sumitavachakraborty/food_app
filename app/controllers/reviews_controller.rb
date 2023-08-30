@@ -8,9 +8,7 @@ class ReviewsController < ApplicationController
 
   def index; end
 
-  def show
-    @all_review = @resturant.reviews.where(approval: true)
-  end
+  def show; end
 
   def new
     @review = @resturant.reviews.new

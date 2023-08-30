@@ -71,8 +71,29 @@ class UsersController < ApplicationController
 
   def location
     @user = User.find_by(id: params[:user_id])
-    get_coordinates(@user, params[:city])
-    redirect_to @user
+    if params[:city].present?
+      get_coordinates(@user, params[:city])
+      redirect_to @user
+    else
+      get_coordinates(@user, params[:Pincode])
+      redirect_to user_change_address_path(@user)
+    end
+  end
+
+  def change_address
+    @user = User.find_by(id: params[:user_id])
+  end
+
+  def admin_login; end
+
+  def check_admin
+    @user = User.find_by(email: params[:email].downcase)
+    if @user&.admin? && @user&.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect_to @user
+    else
+      redirect_to admin_login_path, danger: 'Invalid login details'
+    end
   end
 
   private

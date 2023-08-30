@@ -1,6 +1,12 @@
 var carts = {};
 var restid = 0;
 
+function getRestIdFromUrl() {
+  var urlParts = window.location.pathname.split("/");
+  var restIdIndex = urlParts.indexOf("resturants") + 1;
+  return urlParts[restIdIndex];
+}
+
 $(document).ready(function () {
   initializeCarts();
 });
@@ -24,12 +30,6 @@ function updateConfirmButtonStatus() {
     confirmButton.prop("disabled", true);
     confirmButton.text("Add some items");
   }
-}
-
-function getRestIdFromUrl() {
-  var urlParts = window.location.pathname.split("/");
-  var restIdIndex = urlParts.indexOf("resturants") + 1;
-  return urlParts[restIdIndex];
 }
 
 $(document).on("click", ".submit-order", function () {
@@ -84,9 +84,9 @@ $(document).on("input", ".order-quantity", function () {
       .find(".item-price")
       .text("Price: Rs. " + itemPrice.toFixed(2));
 
-    updateCartItemCount();
+    // updateCartItemCount();
     updateCart();
-    updateConfirmButtonStatus();
+    // updateConfirmButtonStatus();
   }
 });
 
@@ -135,7 +135,6 @@ function updateCart() {
 
 $("#checkout").click(function () {
   localStorage.setItem("carts", JSON.stringify(carts));
-
   $.ajax({
     url: "/resturants/" + restid + "/orders",
     method: "POST",

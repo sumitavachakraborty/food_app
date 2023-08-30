@@ -8,9 +8,12 @@ class ResturantsController < ApplicationController
   before_action :check_location
   include ResturantsHelper
 
-  def show; end
+  def show
+    @all_review = @resturant.reviews.where(approval: true)
+  end
 
   def index
+    session[:category_id] = nil
     if params[:resturant_name].present?
       search_resturant_by_name
       check_empty
@@ -18,7 +21,6 @@ class ResturantsController < ApplicationController
       @resturant = Resturant.all
     end
     @nearest_locations = find_nearest_distance(@resturant, current_user.latitude, current_user.longitude)
-    check_user_empty_nearest_locations
   end
 
   def new

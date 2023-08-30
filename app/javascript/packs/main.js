@@ -111,3 +111,63 @@ function approvereview(review_id) {
   });
 }
 
+//change address
+$(document).ready(function() {
+  $('#search-address').on('input', function() {
+    var input = $(this).val();
+    var pattern = /^[A-Za-z\s]+$/;
+    var searchButton = $('#address-search-btn');
+
+    if (!pattern.test(input)) {
+      $('#pattern-validation-message').text('Please enter only letters and spaces.');
+      searchButton.prop('disabled', true);
+    } else {
+      $('#pattern-validation-message').text('');
+      searchButton.prop('disabled', false);
+    }
+  });
+});
+
+$('#address-search-btn').click(function(event){
+  event.preventDefault();
+  let inp=$('#search-address').val()
+
+
+  const settings = {
+    async: true,
+    crossDomain: true,
+    url: 'https://map-places.p.rapidapi.com/autocomplete/json?input='+inp+'&radius=50000',
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'd1cb59beddmshf5c3d4ef7537f14p1983b7jsn55184da528f0',
+      'X-RapidAPI-Host': 'map-places.p.rapidapi.com'
+    }
+  };
+
+
+  $.ajax(settings).done(function (response) {
+  if (response.status=='OK') {
+
+    $('#autocomplete').empty()
+
+    response.predictions.forEach(element => {
+
+      $('#autocomplete').append(`<li><a class="dropdown-item" href="#">${element.description}</a></li>`)
+
+    });
+
+  }
+  else{
+    alert('An error occurred while fetching')
+  }
+});
+
+})
+
+$(document).on('click','.dropdown-item',function (event) {
+  event.preventDefault();
+  let t=$(this).text()
+  $('#order_delivery_address').text(t)
+  $('#order_delivery_address').val(t)
+})
+
