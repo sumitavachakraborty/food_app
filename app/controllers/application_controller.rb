@@ -39,6 +39,6 @@ class ApplicationController < ActionController::Base
   end
 
   def notification_count
-    current_user.notifications.where(read: false).count
+    Notification.find_notification_count(current_user)
   end
 end

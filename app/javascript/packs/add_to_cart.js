@@ -9,6 +9,7 @@ function getRestIdFromUrl() {
 
 $(document).ready(function () {
   initializeCarts();
+  updateConfirmButtonStatus();
 });
 
 function initializeCarts() {
@@ -84,9 +85,9 @@ $(document).on("input", ".order-quantity", function () {
       .find(".item-price")
       .text("Price: Rs. " + itemPrice.toFixed(2));
 
-    // updateCartItemCount();
+    updateCartItemCount();
     updateCart();
-    // updateConfirmButtonStatus();
+    updateConfirmButtonStatus();
   }
 });
 

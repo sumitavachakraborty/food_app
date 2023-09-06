@@ -23,6 +23,12 @@ body {
   font-weight: bold;
 }
 
+#notification-list{
+  width:350px;
+  max-height: 300px;
+  overflow:auto;
+}
+
 .rating-star {
   font-size: 24px;
   cursor: pointer;

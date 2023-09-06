@@ -43,7 +43,7 @@
             <% end %>
           </a>
           <% if current_user.notifications.count>0 %>
-            <ul class="dropdown-menu p-3" style="width:300px;max-height: 300px;overflow:auto" id="notification-list" aria-labelledby="dropdownMenuButton1">
+            <ul class="dropdown-menu p-3" id="notification-list" aria-labelledby="dropdownMenuButton1">
               <button class="btn btn-warning mark-read my-2" value="<%= current_user.id %>">Mark all as read</button>
               <% current_user.notifications.each do |notification| %>
                 <li class="notification-message"><%=link_to notification.message, new_resturant_review_url(notification.resturant_id)%></li>
