@@ -3,6 +3,7 @@
 # Reviews Controller
 class ReviewsController < ApplicationController
   before_action :require_user, except: [:show]
+  before_action :find_review, only: %i[update destroy approve edit]
   before_action :set_resturant
   before_action :same_user, only: %i[edit update destroy]
 
@@ -15,7 +16,7 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    @review = @resturant.reviews.new(params.require(:review).permit(:comment, :rating, review_images: []))
+    @review = @resturant.reviews.new(review_params)
     @review.user_id = current_user.id
     if @review.save
       flash[:success] = 'Review was successfully added, will be visible after approval'
@@ -25,13 +26,10 @@ class ReviewsController < ApplicationController
     end
   end
 
-  def edit
-    @review = Review.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @review = Review.find(params[:id])
-    if @review.update(params.require(:review).permit(:comment, :rating, review_images: []))
+    if @review.update(review_params)
       flash[:warning] = 'Updated review '
       redirect_to resturant_path(@resturant)
     else
@@ -40,19 +38,21 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    @review = Review.find(params[:id])
     @review.destroy
     redirect_to resturant_path(@resturant)
   end
 
   def approve
-    @review = Review.find(params[:id])
     @review.toggle!(:approval)
 
     respond_to(&:js)
   end
 
   private
+
+  def find_review
+    @review = Review.find(params[:id])
+  end
 
   def set_resturant
     @resturant = Resturant.find(params[:resturant_id])

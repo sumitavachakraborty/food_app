@@ -71,12 +71,13 @@ class UsersController < ApplicationController
 
   def location
     @user = User.find_by(id: params[:user_id])
-    if params[:city].present?
-      get_coordinates(@user, params[:city])
+
+    if params[:pincode].present?
+      Resturant.get_address(params, @user)
+      coordinates_from_pincode(@user, params[:pincode])
       redirect_to @user
     else
-      get_coordinates(@user, params[:Pincode])
-      redirect_to user_change_address_path(@user)
+      redirect_to user_change_address_path(@user), danger: 'Wrong Pincode'
     end
   end
 

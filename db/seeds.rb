@@ -24,7 +24,7 @@ users_data = [
   },
   {
     username: 'sumitava1111',
-    email: 'sumitava@example.com',
+    email: 'sumitava@gmail.com',
     password: 'password456',
     city: 'sodepore',
     latitude: '22.703727',
@@ -327,7 +327,7 @@ Resturant.all.each do |resturant|
     reviews << {
       comment: 'Good resturant',
       approval: false,
-      rating: 2,
+      rating: 3,
       resturant_id: resturant.id,
       review_images: 'food/food2.jpg',
       user_id: 2

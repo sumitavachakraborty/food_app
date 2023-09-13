@@ -5,7 +5,7 @@
   <div class="w-100 ">
     <div class="container col-12">
       <div class="row justify-content-center">
-        <div class="col-8 mt-4">
+        <div class="col-lg-8 col-md-12 mt-4">
           <div class="card text-center shadow p-3 mb-5 bg-white rounded">
             <div class="card-header fst-italic "></span>
             <% if @resturant.category_id.present? %>
@@ -35,7 +35,7 @@
             <strong>Address : </strong>
             <div class="card-text text-center"><%= @resturant.address%></div>
           </div>
-          <div class="btn-group" role="group" aria-label="Basic outlined example">
+          <div class="btn-group d-flex flex-wrap" role="group" aria-label="Basic outlined example">
             <% if logged_in? && current_user.admin? %>
               <a href="#"><%= link_to 'Edit', edit_resturant_path(@resturant), class: "btn btn-outline-success"%></a>
               <a href="#"><%= link_to 'Delete', resturant_path(@resturant), method: :delete ,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
@@ -55,8 +55,7 @@
       </div>
     </div>
   </div>
-  <div class="container col-8">
-    <h2 class="text-center mt-4">Reviews</h2>
+  <div class="container col-lg-8 col-md-12">
     <%= render 'reviews/show' %>
   </div>
 </div>

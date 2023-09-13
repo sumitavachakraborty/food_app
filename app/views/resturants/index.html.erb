@@ -1,15 +1,15 @@
 <div class="container text-center mb-3">
   <%= render 'shared/flash' %>
   <div class="container row justify-content-center my-2">
-    <div class="col-5 text-center">
+    <div class="col-lg-5 col-md-10 text-center">
       <%= render 'search' %>
     </div>
   </div>
-  <% if @nearest_locations.empty? %>
+  <% if @nearest_locations.empty? || @nearest_locations.nil? %>
     <div class="container row justify-content-center align-item-center my-2">
       <div class="col-5 text-center">
         <span> <strong>
-            <h3> No such Resturant</h3>
+            <h3> No Resturant's Found</h3>
           </strong></span>
       </div>
     </div>
@@ -25,7 +25,7 @@
     <% @nearest_locations.each do |resturant,distance| %>
       <div class="container">
         <div class="row justify-content-center">
-          <div class="container col-md-6 col-lg-7 ">
+          <div class="container col-md-8 col-lg-7 ">
             <div class="card text-center shadow p-3 mb-5 bg-white rounded">
               <div class="card-header fst-italic d-flex justify-content-around"> <span>  Resturant name : <%= link_to resturant.name, resturant_path(resturant)%> </span>
                 <% if resturant.category_id.present? %>

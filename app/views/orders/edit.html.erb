@@ -42,35 +42,42 @@
           <%= f.label "Delivery Address :", class: "col-3 col-form-label" %>
           <div class="col-8">
             <%= f.text_field :delivery_address, class: "form-control text-muted",id: "order_delivery_address",placeholder: "Street Name, City, State ZIP",readonly: true %>
-          </div>
-        </div>
-        <div class="form-group row my-3">
-          <%= f.label "Change Address :", class: "col-3 col-form-label" %>
-          <div class="col-6">
-            <div class="dropdown">
-            <div id="pattern-validation-message" style="color: red;"></div>
-              <input type="text" name="" id="search-address" placeholder="Search address name here" class="form-control"  pattern="[A-Za-z\s]+">
-              <button class="btn btn-sm btn-secondary dropdown-toggle" id="address-search-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>
-                search
-              </button>
-              <ul class="dropdown-menu" id="autocomplete">  
-              </ul>
-            </div>
+            <button class="btn btn-dark btn" id="change-address" data-bs-toggle="modal" data-bs-target="#addressModal">
+              Change Address
+            </button>
           </div>
         </div>
         <div class="d-flex justify-content-center">
-          <%= f.submit 'Place Order',class: "btn btn-outline-success btn-lg me-2"%>
+          <%= f.submit 'Place Order',class: "ssa btn btn-outline-success btn-lg me-2"%>
           <%= link_to 'Cancel Order', resturant_order_path(@resturant,@order),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-lg"%>
+        </div>
+        <div class="address-modal m-2">
+          <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <form id="changeAddressForm">
+                    <div class="mb-3">
+                      <label for="newAddress" class="form-label">New Address:</label><span class="text-danger">*</span>
+                      <input type="text" class="form-control" id="newAddress" placeholder="Road, place, appartment (e.g. 5/4 B.T road khardah, pratima appartment)">
+                      <div id="addressValidationError" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="newPincode" class="form-label">New Pincode:</label><span class="text-danger">*</span>
+                      <input type="text" class="form-control" id="newPincode" placeholder="Enter Pincode">
+                      <div id="pincodeValidationError" class="text-danger"></div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" id="saveAddressBtn">Save Changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-

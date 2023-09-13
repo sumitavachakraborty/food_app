@@ -7,11 +7,21 @@ module ApplicationHelper
     if @results.present?
       user.city = @results.city
       user.latitude, user.longitude = @results.coordinates
-      user.address = @results.address
       user.save
       flash[:success] = 'location has been updated'
     else
       flash[:danger] = 'enter city not found'
+    end
+  end
+
+  def coordinates_from_pincode(user, pincode)
+    @results = Geocoder.search(pincode).first
+    if @results.present?
+      user.latitude, user.longitude = @results.coordinates
+      user.save
+      flash[:success] = 'location has been updated'
+    else
+      redirect_to user_change_address_path(user), danger: 'enter pincode not found'
     end
   end
 end

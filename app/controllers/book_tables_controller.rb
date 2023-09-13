@@ -3,6 +3,7 @@
 # BookTables Controller
 class BookTablesController < ApplicationController
   before_action :require_user
+  before_action :find_book_table, only: %i[destroy]
   before_action :set_resturant, except: [:show]
   before_action :admin_user, only: %i[destroy]
 
@@ -28,17 +29,20 @@ class BookTablesController < ApplicationController
 
   def show
     @resturant = Resturant.all
-    @book_table = BookTable.where(user_id: current_user.id)
+    @book_table = BookTable.show_booking
   end
 
   def destroy
-    @book_table = BookTable.find(params[:id])
     @book_table.destroy
     flash[:danger] = 'Booking deleted successfully'
     redirect_to resturant_book_tables_path(@resturant)
   end
 
   private
+
+  def find_book_table
+    @book_table = BookTable.find(params[:id])
+  end
 
   def set_resturant
     @resturant = Resturant.find(params[:resturant_id])

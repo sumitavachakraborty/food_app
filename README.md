@@ -63,7 +63,8 @@ Resturant.import force: true
 rails s
 
 Then for direct login,
-admin_email : sumitava@example.com
+admin_email : sumitava@gmail.com
+password : password123
 
 ### 6. To add latitude and longitude in form
 https://www.google.com/maps/preview/@#{latitude},#{longitude},10z

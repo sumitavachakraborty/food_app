@@ -65,11 +65,11 @@ RSpec.describe User, type: :model do
 
     it 'is not valid without a city' do
       user = User.new(
-        username: 'sumi.tava',
-        email: 'sumi.tava@example.com'
+        username: 'sumitava',
+        email: 'sumitava@example.com'
       )
       expect(user).not_to be_valid
-      expect(user.errors[:city]).to include("can't be blank")
+      expect(user.errors[:city]).to include("must be present")
     end
   end
 end

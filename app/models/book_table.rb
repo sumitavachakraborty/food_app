@@ -5,12 +5,13 @@ class BookTable < ApplicationRecord
   paginates_per 3
   belongs_to :user
   belongs_to :resturant
-  
+
   validate :book_date_cannotbe_in_the_past
   validates :book_time, presence: true
   validates :head_count, presence: true
   validates_uniqueness_of :book_date, scope: :resturant_id
   validate :book_date_timespan
+  scope :show_booking, -> { where(user_id: current_user.id) }
 
   def book_date_cannotbe_in_the_past
     errors.add(:book_date, 'must be selected') unless book_date.present?

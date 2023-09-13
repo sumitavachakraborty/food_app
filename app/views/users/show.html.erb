@@ -1,14 +1,5 @@
 <%= render 'shared/flash' %>
 <h1 class="text-center mt-4">Welcome <%= @user.username %></h1>
-<div class="container col-md-6 col-lg-4">
-  <%= form_with(url: user_location_path(@user), method: :post, class: "input-group") do |f| %>
-    <%= f.text_field :city, class: "form-control border border-dark", placeholder: "Enter your city", pattern: '[A-Za-z\s]+', required: true %>
-    <div class="input-group-append">
-      <button type="submit" class="btn btn-outline-danger"> <%= @user.city.present? ? "Change city" : "Add city" %>
-      </button>
-    </div>
-  <% end %>
-</div>
 <div class="container col-md-6 col-lg-4 text-center my-2 shadow p-3 mb-5 bg-body rounded">
   <div class="mb-2">
     <%if(@user.images.present?)%>
@@ -21,7 +12,7 @@
         <%= f.file_field :images ,{style: "display:none",id: "take_pic", accept: "image/*"}%>
       </div>
       <div class="profile-pic-add" id="change_pic">
-        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <i class='fas fa-cloud-upload-alt'></i>
       </div>
       <%= f.submit "", class: "btn btn-primary m-auto",id: "submit_btn",style: "display:none" %>
     <% end %>
@@ -41,7 +32,7 @@
   <% end %>
   <% if logged_in? && @user == current_user %>
     <%= link_to 'Edit Profile', edit_user_path(@user), class: "btn btn-outline-success"%>
-    <%= link_to 'Change address', user_change_address_path(@user), class: "btn btn-outline-success"%>
+    <%= link_to 'Change delivery address', user_change_address_path(@user), class: "btn btn-outline-success"%>
   <% end %>
 </div>
 <div class="container d-flex justify-content-center">

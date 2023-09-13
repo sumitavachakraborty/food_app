@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   add_flash_types :success, :warning, :danger, :info
   helper_method :current_user, :logged_in?, :notification_count
+  include ResturantsHelper
 
   def not_found_method
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
@@ -36,6 +37,14 @@ class ApplicationController < ActionController::Base
 
     flash[:danger] = 'Please enter your address'
     redirect_to user_path(current_user)
+  end
+
+  def check_distance
+    dis = distance_between(@resturant.latitude, @resturant.longitude, current_user.latitude, current_user.longitude)
+    return unless dis > 30
+
+    flash[:danger] = 'Delivery location very far, more than 30 K.M'
+    redirect_to resturants_path
   end
 
   def notification_count

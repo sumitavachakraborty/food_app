@@ -1,19 +1,76 @@
 <div class="my-3">
   <%= render 'shared/flash' %>
-  <div class="container card shadow p-3 mb-3 bg-white rounded col-md-6 col-lg-4">
-    <%= form_with(url: user_location_path(@user), method: :post, class: "input-group") do |f| %>
-      <%= f.text_field 'Pincode', class: "form-control border border-dark", placeholder: "Enter your 7-digit pincode", pattern: "^[1-9][0-9]{5}$", required: true %>
-      <div class="input-group-append">
-        <button type="submit" class="btn btn-outline-danger"> <%= @user.address.present? ? "Change pincode" : "Add pincode" %>
-        </button>
+  <h1 class="text-center"> Change your Address</h1>
+  <div class="container card shadow p-3 mb-3 bg-white rounded col-6">
+    <%= form_with(url: user_location_path(@user), method: :post) do |f| %>
+      <div class="form-group">
+        <%= f.label 'Address Line 1' %>
+        <%= f.text_field 'address_line1', class: 'form-control', placeholder: 'Road number,place,appartment (e.g. 5/4 B.T road khardah, pratima appartment)', pattern: '^(?=.*[A-Za-z])[0-9A-Za-z\s,./-]+$', required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label 'Address Line 2' %>
+        <%= f.text_field 'address_line2', class: "form-control", placeholder: "Address Line 2" %>
+      </div>
+      <div class="form-group">
+        <%= f.label 'Country' %>
+        <%= f.text_field 'country', class: "form-control",value: 'India',disabled: true %>
+      </div>
+      <div class="form-group">
+        <!-- State (Select from a collection of Indian states) -->
+        <%= f.label 'State' %>
+        <%= f.select 'state', 
+               [['Andaman and Nicobar Islands', 'Andaman and Nicobar Islands'],
+                ['Andhra Pradesh', 'Andhra Pradesh'],
+                ['Arunachal Pradesh', 'Arunachal Pradesh'],
+                ['Assam', 'Assam'],
+                ['Bihar', 'Bihar'],
+                ['Chandigarh', 'Chandigarh'],
+                ['Chhattisgarh', 'Chhattisgarh'],
+                ['Dadra and Nagar Haveli', 'Dadra and Nagar Haveli'],
+                ['Daman and Diu', 'Daman and Diu'],
+                ['Delhi', 'Delhi'],
+                ['Goa', 'Goa'],
+                ['Gujarat', 'Gujarat'],
+                ['Haryana', 'Haryana'],
+                ['Himachal Pradesh', 'Himachal Pradesh'],
+                ['Jammu and Kashmir', 'Jammu and Kashmir'],
+                ['Jharkhand', 'Jharkhand'],
+                ['Karnataka', 'Karnataka'],
+                ['Kerala', 'Kerala'],
+                ['Ladakh', 'Ladakh'],
+                ['Lakshadweep', 'Lakshadweep'],
+                ['Madhya Pradesh', 'Madhya Pradesh'],
+                ['Maharashtra', 'Maharashtra'],
+                ['Manipur', 'Manipur'],
+                ['Meghalaya', 'Meghalaya'],
+                ['Mizoram', 'Mizoram'],
+                ['Nagaland', 'Nagaland'],
+                ['Odisha', 'Odisha'],
+                ['Puducherry', 'Puducherry'],
+                ['Punjab', 'Punjab'],
+                ['Rajasthan', 'Rajasthan'],
+                ['Sikkim', 'Sikkim'],
+                ['Tamil Nadu', 'Tamil Nadu'],
+                ['Telangana', 'Telangana'],
+                ['Tripura', 'Tripura'],
+                ['Uttar Pradesh', 'Uttar Pradesh'],
+                ['Uttarakhand', 'Uttarakhand'],
+                ['West Bengal', 'West Bengal']],
+               {}, class: "form-control", required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label 'City' %>
+        <%= f.text_field 'city', class: "form-control", placeholder: "City",pattern: '[A-Za-z]+', required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label 'Pincode' %>
+        <%= f.text_field 'pincode', class: "form-control", placeholder: "Enter your 7-digit pincode", pattern: "^[1-9][0-9]{5}$", required: true %>
+      </div>
+
+      <div class="d-flex justify-content-center my-2">
+        <%= f.submit "Change Address", class: "btn btn-outline-success mx-2" %>
+        <%= link_to 'Cancel',@user, class: "btn btn-outline-danger " %>
       </div>
     <% end %>
-    <div class="container my-3 text-center">
-      <% if @user.address.present? %>
-        <p class="text-center"> <strong>  Address - </strong><%= @user.address %></p>
-      <% else %>
-        <span class="text-center"><strong> Please enter the address </strong></span>
-      <% end %>
-    </div>
   </div>
 </div>

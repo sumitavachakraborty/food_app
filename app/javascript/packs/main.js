@@ -112,62 +112,63 @@ function approvereview(review_id) {
 }
 
 //change address
-$(document).ready(function() {
-  $('#search-address').on('input', function() {
-    var input = $(this).val();
-    var pattern = /^[A-Za-z\s]+$/;
-    var searchButton = $('#address-search-btn');
+$(document).on("click", "#change-address", function (event) {
+  event.preventDefault();
+});
 
-    if (!pattern.test(input)) {
-      $('#pattern-validation-message').text('Please enter only letters and spaces.');
-      searchButton.prop('disabled', true);
+$(document).ready(function () {
+  var myModal = new bootstrap.Modal(document.getElementById("addressModal"));
+
+  $("#saveAddressBtn").on("click", function () {
+    var newAddress = $("#newAddress").val();
+    var newPincode = $("#newPincode").val();
+
+    var addressPattern = /^(?=.*[A-Za-z])[0-9A-Za-z\s,./-]+$/;
+    var pincodePattern = /^\d{6}$/;
+    var isAddressValid = addressPattern.test(newAddress);
+    var isPincodeValid = pincodePattern.test(newPincode);
+
+    if (!isAddressValid) {
+      $("#addressValidationError").text("Invalid address format.");
     } else {
-      $('#pattern-validation-message').text('');
-      searchButton.prop('disabled', false);
+      $("#addressValidationError").text("");
+    }
+
+    if (!isPincodeValid) {
+      $("#pincodeValidationError").text("Invalid pincode format.");
+    } else {
+      $("#pincodeValidationError").text("");
+    }
+
+    if (isAddressValid && isPincodeValid) {
+      $("#order_delivery_address").val(newAddress + ", " + newPincode);
+      myModal.hide();
     }
   });
 });
 
-$('#address-search-btn').click(function(event){
-  event.preventDefault();
-  let inp=$('#search-address').val()
+//review image
+$(document).ready(function() {
+  $('#review_images_field').on('change', function(e) {
+    var files = e.target.files;
+    $('#image-preview').empty(); 
 
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      var reader = new FileReader();
 
-  const settings = {
-    async: true,
-    crossDomain: true,
-    url: 'https://map-places.p.rapidapi.com/autocomplete/json?input='+inp+'&radius=50000',
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': 'd1cb59beddmshf5c3d4ef7537f14p1983b7jsn55184da528f0',
-      'X-RapidAPI-Host': 'map-places.p.rapidapi.com'
+      reader.onload = function(e) {
+        var imageSrc = e.target.result;
+        var imagePreview = `
+          <div>
+            <img src="${imageSrc}" alt="Selected Image" style="max-width: 150px; max-height: 150px;">
+          </div>
+        `;
+
+        $('#image-preview').append(imagePreview);
+      };
+
+      reader.readAsDataURL(file);
     }
-  };
-
-
-  $.ajax(settings).done(function (response) {
-  if (response.status=='OK') {
-
-    $('#autocomplete').empty()
-
-    response.predictions.forEach(element => {
-
-      $('#autocomplete').append(`<li><a class="dropdown-item" href="#">${element.description}</a></li>`)
-
-    });
-
-  }
-  else{
-    alert('An error occurred while fetching')
-  }
+  });
 });
-
-})
-
-$(document).on('click','.dropdown-item',function (event) {
-  event.preventDefault();
-  let t=$(this).text()
-  $('#order_delivery_address').text(t)
-  $('#order_delivery_address').val(t)
-})
-
