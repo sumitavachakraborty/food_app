@@ -115,6 +115,6 @@ class UsersController < ApplicationController
     return unless current_user != @user
 
     flash[:danger] = 'Your can edit or delete your review'
-    redirect_to root_path
+    redirect_to users_path
   end
 end
