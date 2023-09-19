@@ -46,7 +46,7 @@ all the node modules are added in github)
 rails db:setup
 ```
 
-### 5. Create the elasticsearch indices
+### 5. Create the elasticsearch indices(if elasticsearch not working properly)
 
 Make sure that elasticsearch is running at `localhost:9200`
 
@@ -62,9 +62,9 @@ Resturant.import force: true
 
 rails s
 
-Then for direct login,
+Then for admin login,
 admin_email : sumitava@gmail.com
-password : password123
+password : password456
 
 ### 6. To add latitude and longitude in form
 https://www.google.com/maps/preview/@#{latitude},#{longitude},10z
