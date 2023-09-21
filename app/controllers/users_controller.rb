@@ -3,7 +3,7 @@
 # Users Controller
 class UsersController < ApplicationController
   include ApplicationHelper
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy location makeadmin change_address]
   before_action :require_user, only: %i[show edit update destroy]
   before_action :same_user, only: %i[show edit update destroy]
   before_action :admin_user, only: %i[index]
@@ -65,26 +65,16 @@ class UsersController < ApplicationController
   end
 
   def makeadmin
-    @tempuser = User.find(params[:id])
-    @tempuser.toggle!(:admin)
+    @user.toggle!(:admin)
     respond_to(&:js)
   end
 
   def location
-    @user = User.find_by(id: params[:id])
-
-    if params[:pincode].present?
-      Resturant.get_address(params, @user)
-      coordinates_from_pincode(@user, params[:pincode])
-      redirect_to @user
-    else
-      redirect_to user_change_address_path(@user), danger: 'Wrong Pincode'
-    end
+    Resturant.get_address(params, @user)
+    coordinates_from_pincode(@user, params[:pincode]) if params[:pincode].present?
   end
 
-  def change_address
-    @user = User.find_by(id: params[:id])
-  end
+  def change_address; end
 
   def admin_login; end
 
@@ -94,7 +84,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to @user
     else
-      redirect_to admin_login_path, danger: 'Invalid login details'
+      redirect_to admin_login_users_path, danger: 'Invalid login details'
     end
   end
 

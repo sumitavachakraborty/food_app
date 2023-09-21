@@ -8,7 +8,7 @@ class BookTablesController < ApplicationController
   before_action :admin_user, only: %i[destroy]
 
   def index
-    @book_tables = @resturant.book_tables.where(user_id: current_user.id)
+    @book_tables = @resturant.book_tables.show_booking(current_user)
   end
 
   def new
