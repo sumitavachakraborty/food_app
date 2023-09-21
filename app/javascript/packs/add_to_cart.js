@@ -42,8 +42,11 @@ $(document).on("click", ".submit-order", function () {
 
   if (!carts[restid]) {
     carts[restid] = {};
+    alert(`Successfully added ${name}, to cart` );
+  } else if (!carts[restid][id]) {
+    alert(`Successfully added ${name}, to cart` );
   } else if (carts[restid][id]) {
-    alert("items already added to cart");
+    alert("Item already added in the cart");
   }
 
   var item = {
@@ -147,10 +150,9 @@ $("#checkout").click(function () {
       delete carts[restid];
       updateCartItemCount();
       updateCart();
-      alert("Submitted order successfully!");
     },
     error: function (xhr, status, error) {
-      alert("Please add items to the cart");
+      alert("Please, add items to the cart");
     },
   });
 });

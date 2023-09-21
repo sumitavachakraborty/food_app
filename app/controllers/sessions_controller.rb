@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
       get_omniauth_user(u)
     end
     if find_user_auth(user).empty?
-      redirect_to login_path, danger: 'User already signed up, login again'
+      redirect_to new_session_path, danger: 'User already signed up, login again'
     else
       user.save!
       redirect_to user

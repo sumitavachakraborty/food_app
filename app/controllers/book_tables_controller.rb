@@ -21,6 +21,7 @@ class BookTablesController < ApplicationController
     @book_tables.user_id = current_user.id
     if @book_tables.save
       flash[:success] = 'Table Booked successfully'
+      send_notification
       redirect_to resturant_book_tables_path(@resturant)
     else
       render :new
@@ -29,7 +30,7 @@ class BookTablesController < ApplicationController
 
   def show
     @resturant = Resturant.all
-    @book_table = BookTable.show_booking
+    @book_table = BookTable.show_booking(current_user)
   end
 
   def destroy
@@ -39,6 +40,12 @@ class BookTablesController < ApplicationController
   end
 
   private
+
+  def send_notification
+    Notification.create(user_id: current_user.id,
+                        message: "Booked table for #{@resturant.name}, check details",
+                        resturant_id: @resturant.id, booktable_id: @book_tables.id)
+  end
 
   def find_book_table
     @book_table = BookTable.find(params[:id])

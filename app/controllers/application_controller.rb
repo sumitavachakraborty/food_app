@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     return if logged_in?
 
     flash[:danger] = 'You must log in to continue'
-    redirect_to login_path
+    redirect_to new_session_path
   end
 
   def admin_user

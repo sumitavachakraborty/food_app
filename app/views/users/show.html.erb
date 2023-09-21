@@ -1,6 +1,6 @@
 <%= render 'shared/flash' %>
 <h1 class="text-center mt-4">Welcome <%= @user.username %></h1>
-<div class="container col-md-6 col-lg-4 text-center my-2 shadow p-3 mb-5 bg-body rounded">
+<div class="container col-md-8 col-lg-4 text-center my-2 shadow p-3 mb-5 bg-body rounded">
   <div class="mb-2">
     <%if(@user.images.present?)%>
       <%= image_tag @user.images, style: "width: 300px", class: "img-fluid"%>
@@ -32,7 +32,11 @@
   <% end %>
   <% if logged_in? && @user == current_user %>
     <%= link_to 'Edit Profile', edit_user_path(@user), class: "btn btn-outline-success"%>
-    <%= link_to 'Change delivery address', user_change_address_path(@user), class: "btn btn-outline-success"%>
+    <% if @user.address.present? %>
+      <%= link_to 'Change delivery address', change_address_user_path(@user), class: "btn btn-outline-success"%>
+    <% else %>
+      <%= link_to 'Add address', change_address_user_path(@user), class: "btn btn-outline-success"%>
+    <% end %>
   <% end %>
 </div>
 <div class="container d-flex justify-content-center">

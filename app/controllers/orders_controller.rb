@@ -4,7 +4,7 @@
 class OrdersController < ApplicationController
   before_action :require_user
   before_action :find_resturant
-  before_action :find_order, only: %i[edit update destroy]
+  before_action :find_order, only: %i[edit update destroy show]
   before_action :check_location
   before_action :check_distance
   include OrdersHelper
@@ -29,14 +29,16 @@ class OrdersController < ApplicationController
 
   def edit; end
 
+  def show; end
+
   def update
     if @order.update(params_order)
-      flash[:info] = 'Order placed successfully'
       OrderMailer.order_confirmation(current_user, @order).deliver_later
       Notification.create(user_id: current_user.id,
-                          message: "Order placed for #{@resturant.name}, Please provide rating",
-                          resturant_id: @resturant.id)
-      redirect_to resturant_orders_path(@resturant)
+                          message: "Order placed for #{@resturant.name}, check details",
+                          resturant_id: @resturant.id,
+                          order_id: @order.id)
+      redirect_to resturant_orders_path(@resturant), info: 'Order placed successfully'
     else
       render :edit
     end

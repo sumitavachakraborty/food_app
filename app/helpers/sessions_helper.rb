@@ -14,14 +14,14 @@ module SessionsHelper
     @user.token_expire = Time.now + 10.minutes
     @user.save
     UserMailer.confirmation_email(@user, @login_link).deliver_later
-    redirect_to login_path, success: 'Link has been sent to your email address'
+    redirect_to new_session_path, success: 'Link has been sent to your email address'
   end
 
   def check_user
     if @user
       mail_set_user
     else
-      redirect_to login_path, danger: 'User Not Signed Up'
+      redirect_to new_session_path, danger: 'User Not Signed Up'
     end
   end
 

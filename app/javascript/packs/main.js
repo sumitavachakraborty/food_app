@@ -4,7 +4,6 @@ $(".make_admin").click(function () {
 });
 
 function makeadmin(idata) {
-  console.log(idata);
   $.ajax({
     url: "/makeadmin",
     method: "POST",
@@ -12,7 +11,8 @@ function makeadmin(idata) {
       id: idata,
       authenticity_token: $('meta[name="csrf-token"]').attr("content"),
     },
-    success: function (data) {},
+    success: function (data) {
+    },
     error: function (data) {},
   });
 }
@@ -38,7 +38,7 @@ function markread(idata) {
       authenticity_token: $('meta[name="csrf-token"]').attr("content"),
     },
     success: function (data) {
-      alert("Marked as read successfully!");
+      alert("Marked all notifications as read!");
     },
     error: function (data) {},
   });
@@ -59,6 +59,7 @@ function count(idata) {
     error: function (data) {},
   });
 }
+
 
 // order edit
 $(document).ready(function () {
@@ -105,7 +106,7 @@ function approvereview(review_id) {
       authenticity_token: $('meta[name="csrf-token"]').attr("content"),
     },
     success: function (data) {
-      alert("Review successfully approved!");
+      alert("Succesfully reviewed");
     },
     error: function (data) {},
   });

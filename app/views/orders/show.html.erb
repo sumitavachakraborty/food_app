@@ -1,0 +1,34 @@
+<% if @order.present? %>
+  <h2 class="text-center my-3">Your order details</h2>
+  <div class="my-3">
+    <div class="d-flex justify-content-center mb-3">
+      <div class="card bg-light col-lg-6 col-sm-10">
+        <div class="card-header">
+          Ordered : <%= time_ago_in_words(@order.created_at) %> ago
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Food items :</strong>
+            <%= @order.foodname_array.join(', ')%>
+          </li>
+          <li class="list-group-item">
+            <strong>Food price :</strong>
+            <%= @order.food_price_array.join(', ')%>
+          </li>
+          <li class="list-group-item">
+            <strong>Food quantity :</strong>
+            <%= @order.foodquantity_array.join(', ')%>
+          </li>
+          <li class="list-group-item">
+            <strong>Total Price :</strong> <%= @order.total %>
+          </li>
+          <li class="list-group-item">
+            <strong>Delivery Address :</strong> <%= @order.delivery_address %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <h3 class="text-dark text-center my-3"> No orders present</h3>
+<% end %>

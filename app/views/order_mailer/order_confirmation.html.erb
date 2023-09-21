@@ -6,6 +6,9 @@
   </head>
   <body>
     <h1>Thankyou <%= @user.username %>, Your order is placed succesfully</h1>
+    <h3>Ordered items : <%= @name %></h3>
+    <h3>Ordered quantity : <%= @quantity %></h3>
+    <h3>Ordered price : <%= @price %></h3>
     <h2>Total Price for Order: Rs.<strong><%= @total %></strong></h2>
     <h2>Delivery Address : <strong><%= @address %></strong> </h2>
     <h3> Please provide ratings and reviews : <%= link_to 'Provide ratings', @review_link %></h3>

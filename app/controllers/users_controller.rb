@@ -29,6 +29,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      get_coordinates(@user, @user.city)
+      redirect_to login_sessions_path, success: "#{@user.username}! You signed in successfully,
+                                                 Please log in to continue"
+    else
+      render :new
+    end
+  end
+
   def edit; end
 
   def update
@@ -37,16 +48,6 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       render :edit
-    end
-  end
-
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      get_coordinates(@user, @user.city)
-      redirect_to login_path, success: "#{@user.username}! You signed in successfully, Please log in to continue"
-    else
-      render :new
     end
   end
 
@@ -70,7 +71,7 @@ class UsersController < ApplicationController
   end
 
   def location
-    @user = User.find_by(id: params[:user_id])
+    @user = User.find_by(id: params[:id])
 
     if params[:pincode].present?
       Resturant.get_address(params, @user)
@@ -82,7 +83,7 @@ class UsersController < ApplicationController
   end
 
   def change_address
-    @user = User.find_by(id: params[:user_id])
+    @user = User.find_by(id: params[:id])
   end
 
   def admin_login; end

@@ -5,7 +5,7 @@ class ResturantsController < ApplicationController
   before_action :set_resturant, only: %i[show edit update destroy]
   before_action :require_user
   before_action :admin_user, only: %i[edit new update destroy]
-  before_action :check_location
+  before_action :check_location, except: %i[count]
   include ResturantsHelper
 
   def show

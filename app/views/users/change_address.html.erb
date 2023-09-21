@@ -2,7 +2,7 @@
   <%= render 'shared/flash' %>
   <h1 class="text-center"> Change your Address</h1>
   <div class="container card shadow p-3 mb-3 bg-white rounded col-6">
-    <%= form_with(url: user_location_path(@user), method: :post) do |f| %>
+    <%= form_with(url: location_user_path(@user), method: :post) do |f| %>
       <div class="form-group">
         <%= f.label 'Address Line 1' %>
         <%= f.text_field 'address_line1', class: 'form-control', placeholder: 'Road number,place,appartment (e.g. 5/4 B.T road khardah, pratima appartment)', pattern: '^(?=.*[A-Za-z])[0-9A-Za-z\s,./-]+$', required: true %>

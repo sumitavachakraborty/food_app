@@ -23,14 +23,14 @@
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Logout' , logout_path , class: "nav-link", method: :delete%>
+            <%= link_to 'Logout' , logout_sessions_path , class: "nav-link", method: :delete%>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to 'Log in' , login_path , class: "nav-link" %>
+            <%= link_to 'Log in' , new_session_path , class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Sign up' , signup_path , class: "nav-link" %>
+            <%= link_to 'Sign up' , new_user_path , class: "nav-link" %>
           </li>
         <% end %>
       </ul>
@@ -42,15 +42,23 @@
               <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="0"><%= notification_count %></span>
             <% end %>
           </a>
-          <% if current_user.notifications.count>0 %>
-            <ul class="dropdown-menu p-3" id="notification-list" aria-labelledby="dropdownMenuButton1">
-              <button class="btn btn-warning mark-read my-2" value="<%= current_user.id %>">Mark all as read</button>
+          <ul class="dropdown-menu p-3" id="notification-list" aria-labelledby="dropdownMenuButton1">
+            <% if current_user.notifications.count>0 %>
+            <button class="btn btn-warning mark-read my-2" value="<%= current_user.id %>">Mark all as read</button>
               <% current_user.notifications.order(created_at: :desc).each do |notification| %>
-                <li class="notification-message"><%=link_to notification.message, new_resturant_review_url(notification.resturant_id)%></li>
-                <div class="dropdown-divider"></div>
+                <% if notification.booktable_id.present? %>
+                  <li class="notification-message"><%=link_to notification.message, resturant_book_tables_path(notification.resturant_id)%></li>
+                  <div class="dropdown-divider"></div>
+                <% else %>  
+                  <li class="notification-message"><%=link_to notification.message, resturant_order_path(notification.resturant_id,notification.order_id)%></li>
+                  <li class="notification-message"><%=link_to 'Provide review', new_resturant_review_url(notification.resturant_id)%></li>
+                  <div class="dropdown-divider"></div>
+                <% end %>
               <% end %>
-            </ul>
-          <% end %>
+            <% else %>
+              <li>No notifications present</li>
+            <% end %>
+          </ul>
         </div>
         <%=  form_with(url: resturants_path, method: :get) do |form| %>
           <div class="input-group">

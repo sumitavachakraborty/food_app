@@ -30,7 +30,7 @@ class ReviewsController < ApplicationController
 
   def update
     if @review.update(review_params)
-      flash[:warning] = 'Updated review '
+      flash[:warning] = 'Updated review'
       redirect_to resturant_path(@resturant)
     else
       render :edit
