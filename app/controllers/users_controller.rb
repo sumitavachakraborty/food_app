@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   def show
     @resturant = Resturant.all
-    @book_table = BookTable.where(user_id: current_user.id).page(params[:page])
+    @book_table = BookTable.show_booking(@user).page(params[:page])
     return unless @user.orders.present?
 
     @orders = @user.orders.order(created_at: :desc).page(params[:page])
@@ -69,12 +69,12 @@ class UsersController < ApplicationController
     respond_to(&:js)
   end
 
+  def change_address; end
+
   def location
     Resturant.get_address(params, @user)
     coordinates_from_pincode(@user, params[:pincode]) if params[:pincode].present?
   end
-
-  def change_address; end
 
   def admin_login; end
 

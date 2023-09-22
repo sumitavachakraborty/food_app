@@ -21,7 +21,7 @@
       </div>
       <div class="form-group row mb-3">
         <%= f.label :review_images %>
-        <%= f.file_field :review_images, multiple: true, id: "review_images_field" %>
+        <%= f.file_field :review_images, multiple: true, id: "review_images_field", accept: "image/*"  %>
         <div id="image-preview">
         <% if @review.review_images.any? %>
           <% @review.review_images.each do |image| %>
