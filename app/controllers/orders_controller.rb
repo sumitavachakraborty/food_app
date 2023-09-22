@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
       OrderMailer.order_confirmation(current_user, @order).deliver_later
       Notification.create(user_id: current_user.id,
                           message: "Order placed for #{@resturant.name}, check details",
-                          resturant_id: @resturant.id,order_id: @order.id)
+                          resturant_id: @resturant.id, order_id: @order.id)
       redirect_to resturant_orders_path(@resturant), info: 'Order placed successfully'
     else
       render :edit
