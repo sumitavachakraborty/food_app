@@ -31,4 +31,12 @@ module OrdersHelper
                                                         foodquantity_array: @quantity_array,
                                                         food_price_array: @price_array)
   end
+
+  def update_quantity
+    foodquantity_params = params[:order][:foodquantity_array]
+    foodquantity_array = foodquantity_params.values.map(&:to_h)
+    foodquantity_array.each_with_index do |food_params, index|
+      @order.foodquantity_array[index] = food_params['food_quantity']
+    end
+  end
 end
