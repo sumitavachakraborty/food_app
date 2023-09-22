@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   
   resources :resturants do
     resources :foods, except: [:show]
-    resources :orders, except: [:show]
+    resources :orders
     resources :reviews
     post 'approve', to: 'reviews#approve'
     get '/gallery', to: 'resturants#gallery'
