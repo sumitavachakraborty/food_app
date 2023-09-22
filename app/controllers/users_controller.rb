@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       get_coordinates(@user, @user.city)
-      redirect_to login_sessions_path, success: "#{@user.username}! You signed in successfully,
+      redirect_to new_session_path, success: "#{@user.username}! You signed in successfully,
                                                  Please log in to continue"
     else
       render :new
