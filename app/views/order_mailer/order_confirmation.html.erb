@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <h1>Thank you <%= @user.username %>, Your order is placed successfully</h1>
+  <h2>Thank you <%= @user.username %>, Your order is placed successfully</h1>
   <table border="1">
     <thead>
       <tr>
@@ -24,8 +24,8 @@
       <% end %>
     </tbody>
   </table>
-  <h2>Total Price for Order: Rs.<strong><%= @total %></strong></h2>
-  <h2>Delivery Address: <strong><%= @address %></strong></h2>
+  <h4>Total Price for Order: Rs.<strong><%= @total %></strong></h2>
+  <h4>Delivery Address: <strong><%= @address %></strong></h2>
   <h3>Please provide ratings and reviews: <%= link_to 'Provide ratings', @review_link %></h3>
 </body>
 </html>
