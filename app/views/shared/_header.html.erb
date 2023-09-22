@@ -51,7 +51,7 @@
                   <div class="dropdown-divider"></div>
                 <% else %>  
                   <li class="notification-message"><%=link_to notification.message, resturant_order_path(notification.resturant_id,notification.order_id)%></li>
-                  <li class="notification-message"><%=link_to 'Provide review', new_resturant_review_url(notification.resturant_id)%></li>
+                  <li class="notification-message"><%=link_to 'Provide review', new_resturant_review_url(notification.resturant_id), class: "text-warning fw-bolder"%></li>
                   <div class="dropdown-divider"></div>
                 <% end %>
               <% end %>

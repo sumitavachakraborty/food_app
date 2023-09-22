@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
   def update
     update_quantity
     if @order.update(params_order)
-      OrderMailer.order_confirmation(current_user, @order).deliver_later
+      OrderMailer.order_confirmation(current_user, @order).deliver_now
       Notification.create(user_id: current_user.id,
                           message: "Order placed for #{@resturant.name}, check details",
                           resturant_id: @resturant.id, order_id: @order.id)

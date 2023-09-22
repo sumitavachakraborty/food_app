@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-    <h1>Thankyou <%= @user.username %>, Your order is placed succesfully</h1>
-    <h3>Ordered items : <%= @name %></h3>
-    <h3>Ordered quantity : <%= @quantity %></h3>
-    <h3>Ordered price : <%= @price %></h3>
-    <h2>Total Price for Order: Rs.<strong><%= @total %></strong></h2>
-    <h2>Delivery Address : <strong><%= @address %></strong> </h2>
-    <h3> Please provide ratings and reviews : <%= link_to 'Provide ratings', @review_link %></h3>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Thank you <%= @user.username %>, Your order is placed successfully</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Food</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.foodquantity_array.each_with_index do |food_quantity, index| %>
+        <tr>
+          <td><%= @order.foodname_array[index] %></td>
+          <td><%= food_quantity %></td>
+          <td>Rs.<%= @order.food_price_array[index] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <h2>Total Price for Order: Rs.<strong><%= @total %></strong></h2>
+  <h2>Delivery Address: <strong><%= @address %></strong></h2>
+  <h3>Please provide ratings and reviews: <%= link_to 'Provide ratings', @review_link %></h3>
+</body>
 </html>
+
