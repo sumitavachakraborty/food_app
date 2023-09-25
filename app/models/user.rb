@@ -18,13 +18,11 @@ class User < ApplicationRecord
   validate :city_presence
 
   def city_presence
-    if city.present?
-      location = Geocoder.search(city)
-      return if location.first.present?
+    return unless city.present?
 
-      errors.add(:city, 'entered is not valid')
-    else
-      errors.add(:city, 'must be present')
-    end
+    location = Geocoder.search(city)
+    return if location.first.present?
+
+    errors.add(:city, 'entered is not valid')
   end
 end

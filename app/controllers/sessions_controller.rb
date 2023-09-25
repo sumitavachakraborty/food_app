@@ -64,6 +64,5 @@ class SessionsController < ApplicationController
     user.username = request.env['omniauth.auth'][:info][:first_name]
     user.email = request.env['omniauth.auth'][:info][:email]
     user.password_digest = SecureRandom.hex(15)
-    user.city = 'kolkata'
   end
 end
