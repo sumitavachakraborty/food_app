@@ -1,4 +1,3 @@
-//make admin
 $(".make_admin").click(function () {
   makeadmin($(this).val());
 });
@@ -11,20 +10,17 @@ function makeadmin(idata) {
       id: idata,
       authenticity_token: $('meta[name="csrf-token"]').attr("content"),
     },
-    success: function (data) {
-    },
+    success: function (data) {},
     error: function (data) {},
   });
 }
 
-// auto remove flash
 $(document).ready(function () {
   setTimeout(function () {
     $("#flash").fadeOut();
   }, 5000);
 });
 
-//mark read notifications
 $(".mark-read").click(function () {
   markread($(this).val());
 });
@@ -60,8 +56,6 @@ function count(idata) {
   });
 }
 
-
-// order edit
 $(document).ready(function () {
   var initialquantity = $('.quantity input[type="number"]');
   var initialinput = $('input[name="order[total]"]');
@@ -82,7 +76,6 @@ $(document).ready(function () {
   }
 });
 
-// rating
 $(".rating-form span").click(function () {
   var value = $(this).attr("data-value");
   $(".rating").val(value);
@@ -91,7 +84,6 @@ $(".rating-form span").click(function () {
   $(this).prevAll("span").removeClass("bi-star").addClass("bi-star-fill");
 });
 
-//approve review
 $(".approve").click(function () {
   approvereview($(this).val());
 });
@@ -112,7 +104,6 @@ function approvereview(review_id) {
   });
 }
 
-//change address
 $(document).on("click", "#change-address", function (event) {
   event.preventDefault();
 });
@@ -148,17 +139,16 @@ $(document).ready(function () {
   });
 });
 
-//review image
-$(document).ready(function() {
-  $('#review_images_field').on('change', function(e) {
+$(document).ready(function () {
+  $("#review_images_field").on("change", function (e) {
     var files = e.target.files;
-    $('#image-preview').empty(); 
+    $("#image-preview").empty();
 
     for (var i = 0; i < files.length; i++) {
       var file = files[i];
       var reader = new FileReader();
 
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         var imageSrc = e.target.result;
         var imagePreview = `
           <div>
@@ -166,7 +156,7 @@ $(document).ready(function() {
           </div>
         `;
 
-        $('#image-preview').append(imagePreview);
+        $("#image-preview").append(imagePreview);
       };
 
       reader.readAsDataURL(file);

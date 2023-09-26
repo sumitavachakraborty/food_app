@@ -1,4 +1,3 @@
-// change picture for user
 $("#change_pic").click(function () {
   console.log("clicked");
   $("#take_pic").trigger("click");
