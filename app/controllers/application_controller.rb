@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
   add_flash_types :success, :warning, :danger, :info
   helper_method :current_user, :logged_in?, :notification_count
-  include ResturantsHelper
+  include RestaurantsHelper
 
   def not_found_method
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
     return if logged_in? && current_user.admin?
 
     flash[:danger] = 'Only admins can access this page'
-    redirect_to resturants_path
+    redirect_to restaurants_path
   end
 
   def check_location
@@ -40,11 +40,11 @@ class ApplicationController < ActionController::Base
   end
 
   def check_distance
-    dis = distance_between(@resturant.latitude, @resturant.longitude, current_user.latitude, current_user.longitude)
+    dis = distance_between(@restaurant.latitude, @restaurant.longitude, current_user.latitude, current_user.longitude)
     return unless dis > 30
 
     flash[:danger] = 'Delivery location very far, more than 30 K.M'
-    redirect_to resturants_path
+    redirect_to restaurants_path
   end
 
   def notification_count

@@ -39,24 +39,21 @@ body {
   color: gold;
 }
 
-@keyframes glow {
-
-  0%,
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 10px rgba(255, 223, 0, 0.7);
-  }
-
-  50% {
-    transform: scale(1.10);
-    box-shadow: 0 0 20px rgba(255, 223, 0, 0.7);
-  }
-}
-
-.glow-animation {
-  animation: glow 1s infinite;
-}
 
 a {
   text-decoration: none !important;
+}
+
+#alert-container {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.alertcart {
+  padding: 20px;
+  background-color:  rgba(255, 221, 0, 0.977);
+  font-weight: 700;
 }

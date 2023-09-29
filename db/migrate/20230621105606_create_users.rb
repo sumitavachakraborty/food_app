@@ -12,6 +12,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :login_token
       t.string :token_expire
       t.string :images
+      t.text :address
       t.boolean :admin, default: false
 
       t.timestamps

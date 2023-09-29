@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @resturant = Resturant.all
+    @restaurant = Restaurant.all
     @book_table = BookTable.show_booking(@user).page(params[:page])
     return unless @user.orders.present?
 
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   def new
     if logged_in?
       flash[:info] = 'You are already logged in.'
-      redirect_to resturants_path
+      redirect_to restaurants_path
     else
       @user = User.new
     end
@@ -72,7 +72,7 @@ class UsersController < ApplicationController
   def change_address; end
 
   def location
-    Resturant.get_address(params, @user)
+    Restaurant.get_address(params, @user)
     coordinates_from_pincode(@user, params[:pincode]) if params[:pincode].present?
   end
 

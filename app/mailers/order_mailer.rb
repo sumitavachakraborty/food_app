@@ -11,7 +11,7 @@ class OrderMailer < ApplicationMailer
     order_attachment = pdf_generation(order)
     attachments['Order_details.pdf'] = order_attachment
     @address = order.delivery_address
-    @review_link = new_resturant_review_url(order.resturant_id)
+    @review_link = new_restaurant_review_url(order.restaurant_id)
     mail(to: @user.email, subject: 'Order placed succesfully')
   end
 

@@ -1,0 +1,62 @@
+<div class="container text-center mb-3">
+  <%= render 'shared/flash' %>
+  <h2 class="text-center mt-4"><%= @restaurant.name %></h2>
+  <%= link_to '[ Back to Restaurants listing ]', restaurants_path, class: "text-center text-danger" %>
+  <div class="w-100 ">
+    <div class="container col-12">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-12 mt-4">
+          <div class="card text-center shadow p-3 mb-5 bg-white rounded">
+            <div class="card-header fst-italic "></span>
+            <% if @restaurant.categories_id.present? %>
+              <span> <strong>Category  : </strong> <%= Category.category_name(@restaurant) %> </span>
+            <% end %>
+          </div>
+          <div class="restaurant_cover">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <% @restaurant.cover_image.each_with_index do |picture,i| %>
+                  <div class="carousel-item <%= i == 0 ? 'active' : '' %>">
+                    <%= image_tag picture,class: "mx-auto w-100", style: "height: 400px"%>
+                  </div>
+                <% end %>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <strong>Address : </strong>
+            <div class="card-text text-center"><%= @restaurant.address%></div>
+          </div>
+          <div class="btn-group d-flex flex-wrap" role="group" aria-label="Basic outlined example">
+            <% if logged_in? && current_user.admin? %>
+              <a href="#"><%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-outline-success"%></a>
+              <a href="#"><%= link_to 'Delete', restaurant_path(@restaurant), method: :delete ,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
+              <a href="#"><%= link_to 'Add Food', new_restaurant_food_path(@restaurant), class: "btn btn-outline-primary"%></a>
+            <% end %>
+            <%= link_to 'Order Online', restaurant_orders_path(@restaurant), class: "btn btn-outline-primary"%>
+            <%= link_to 'Menu', restaurant_foods_path(@restaurant), class: "btn btn-outline-danger"%>
+            <%= link_to 'Add Review', new_restaurant_review_path(@restaurant), class: "btn btn-outline-primary"%>
+            <% if @restaurant.book_tables.find_by(user_id: current_user.id).present? %>
+              <%= link_to 'Your table bookings', restaurant_book_tables_path(@restaurant), class: "btn btn-outline-success" %>
+            <% else %>
+              <%= link_to 'Book a Table', new_restaurant_book_table_path(@restaurant), class: "btn btn-outline-success" %>
+            <% end %>
+            <%= link_to 'Photos', restaurant_gallery_path(@restaurant), class: "btn btn-outline-success" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container col-lg-8 col-md-12">
+    <%= render 'reviews/show' %>
+  </div>
+</div>
+</div>

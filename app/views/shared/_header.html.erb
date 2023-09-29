@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to 'Resturants', resturants_path, class: "nav-link"  %>
+          <%= link_to 'Restaurants', restaurants_path, class: "nav-link"  %>
         </li>
         <% if logged_in? && current_user.admin? %>
           <li class="nav-item">
@@ -47,11 +47,11 @@
             <button class="btn btn-warning mark-read my-2" value="<%= current_user.id %>">Mark all as read</button>
               <% current_user.notifications.order(created_at: :desc).each do |notification| %>
                 <% if notification.booktable_id.present? %>
-                  <li class="notification-message"><%=link_to notification.message, resturant_book_tables_path(notification.resturant_id)%></li>
+                  <li class="notification-message"><%=link_to notification.message, restaurant_book_tables_path(notification.restaurant_id)%></li>
                   <div class="dropdown-divider"></div>
                 <% else %>  
-                  <li class="notification-message"><%=link_to notification.message, resturant_order_path(notification.resturant_id,notification.order_id)%></li>
-                  <li class="notification-message"><%=link_to 'Provide review', new_resturant_review_url(notification.resturant_id), class: "text-warning fw-bolder"%></li>
+                  <li class="notification-message"><%=link_to notification.message, restaurant_order_path(notification.restaurant_id,notification.order_id)%></li>
+                  <li class="notification-message"><%=link_to 'Provide review', new_restaurant_review_url(notification.restaurant_id), class: "text-warning fw-bolder"%></li>
                   <div class="dropdown-divider"></div>
                 <% end %>
               <% end %>
@@ -60,9 +60,9 @@
             <% end %>
           </ul>
         </div>
-        <%=  form_with(url: resturants_path, method: :get) do |form| %>
+        <%=  form_with(url: restaurants_path, method: :get) do |form| %>
           <div class="input-group">
-            <%= form.text_field :resturant_name, value: params[:resturant_name], placeholder: "Resturant name", class: "form-control" %>
+            <%= form.text_field :restaurant_name, value: params[:restaurant_name], placeholder: "Restaurant name", class: "form-control" %>
             <%= form.submit "Search", class: "btn btn-outline-warning" %>
           </div>
         <% end %>

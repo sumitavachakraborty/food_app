@@ -25,11 +25,11 @@ module OrdersHelper
   end
 
   def create_order
-    Resturant.find(params[:resturant_id]).orders.create(quantity: @total_quantity, total: @total_price,
-                                                        user_id: current_user.id,
-                                                        foodname_array: @food_name_array,
-                                                        foodquantity_array: @quantity_array,
-                                                        food_price_array: @price_array)
+    Restaurant.find(params[:restaurant_id]).orders.create(quantity: @total_quantity, total: @total_price,
+                                                          user_id: current_user.id,
+                                                          foodname_array: @food_name_array,
+                                                          foodquantity_array: @quantity_array,
+                                                          food_price_array: @price_array)
   end
 
   def update_quantity

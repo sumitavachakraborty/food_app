@@ -3,14 +3,14 @@
 # Orders Controller
 class OrdersController < ApplicationController
   before_action :require_user
-  before_action :find_resturant
+  before_action :find_restaurant
   before_action :find_order, only: %i[edit update destroy show]
   before_action :check_location
   before_action :check_distance
   include OrdersHelper
 
   def index
-    @food = @resturant.foods
+    @food = @restaurant.foods
   end
 
   def new; end
@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
     @order.delivery_address = current_user.address
     if @order.save!
       flash[:success] = 'Food item created successfully'
-      redirect_to edit_resturant_order_path(@resturant, @order)
+      redirect_to edit_restaurant_order_path(@restaurant, @order)
     end
     respond_to(&:js)
   end
@@ -36,9 +36,9 @@ class OrdersController < ApplicationController
     if @order.update(params_order)
       OrderMailer.order_confirmation(current_user, @order).deliver_later
       Notification.create(user_id: current_user.id,
-                          message: "Order placed for #{@resturant.name}, check details",
-                          resturant_id: @resturant.id, order_id: @order.id)
-      redirect_to resturant_orders_path(@resturant), info: 'Order placed successfully'
+                          message: "Order placed for #{@restaurant.name}, check details",
+                          restaurant_id: @restaurant.id, orders_id: @order.id)
+      redirect_to restaurant_orders_path(@restaurant), info: 'Order placed successfully'
     else
       render :edit
     end
@@ -47,7 +47,7 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     flash[:danger] = 'Order Cancelled'
-    redirect_to resturant_orders_path(@resturant)
+    redirect_to restaurant_orders_path(@restaurant)
   end
 
   private
@@ -59,8 +59,8 @@ class OrdersController < ApplicationController
                                   food_price_array: [])
   end
 
-  def find_resturant
-    @resturant = Resturant.find(params[:resturant_id])
+  def find_restaurant
+    @restaurant = Restaurant.find(params[:restaurant_id])
   end
 
   def find_order

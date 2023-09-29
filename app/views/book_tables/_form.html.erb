@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <%= render 'shared/errors', obj: @book_tables %>
-      <%= form_with(model: [@resturant, @book_tables], class: "shadow p-3 mb-5 bg-white rounded", local: true) do |f| %>
+      <%= form_with(model: [@restaurant, @book_tables], class: "shadow p-3 mb-5 bg-white rounded", local: true) do |f| %>
         <div class="form-group mb-3">
           <span class="text-danger">*</span>
           <%= f.label :book_date, class: "col-form-label" %>
@@ -24,6 +24,6 @@
       <% end %>
     </div>
   </div>
-  <%= link_to '[ Back to Resturant ]', resturant_path(@resturant), class: "text-center d-block my-3" %>
+  <%= link_to '[ Back to Restaurant ]', restaurant_path(@restaurant), class: "text-center d-block my-3" %>
 </div>
 

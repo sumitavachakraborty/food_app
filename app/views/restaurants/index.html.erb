@@ -1,0 +1,68 @@
+<div class="container text-center mb-3">
+  <%= render 'shared/flash' %>
+  <div class="container row justify-content-center my-2">
+    <div class="col-lg-5 col-md-10 text-center">
+      <%= render 'search' %>
+    </div>
+  </div>
+  <% if @nearest_locations.empty? || @nearest_locations.nil? %>
+    <div class="container row justify-content-center align-item-center my-2">
+      <div class="col-5 text-center">
+        <span> <strong>
+            <h3> No Restaurant's Found</h3>
+          </strong></span>
+      </div>
+    </div>
+  <% else %>
+    <h2 class="text-center mt-4"> All Restaurants within your 20 k.m </h2>
+    <% if logged_in? && current_user.admin? %>
+      <div class="btn-group" role="group" aria-label="Basic outlined example">
+        <%= link_to 'Add new Restaurants' , new_restaurant_path , class: "btn btn-outline-success my-4"%>
+        <%= link_to 'All Categories' , categories_path , class: "btn btn-outline-success my-4"%>
+      </div>
+    <%end%>
+    <span class="btn btn-warning disabled my-4"> <strong>Your Location : </strong> <%= current_user.city.upcase %> </span>
+    <% @nearest_locations.each do |restaurant,distance| %>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="container col-md-8 col-lg-7 ">
+            <div class="card text-center shadow p-3 mb-5 bg-white rounded">
+              <div class="card-header fst-italic d-flex justify-content-around"> <span>  Restaurant name : <%= link_to restaurant.name, restaurant_path(restaurant)%> </span>
+                <% if restaurant.categories_id.present? %>
+                  <span> <strong>Category  : </strong> <%= Category.category_name(restaurant) %> </span>
+                <% end %>
+              </div>
+              <div class="restaurant_cover">
+                <%if(restaurant.cover_image.first.present?)%>
+                  <%= link_to image_tag(restaurant.cover_image.first,style: "width: 400px", class: "img-fluid"),restaurant_path(restaurant)%>
+                <%else%>
+                  <%= image_tag "userimage.jpg", style: "width: 400px", class: "img-fluid"%>
+                <%end%>
+              </div>
+              <div class="card-body">
+                <strong>Address  : </strong>
+                <div class="card-text text-center mb-2"><%= restaurant.address%></div>
+                <% if logged_in? && (current_user.admin?) %>
+                  <a href="#"><%= link_to 'Edit', edit_restaurant_path(restaurant), class: "btn btn-outline-success"%></a>
+                  <a href="#"><%= link_to 'Delete', restaurant_path(restaurant),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
+                <% end %>
+                <%= link_to 'Order Online', restaurant_orders_path(restaurant), class: "btn btn-outline-primary"%>
+                <% if restaurant.check_tables(current_user) %>
+                  <%= link_to 'Your table bookings', restaurant_book_tables_path(restaurant), class: "btn btn-outline-success" %>
+                <% else %>
+                  <%= link_to 'Book a Table', new_restaurant_book_table_path(restaurant), class: "btn btn-outline-success" %>
+                <% end %>
+              </div>
+              <div class="card-footer text-body-secondary">
+                <strong>Distance from <%= current_user.city.upcase %> : - </strong> <%= distance %> Kilometer 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end%>
+    <div class="d-flex justify-content-center">
+      <span><%= paginate @nearest_locations %></span>
+    </div>
+  </div>
+<% end %>

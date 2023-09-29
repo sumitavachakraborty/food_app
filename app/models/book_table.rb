@@ -4,7 +4,7 @@
 class BookTable < ApplicationRecord
   paginates_per 3
   belongs_to :user
-  belongs_to :resturant
+  belongs_to :restaurant
 
   validate :book_date_cannotbe_in_the_past
   validates :book_time, presence: true

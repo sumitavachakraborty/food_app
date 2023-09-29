@@ -7,9 +7,9 @@ class CreateReviews < ActiveRecord::Migration[6.1]
       t.text :comment
       t.boolean :approval, default: false
       t.integer :rating
-      t.references :resturant, foreign_key: true
+      t.references :restaurant, foreign_key: true, on_delete: :cascade
       t.string :review_images
-      t.references :user, foreign_key: true
+      t.references :user, foreign_key: true, on_delete: :nullify
 
       t.timestamps
     end

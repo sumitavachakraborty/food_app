@@ -2,7 +2,7 @@
 
 # Food Model
 class Food < ApplicationRecord
-  belongs_to :resturant
+  belongs_to :restaurant
   has_one_attached :food_image
   validates :food_name, presence: true,
                         length: { minimum: 3, maximum: 20 }

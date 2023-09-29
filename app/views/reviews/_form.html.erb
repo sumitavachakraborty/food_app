@@ -1,8 +1,8 @@
 <% if logged_in? %>
   <%= render 'shared/errors', obj: @review%>
-  <div class="text-center">  <%= link_to '[ Back to Resturant ] ', resturant_path(@resturant), class: "tet-primary " %></div>
+  <div class="text-center">  <%= link_to '[ Back to Restaurant ] ', restaurant_path(@restaurant), class: "tet-primary " %></div>
   <div class="rating-form-body well">
-    <%= form_with(model:[@resturant,@review],class: "shadow p-3 mb-5 bg-white rounded") do |f| %>
+    <%= form_with(model:[@restaurant,@review],class: "shadow p-3 mb-5 bg-white rounded") do |f| %>
       <div class="rating-form form-group">
         <%= f.hidden_field :rating, class: "rating", in: 1..5 %>
         <% (1..5).each do |value| %>

@@ -3,7 +3,7 @@
     <div class="col-10" >
       <%= render 'shared/errors', obj: @order%>
       <%= render 'shared/flash' %>
-      <%= form_with(model: [@resturant,@order],class: "shadow p-3 mb-5 bg-white rounded",local: true) do |f| %>
+      <%= form_with(model: [@restaurant,@order],class: "shadow p-3 mb-5 bg-white rounded",local: true) do |f| %>
         <div class="form-group row mb-3">
           <%= f.label :quantity, class: "col-2 col-form-label" %>
           <div class ="col-10">
@@ -21,6 +21,6 @@
         </div>
       <% end %>
     </div>
-    <%= link_to '[ Back to Foods listing ]', resturant_foods_path(@resturant), class: "text-center" %>
+    <%= link_to '[ Back to Foods listing ]', restaurant_foods_path(@restaurant), class: "text-center" %>
   </div>
 </div>

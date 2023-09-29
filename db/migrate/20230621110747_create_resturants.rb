@@ -3,7 +3,7 @@
 
 class CreateResturants < ActiveRecord::Migration[6.1]
   def change
-    create_table :resturants do |t|
+    create_table :restaurants do |t|
       t.string :name
       t.text :address
       t.string :cover_image

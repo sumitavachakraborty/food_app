@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     get '/auth/google_oauth2/callback', to: 'sessions#omniauth', on: :collection
   end
   
-  resources :resturants do
+  resources :restaurants do
     resources :foods, except: [:show]
     resources :orders
     resources :reviews

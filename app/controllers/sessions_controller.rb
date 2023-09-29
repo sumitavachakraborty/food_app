@@ -57,7 +57,7 @@ class SessionsController < ApplicationController
   end
 
   def check_login
-    redirect_to resturants_path if logged_in?
+    redirect_to restaurants_path if logged_in?
   end
 
   def get_omniauth_user(user)

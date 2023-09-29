@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_one_attached :images
-  has_many :orders, dependent: :nullify
+  has_many :orders, dependent: :destroy
   has_many :reviews, dependent: :nullify
   has_many :notifications, dependent: :destroy
   has_many :book_tables, dependent: :destroy

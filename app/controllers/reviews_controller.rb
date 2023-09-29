@@ -4,7 +4,7 @@
 class ReviewsController < ApplicationController
   before_action :require_user, except: [:show]
   before_action :find_review, only: %i[update destroy approve edit]
-  before_action :set_resturant
+  before_action :set_restaurant
   before_action :same_user, only: %i[edit update destroy]
 
   def index; end
@@ -12,15 +12,15 @@ class ReviewsController < ApplicationController
   def show; end
 
   def new
-    @review = @resturant.reviews.new
+    @review = @restaurant.reviews.new
   end
 
   def create
-    @review = @resturant.reviews.new(review_params)
+    @review = @restaurant.reviews.new(review_params)
     @review.user_id = current_user.id
     if @review.save
       flash[:success] = 'Review was successfully added, will be visible after approval'
-      redirect_to resturant_path(@resturant)
+      redirect_to restaurant_path(@restaurant)
     else
       render :new
     end
@@ -31,7 +31,7 @@ class ReviewsController < ApplicationController
   def update
     if @review.update(review_params)
       flash[:warning] = 'Updated review'
-      redirect_to resturant_path(@resturant)
+      redirect_to restaurant_path(@restaurant)
     else
       render :edit
     end
@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review.destroy
-    redirect_to resturant_path(@resturant)
+    redirect_to restaurant_path(@restaurant)
   end
 
   def approve
@@ -54,8 +54,8 @@ class ReviewsController < ApplicationController
     @review = Review.find(params[:id])
   end
 
-  def set_resturant
-    @resturant = Resturant.find(params[:resturant_id])
+  def set_restaurant
+    @restaurant = Restaurant.find(params[:restaurant_id])
   end
 
   def review_params
@@ -66,6 +66,6 @@ class ReviewsController < ApplicationController
     return unless current_user == @user
 
     flash[:danger] = 'Your can edit or delete your review'
-    redirect_to resturant_path(@resturant)
+    redirect_to restaurant_path(@restaurant)
   end
 end

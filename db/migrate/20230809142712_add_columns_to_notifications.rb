@@ -3,7 +3,7 @@
 # changed user foreign key
 class AddColumnsToNotifications < ActiveRecord::Migration[6.1]
   def change
-    remove_foreign_key :notifications, :users
-    add_foreign_key :notifications, :users, null: false, on_delete: :cascade
+    add_reference :notifications, :book_tables, optionals: true
+    add_reference :notifications, :orders, optionals: true
   end
 end

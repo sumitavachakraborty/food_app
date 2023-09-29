@@ -3,8 +3,8 @@
 # add_column to resturants
 class AddLocationToResturant < ActiveRecord::Migration[6.1]
   def change
-    add_column :resturants, :city, :string
-    add_column :resturants, :latitude, :string
-    add_column :resturants, :longitude, :string
+    add_column :restaurants, :city, :string
+    add_column :restaurants, :latitude, :string
+    add_column :restaurants, :longitude, :string
   end
 end

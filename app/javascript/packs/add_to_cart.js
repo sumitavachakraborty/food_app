@@ -1,17 +1,56 @@
 var carts = {};
 var restid = 0;
-
-function getRestIdFromUrl() {
-  var urlParts = window.location.pathname.split("/");
-  var restIdIndex = urlParts.indexOf("resturants") + 1;
-  return urlParts[restIdIndex];
-}
-
 $(document).ready(function () {
   initializeCarts();
   updateConfirmButtonStatus();
 });
 
+function getRestIdFromUrl() {
+  var urlParts = window.location.pathname.split("/");
+  var restIdIndex = urlParts.indexOf("restaurants") + 1;
+  return urlParts[restIdIndex];
+}
+function showAlert(message) {
+  const alertContainer = document.getElementById('alert-container');
+  const alertElement = document.createElement('div');
+  alertElement.className = 'alertcart alert-primary'; 
+  alertElement.textContent = message;
+
+  alertContainer.appendChild(alertElement);
+  setTimeout(() => {
+      alertContainer.removeChild(alertElement);
+  }, 5000);
+}
+$(document).on("click", ".submit-order", function () {
+  var orderItem = $(this).closest(".order-item");
+  var quantity = orderItem.find(".order-quantity").val();
+  var id = $(this).val();
+  var price = parseFloat(orderItem.find(".card-text").text());
+  var name = orderItem.find(".foodname").text();
+  console.log("ordered item")
+  
+  if (!carts[restid]) {
+    carts[restid] = {};
+    alert(`Successfully added ${name} to cart`);
+    console.log("first alert")
+  } else if (!carts[restid][id]) {
+    console.log("second alert")
+    alert(`Successfully added ${name} to cart`);
+  } else if (carts[restid][id]) {
+    alert("Item already added in the cart");
+  }
+
+  var item = {
+    q: parseInt(quantity),
+    p: price,
+    n: name,
+  };
+  carts[restid][id] = item;
+
+  updateCartItemCount();
+  updateCart();
+  updateConfirmButtonStatus();
+});
 function initializeCarts() {
   if (localStorage.getItem("carts")) {
     carts = JSON.parse(localStorage.getItem("carts"));
@@ -32,40 +71,6 @@ function updateConfirmButtonStatus() {
     confirmButton.text("Add some items");
   }
 }
-
-$(document).on("click", ".submit-order", function () {
-  var orderItem = $(this).closest(".order-item");
-  var quantity = orderItem.find(".order-quantity").val();
-  var id = $(this).val();
-  var price = parseFloat(orderItem.find(".card-text").text());
-  var name = orderItem.find(".foodname").text();
-
-  if (!carts[restid]) {
-    carts[restid] = {};
-    alert(`Successfully added ${name}, to cart` );
-  } else if (!carts[restid][id]) {
-    alert(`Successfully added ${name}, to cart` );
-  } else if (carts[restid][id]) {
-    alert("Item already added in the cart");
-  }
-
-  var item = {
-    q: parseInt(quantity),
-    p: price,
-    n: name,
-  };
-  carts[restid][id] = item;
-
-  updateCartItemCount();
-  updateCart();
-  updateConfirmButtonStatus();
-
-  $("#cart-btn").addClass("glow-animation");
-  setTimeout(function () {
-    $("#cart-btn").removeClass("glow-animation");
-  }, 5000);
-});
-
 $(document).on("click", ".remove-item", function () {
   var itemKey = $(this).data("item-key");
   delete carts[restid][itemKey];
@@ -140,7 +145,7 @@ function updateCart() {
 $("#checkout").click(function () {
   localStorage.setItem("carts", JSON.stringify(carts));
   $.ajax({
-    url: "/resturants/" + restid + "/orders",
+    url: "/restaurants/" + restid + "/orders",
     method: "POST",
     data: {
       cart_items: carts[restid],

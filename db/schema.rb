@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_21_064719) do
+ActiveRecord::Schema.define(version: 2023_08_09_142712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,14 +45,14 @@ ActiveRecord::Schema.define(version: 2023_09_21_064719) do
   end
 
   create_table "book_tables", force: :cascade do |t|
-    t.bigint "resturant_id", null: false
+    t.bigint "restaurant_id", null: false
     t.datetime "book_date"
     t.datetime "book_time"
     t.integer "head_count"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["resturant_id"], name: "index_book_tables_on_resturant_id"
+    t.index ["restaurant_id"], name: "index_book_tables_on_restaurant_id"
     t.index ["user_id"], name: "index_book_tables_on_user_id"
   end
 
@@ -63,31 +63,35 @@ ActiveRecord::Schema.define(version: 2023_09_21_064719) do
   end
 
   create_table "foods", force: :cascade do |t|
-    t.bigint "resturant_id", null: false
+    t.bigint "restaurant_id", null: false
     t.string "food_name"
     t.string "food_price"
     t.string "food_image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["resturant_id"], name: "index_foods_on_resturant_id"
+    t.index ["restaurant_id"], name: "index_foods_on_restaurant_id"
   end
 
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "message"
     t.boolean "read", default: false
+    t.bigint "restaurant_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "resturant_id"
-    t.integer "order_id"
-    t.integer "booktable_id"
+    t.bigint "book_tables_id"
+    t.bigint "orders_id"
+    t.index ["book_tables_id"], name: "index_notifications_on_book_tables_id"
+    t.index ["orders_id"], name: "index_notifications_on_orders_id"
+    t.index ["restaurant_id"], name: "index_notifications_on_restaurant_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "orders", force: :cascade do |t|
-    t.bigint "resturant_id", null: false
+    t.bigint "restaurant_id", null: false
     t.float "total"
     t.integer "quantity"
+    t.text "pincode"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -95,12 +99,11 @@ ActiveRecord::Schema.define(version: 2023_09_21_064719) do
     t.integer "foodquantity_array", default: [], array: true
     t.float "food_price_array", default: [], array: true
     t.string "delivery_address"
-    t.text "pincode"
-    t.index ["resturant_id"], name: "index_orders_on_resturant_id"
+    t.index ["restaurant_id"], name: "index_orders_on_restaurant_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "resturants", force: :cascade do |t|
+  create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.text "address"
     t.string "cover_image"
@@ -109,19 +112,20 @@ ActiveRecord::Schema.define(version: 2023_09_21_064719) do
     t.string "city"
     t.string "latitude"
     t.string "longitude"
-    t.integer "category_id"
+    t.bigint "categories_id"
+    t.index ["categories_id"], name: "index_restaurants_on_categories_id"
   end
 
   create_table "reviews", force: :cascade do |t|
     t.text "comment"
     t.boolean "approval", default: false
     t.integer "rating"
-    t.bigint "resturant_id"
+    t.bigint "restaurant_id"
     t.string "review_images"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["resturant_id"], name: "index_reviews_on_resturant_id"
+    t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
@@ -134,25 +138,25 @@ ActiveRecord::Schema.define(version: 2023_09_21_064719) do
     t.string "login_token"
     t.string "token_expire"
     t.string "images"
+    t.text "address"
     t.boolean "admin", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "city"
     t.string "latitude"
     t.string "longitude"
-    t.text "address"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "book_tables", "resturants"
-  add_foreign_key "book_tables", "users", on_delete: :cascade
-  add_foreign_key "foods", "resturants"
-  add_foreign_key "notifications", "users", on_delete: :cascade
-  add_foreign_key "orders", "resturants"
-  add_foreign_key "orders", "users", on_delete: :nullify
-  add_foreign_key "reviews", "resturants"
-  add_foreign_key "reviews", "users", on_delete: :nullify
+  add_foreign_key "book_tables", "restaurants"
+  add_foreign_key "book_tables", "users"
+  add_foreign_key "foods", "restaurants"
+  add_foreign_key "notifications", "restaurants"
+  add_foreign_key "notifications", "users"
+  add_foreign_key "orders", "restaurants"
+  add_foreign_key "orders", "users"
+  add_foreign_key "reviews", "restaurants"
+  add_foreign_key "reviews", "users"
 end
-
 #rubocop:enable all

@@ -3,7 +3,7 @@
 # Review Model
 class Review < ApplicationRecord
   belongs_to :user
-  belongs_to :resturant
+  belongs_to :restaurant
   has_many_attached :review_images
   validates :rating, presence: true
   validates :comment, length: { minimum: 3, maximum: 45 }

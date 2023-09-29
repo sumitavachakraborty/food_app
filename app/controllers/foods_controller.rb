@@ -4,24 +4,24 @@
 class FoodsController < ApplicationController
   before_action :set_food, only: %i[edit update destroy]
   before_action :require_user, except: %i[index]
-  before_action :find_resturant
+  before_action :find_restaurant
   before_action :require_user
 
   def index
-    @food = @resturant.foods
+    @food = @restaurant.foods
   end
 
   def new
-    @food = @resturant.foods.new
+    @food = @restaurant.foods.new
   end
 
   def edit; end
 
   def create
-    @food = @resturant.foods.new(food_params)
+    @food = @restaurant.foods.new(food_params)
     if @food.save
       flash[:success] = 'Food item created successfully'
-      redirect_to resturant_foods_path(@resturant)
+      redirect_to restaurant_foods_path(@restaurant)
     else
       render :new
     end
@@ -30,7 +30,7 @@ class FoodsController < ApplicationController
   def update
     if @food.update(food_params)
       flash[:info] = 'Food item updated successfully'
-      redirect_to resturant_foods_path(@resturant)
+      redirect_to restaurant_foods_path(@restaurant)
     else
       render :edit
     end
@@ -38,8 +38,8 @@ class FoodsController < ApplicationController
 
   def destroy
     @food.destroy
-    flash[:danger] = 'Resturant deleted successfully'
-    redirect_to resturant_foods_path(@resturant)
+    flash[:danger] = 'Restaurant deleted successfully'
+    redirect_to restaurant_foods_path(@restaurant)
   end
 
   private
@@ -52,7 +52,7 @@ class FoodsController < ApplicationController
     @food = Food.find(params[:id])
   end
 
-  def find_resturant
-    @resturant = Resturant.find(params[:resturant_id])
+  def find_restaurant
+    @restaurant = Restaurant.find(params[:restaurant_id])
   end
 end
