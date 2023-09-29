@@ -9,7 +9,7 @@ class CreateReviews < ActiveRecord::Migration[6.1]
       t.integer :rating
       t.references :restaurant, null: false, foreign_key: true
       t.string :review_images
-      t.references :user, foreign_key: true
+      t.references :user, foreign_key: true, null: false
 
       t.timestamps
     end

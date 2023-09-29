@@ -44,11 +44,11 @@ ActiveRecord::Schema.define(version: 2023_08_09_142712) do
   end
 
   create_table "book_tables", force: :cascade do |t|
-    t.bigint "restaurant_id"
+    t.bigint "restaurant_id", null: false
     t.datetime "book_date"
     t.datetime "book_time"
     t.integer "head_count"
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["restaurant_id"], name: "index_book_tables_on_restaurant_id"
