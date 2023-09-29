@@ -2,11 +2,8 @@
 
 # Orders Controller
 class OrdersController < ApplicationController
-  before_action :require_user
-  before_action :find_restaurant
+  before_action :require_user, :find_restaurant, :check_location, :check_distance
   before_action :find_order, only: %i[edit update destroy show]
-  before_action :check_location
-  before_action :check_distance
   include OrdersHelper
 
   def index

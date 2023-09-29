@@ -17,8 +17,8 @@ RSpec.describe Food, type: :model do
   end
 
   describe 'associations' do
-    it 'belongs to a resturant' do
-      association = Food.reflect_on_association(:resturant)
+    it 'belongs to a restaurant' do
+      association = Food.reflect_on_association(:restaurant)
       expect(association.macro).to eq(:belongs_to)
     end
   end

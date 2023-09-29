@@ -5,7 +5,6 @@ class FoodsController < ApplicationController
   before_action :set_food, only: %i[edit update destroy]
   before_action :require_user, except: %i[index]
   before_action :find_restaurant
-  before_action :require_user
 
   def index
     @food = @restaurant.foods

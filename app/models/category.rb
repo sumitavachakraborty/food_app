@@ -7,6 +7,6 @@ class Category < ApplicationRecord
   validates :category_name, presence: true
 
   def self.category_name(resturant_id)
-    Category.find(resturant_id.categories_id).category_name
+    Category.find(resturant_id.category_id).category_name
   end
 end

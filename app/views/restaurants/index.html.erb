@@ -28,7 +28,7 @@
           <div class="container col-md-8 col-lg-7 ">
             <div class="card text-center shadow p-3 mb-5 bg-white rounded">
               <div class="card-header fst-italic d-flex justify-content-around"> <span>  Restaurant name : <%= link_to restaurant.name, restaurant_path(restaurant)%> </span>
-                <% if restaurant.categories_id.present? %>
+                <% if restaurant.category_id.present? %>
                   <span> <strong>Category  : </strong> <%= Category.category_name(restaurant) %> </span>
                 <% end %>
               </div>

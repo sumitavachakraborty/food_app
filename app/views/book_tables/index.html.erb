@@ -1,35 +1,42 @@
 <div class="container text-center">
   <div class="container text-center mb-3">
     <%= render 'shared/flash' %>
-    <%= link_to 'Book Table', new_restaurant_book_table_path(@restaurant), class: "btn btn-success mt-4" %>
-    <h2 class="text-center my-4">
-      <%= current_user.username%>'s Table Bookings
-    </h2>
-    <% @book_tables.each do |table| %>
-      <div class="row justify-content-center mb-3">
-        <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem">
-          <div class="card-body">
-            <h5 class="card-title">
-              <strong>Book Date :</strong>
-              <%= table.book_date.strftime('%Y-%m-%d') %>
-            </h5>
-            <h6 class="card-subtitle my-2 text-muted">
-              <strong>Book time :</strong>
-              <%= table.book_time.strftime('%H:%M') %>
-            </h6>
-            <p class="card-text">
-              <strong> Head Count :</strong>
-              <%= table.head_count %>
-            </p>
-            <a href="#" class="card-link">
-              <%= link_to @restaurant.name, restaurant_path(@restaurant),class:"card-link" %>
-            </a>
+    <%= link_to '[ Back to Restaurant ]', restaurant_path(@restaurant), class: "text-center d-block my-3" %>
+    <% if @book_tables.empty? %>
+      <h2 class="text-center my-4">
+        No Table Bookings, <%= link_to 'Book Table now', new_restaurant_book_table_path(@restaurant), class: "btn btn-success" %>
+      </h2>  
+    <% else %>
+    <%= link_to 'Book Table', new_restaurant_book_table_path(@restaurant), class: "btn btn-success" %>
+      <h2 class="text-center my-4">
+        <%= current_user.username%>'s Table Bookings
+      </h2>
+      <% @book_tables.each do |table| %>
+        <div class="row justify-content-center mb-3">
+          <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">
+                <strong>Book Date :</strong>
+                <%= table.book_date.strftime('%Y-%m-%d') %>
+              </h5>
+              <h6 class="card-subtitle my-2 text-muted">
+                <strong>Book time :</strong>
+                <%= table.book_time.strftime('%H:%M') %>
+              </h6>
+              <p class="card-text">
+                <strong> Head Count :</strong>
+                <%= table.head_count %>
+              </p>
+              <a href="#" class="card-link">
+                <%= link_to @restaurant.name, restaurant_path(@restaurant),class:"card-link" %>
+              </a>
+            </div>
+            <% if logged_in? && (current_user.admin?) %>
+              <%= link_to 'Delete', restaurant_book_table_path(@restaurant,table),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+            <% end %>
           </div>
-          <% if logged_in? && (current_user.admin?) %>
-            <%= link_to 'Delete', restaurant_book_table_path(@restaurant,table),method: :delete,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
-          <% end %>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    <%end  %>
   </div>
 </div>

@@ -13,8 +13,8 @@ RSpec.describe Category, type: :model do
   end
 
   describe 'associations' do
-    it 'has many resturants' do
-      association = Category.reflect_on_association(:resturants)
+    it 'has many restaurants' do
+      association = Category.reflect_on_association(:restaurants)
       expect(association.macro).to eq(:has_many)
     end
   end

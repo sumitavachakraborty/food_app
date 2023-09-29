@@ -37,7 +37,7 @@ module RestaurantsHelper
   end
 
   def search_and_category_blank?
-    params[:search].blank? && params[:categories_id].blank?
+    params[:search].blank? && params[:category_id].blank?
   end
 
   def set_reference_coordinates
@@ -57,9 +57,9 @@ module RestaurantsHelper
   end
 
   def filter_restaurants_by_category
-    if params[:categories_id].present?
-      session[:categories_id] = params[:categories_id]
-      @restaurant = Restaurant.find_category(params[:categories_id])
+    if params[:category_id].present?
+      session[:category_id] = params[:category_id]
+      @restaurant = Category.find(params[:category_id]).restaurants
     end
     return unless @restaurant.empty?
 

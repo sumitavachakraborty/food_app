@@ -21,18 +21,18 @@ Rails.application.routes.draw do
     resources :orders
     resources :reviews
     post 'approve', to: 'reviews#approve'
-    get '/gallery', to: 'resturants#gallery'
+    get '/gallery', to: 'restaurants#gallery'
     resources :book_tables, except: %i[edit update]
     get 'search', on: :collection
     get 'filter_locations', on: :collection
-    post 'image', to: 'resturants#attach_image'
+    post 'image', to: 'restaurants#attach_image'
   end
   
   post 'image', to: 'users#image'
 
   post 'makeadmin', to: 'users#makeadmin'
-  post 'markread', to: 'resturants#markread'
-  post 'count', to: 'resturants#count'
+  post 'markread', to: 'restaurants#markread'
+  post 'count', to: 'restaurants#count'
   match '*unmatched', to: 'application#not_found_method', via: :all, constraints: lambda { |req|
     !req.path.match(%r{\A/rails/active_storage/})
   }

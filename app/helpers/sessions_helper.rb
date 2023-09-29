@@ -28,7 +28,7 @@ module SessionsHelper
   def make_valid
     session[:user_id] = @user.id
     flash[:info] = 'Login successful'
-    redirect_to resturants_path
+    redirect_to restaurants_path
   end
 
   def find_user_auth(user)

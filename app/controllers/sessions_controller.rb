@@ -2,9 +2,9 @@
 
 # Sessions controller.
 class SessionsController < ApplicationController
+  before_action :check_login, only: %i[new create]
   include ApplicationHelper
   include SessionsHelper
-  before_action :check_login, only: %i[new create]
 
   def new; end
 

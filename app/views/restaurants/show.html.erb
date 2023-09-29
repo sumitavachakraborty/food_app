@@ -8,7 +8,7 @@
         <div class="col-lg-8 col-md-12 mt-4">
           <div class="card text-center shadow p-3 mb-5 bg-white rounded">
             <div class="card-header fst-italic "></span>
-            <% if @restaurant.categories_id.present? %>
+            <% if @restaurant.category_id.present? %>
               <span> <strong>Category  : </strong> <%= Category.category_name(@restaurant) %> </span>
             <% end %>
           </div>

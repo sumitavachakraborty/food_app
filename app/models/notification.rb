@@ -3,5 +3,6 @@
 # Notification Model
 class Notification < ApplicationRecord
   belongs_to :user
-  scope :find_notification_count, ->(current_user) { current_user.notifications.where(read: false).count }
+  belongs_to :book_table, optional: true
+  scope :unread_notifications, ->(current_user) { current_user.notifications.where(read: false).count }
 end

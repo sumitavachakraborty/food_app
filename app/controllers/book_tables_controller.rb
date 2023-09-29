@@ -44,7 +44,7 @@ class BookTablesController < ApplicationController
   def send_notification
     Notification.create(user_id: current_user.id,
                         message: "Booked table for #{@restaurant.name}, check details",
-                        restaurant_id: @restaurant.id, booktable_id: @book_tables.id)
+                        restaurant_id: @restaurant.id, book_table_id: @book_tables.id)
   end
 
   def find_book_table

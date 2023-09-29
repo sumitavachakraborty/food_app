@@ -56,7 +56,7 @@ restaurants = [
     address: 'Sodepur, Khardaha, Barrackpore, North 24 Parganas, West Bengal, 700114, India',
     latitude: '22.7013927',
     longitude: '88.371923',
-    categories_id: 2,
+    category_id: 2,
     cover_image: 'food/food1.jpg'
   },
   {
@@ -64,7 +64,7 @@ restaurants = [
     address: 'Rowland Row, Ho Chi Minh Sarani, Kolkata, West Bengal, 700020, India',
     latitude: '22.5369841',
     longitude: '88.3569412',
-    categories_id: 1,
+    category_id: 1,
     cover_image: 'food/food2.jpg'
   },
   {
@@ -72,7 +72,7 @@ restaurants = [
     address: 'CF Block, Sector I, Bidhannagar, North 24 Parganas, West Bengal, 700064, India',
     latitude: '22.5953422',
     longitude: '88.41695',
-    categories_id: 3,
+    category_id: 3,
     cover_image: 'food/food3.jpg'
   },
   {
@@ -80,7 +80,7 @@ restaurants = [
     address: 'Birla High School, Hungerford Street, Mallick Bazaar, Ho Chi Minh Sarani, Kolkata, West Bengal, 700071, India',
     latitude: '22.5445663',
     longitude: '88.3544478',
-    categories_id: 3,
+    category_id: 3,
     cover_image: 'food/food4.jpg'
   },
   {
@@ -88,7 +88,7 @@ restaurants = [
     address: 'Manoharpukur, Kolkata, West Bengal, 700033, India',
     latitude: '22.5150583',
     longitude: '88.3528332',
-    categories_id: 2,
+    category_id: 2,
     cover_image: 'food/food5.jpg'
   },
   {
@@ -96,7 +96,7 @@ restaurants = [
     address: 'Hindustan Club, Ramani Chatterji Road, Ballygunge, Kolkata, West Bengal, 700029, India',
     latitude: '22.5192695',
     longitude: '88.3606188',
-    categories_id: 1,
+    category_id: 1,
     cover_image: 'food/food7.jpg'
   },
   {
@@ -104,7 +104,7 @@ restaurants = [
     address: 'Anjali Bari, Sri Aurobindo Sarani, Shyam Bazar, Kolkata, West Bengal, 700005, India',
     latitude: '22.5956483',
     longitude: '88.365898',
-    categories_id: nil,
+    category_id: nil,
     cover_image: 'food/food6.jpg'
   },
   {
@@ -112,7 +112,7 @@ restaurants = [
     address: 'GN Block, Sector V, Bidhannagar, Bhangar - II, South 24 Parganas, West Bengal, 700091, India',
     latitude: '22.5688991',
     longitude: '88.4283597',
-    categories_id: 1,
+    category_id: 1,
     cover_image: 'food/food5.jpg'
   },
   {
@@ -120,7 +120,7 @@ restaurants = [
     address: "Devil's, Barrackpore Trunk Road, Milan Garh Colony, Sodepur, Kamarhati, Barrackpore, North 24 Parganas, West Bengal, 700114, India",
     latitude: '22.7604784',
     longitude: '88.3671125',
-    categories_id: 1,
+    category_id: 1,
     cover_image: 'food/food8.jpg'
   },
   {
@@ -128,7 +128,7 @@ restaurants = [
     address: 'Kolkata, West Bengal, 700107, India',
     latitude: '22.519388',
     longitude: '88.3964386',
-    categories_id: 1,
+    category_id: 1,
     cover_image: 'food/food9.jpg'
   },
   {
@@ -136,7 +136,7 @@ restaurants = [
     address: 'Kalyani City, Kalyani, Nadia, West Bengal, 741235, India',
     latitude: '22.9793009',
     longitude: '88.4322281',
-    categories_id: 1,
+    category_id: 1,
     cover_image: 'food/food8.jpg'
   }
 ]

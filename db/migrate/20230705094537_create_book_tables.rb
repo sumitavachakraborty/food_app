@@ -4,11 +4,11 @@
 class CreateBookTables < ActiveRecord::Migration[6.1]
   def change
     create_table :book_tables do |t|
-      t.references :restaurant, null: false, foreign_key: true, on_delete: :cascade
+      t.references :restaurant, foreign_key: true
       t.datetime :book_date
       t.datetime :book_time
       t.integer :head_count
-      t.references :user, null: false, foreign_key: true, on_delete: :cascade
+      t.references :user, foreign_key: true
 
       t.timestamps
     end

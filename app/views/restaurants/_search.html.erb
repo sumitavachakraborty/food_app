@@ -4,8 +4,8 @@
     <%= form.text_field :search, placeholder: "City name", value: params[:search], class: "form-control", pattern: '[A-Za-z\s]+' %>
   </div>
   <div class="input-group">
-    <%= form.label :categories_id, class: "col-form-label mx-2" %>
-    <%= form.select :categories_id, options_for_select( Category.all.map { |category| [category.category_name,category.id] }, session[:categories_id]) , { prompt: "Select a category" }, { class: "form-control" } %>
+    <%= form.label :category_id, class: "col-form-label mx-2" %>
+    <%= form.select :category_id, options_for_select( Category.all.map { |category| [category.category_name,category.id] }, session[:category_id]) , { prompt: "Select a category" }, { class: "form-control" } %>
   </div>
   <%= form.submit "Search", class: "btn btn-outline-warning btn-sm" %>
   <%= link_to "Clear Filter", search_restaurants_path, class: "btn btn-outline-danger btn-sm" %>

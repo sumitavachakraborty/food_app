@@ -19,7 +19,7 @@ function showAlert(message) {
   alertContainer.appendChild(alertElement);
   setTimeout(() => {
       alertContainer.removeChild(alertElement);
-  }, 5000);
+  }, 2000);
 }
 $(document).on("click", ".submit-order", function () {
   var orderItem = $(this).closest(".order-item");
@@ -27,17 +27,14 @@ $(document).on("click", ".submit-order", function () {
   var id = $(this).val();
   var price = parseFloat(orderItem.find(".card-text").text());
   var name = orderItem.find(".foodname").text();
-  console.log("ordered item")
   
   if (!carts[restid]) {
     carts[restid] = {};
-    alert(`Successfully added ${name} to cart`);
-    console.log("first alert")
+    showAlert(`Successfully added ${name} to cart`);
   } else if (!carts[restid][id]) {
-    console.log("second alert")
-    alert(`Successfully added ${name} to cart`);
+    showAlert(`Successfully added ${name} to cart`);
   } else if (carts[restid][id]) {
-    alert("Item already added in the cart");
+    showAlert("Item already added in the cart");
   }
 
   var item = {
@@ -157,7 +154,7 @@ $("#checkout").click(function () {
       updateCart();
     },
     error: function (xhr, status, error) {
-      alert("Please, add items to the cart");
+      showAlert("Please, add items to the cart");
     },
   });
 });

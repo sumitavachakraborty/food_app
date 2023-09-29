@@ -2,8 +2,7 @@
 
 # Categories Controller
 class CategoriesController < ApplicationController
-  before_action :require_user
-  before_action :admin_user
+  before_action :require_user, :admin_user
 
   def index
     @categories = Category.all

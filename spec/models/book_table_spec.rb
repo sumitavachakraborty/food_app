@@ -9,7 +9,7 @@ RSpec.describe BookTable, type: :model do
           book_time: Time.current,
           head_count: 4,
           user: User.new, 
-          resturant: Resturant.new,
+          restaurant: Restaurant.new,
           book_date: Date.today + 6.days
         )
         expect(book_table).to be_valid

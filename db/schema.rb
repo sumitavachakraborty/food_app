@@ -1,4 +1,3 @@
-#rubocop:disable all
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -45,11 +44,11 @@ ActiveRecord::Schema.define(version: 2023_08_09_142712) do
   end
 
   create_table "book_tables", force: :cascade do |t|
-    t.bigint "restaurant_id", null: false
+    t.bigint "restaurant_id"
     t.datetime "book_date"
     t.datetime "book_time"
     t.integer "head_count"
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["restaurant_id"], name: "index_book_tables_on_restaurant_id"
@@ -73,15 +72,15 @@ ActiveRecord::Schema.define(version: 2023_08_09_142712) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.text "message"
     t.boolean "read", default: false
     t.bigint "restaurant_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "book_tables_id"
+    t.bigint "book_table_id"
     t.bigint "orders_id"
-    t.index ["book_tables_id"], name: "index_notifications_on_book_tables_id"
+    t.index ["book_table_id"], name: "index_notifications_on_book_table_id"
     t.index ["orders_id"], name: "index_notifications_on_orders_id"
     t.index ["restaurant_id"], name: "index_notifications_on_restaurant_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
@@ -112,15 +111,15 @@ ActiveRecord::Schema.define(version: 2023_08_09_142712) do
     t.string "city"
     t.string "latitude"
     t.string "longitude"
-    t.bigint "categories_id"
-    t.index ["categories_id"], name: "index_restaurants_on_categories_id"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_restaurants_on_category_id"
   end
 
   create_table "reviews", force: :cascade do |t|
     t.text "comment"
     t.boolean "approval", default: false
     t.integer "rating"
-    t.bigint "restaurant_id"
+    t.bigint "restaurant_id", null: false
     t.string "review_images"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
@@ -159,4 +158,3 @@ ActiveRecord::Schema.define(version: 2023_08_09_142712) do
   add_foreign_key "reviews", "restaurants"
   add_foreign_key "reviews", "users"
 end
-#rubocop:enable all

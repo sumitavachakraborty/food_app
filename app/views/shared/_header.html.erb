@@ -46,11 +46,11 @@
             <% if current_user.notifications.count>0 %>
             <button class="btn btn-warning mark-read my-2" value="<%= current_user.id %>">Mark all as read</button>
               <% current_user.notifications.order(created_at: :desc).each do |notification| %>
-                <% if notification.booktable_id.present? %>
+                <% if notification.book_table_id.present? %>
                   <li class="notification-message"><%=link_to notification.message, restaurant_book_tables_path(notification.restaurant_id)%></li>
                   <div class="dropdown-divider"></div>
                 <% else %>  
-                  <li class="notification-message"><%=link_to notification.message, restaurant_order_path(notification.restaurant_id,notification.order_id)%></li>
+                  <li class="notification-message"><%=link_to notification.message, restaurant_order_path(notification.restaurant_id,notification.orders_id)%></li>
                   <li class="notification-message"><%=link_to 'Provide review', new_restaurant_review_url(notification.restaurant_id), class: "text-warning fw-bolder"%></li>
                   <div class="dropdown-divider"></div>
                 <% end %>

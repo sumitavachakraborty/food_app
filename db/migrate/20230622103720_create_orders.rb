@@ -9,7 +9,7 @@ class CreateOrders < ActiveRecord::Migration[6.1]
       t.float :total
       t.integer :quantity
       t.text :pincode
-      t.references :user, foreign_key: true, on_delete: :destroy
+      t.references :user, foreign_key: true
       t.timestamps
     end
   end

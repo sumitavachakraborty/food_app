@@ -13,7 +13,7 @@ class RestaurantsController < ApplicationController
   end
 
   def index
-    session[:categories_id] = nil
+    session[:category_id] = nil
     if params[:restaurant_name].present?
       search_restaurant_by_name
       check_empty
@@ -101,7 +101,7 @@ class RestaurantsController < ApplicationController
   private
 
   def restaurant_params
-    params.require(:restaurant).permit(:name, :address, :city, :latitude, :longitude, :categories_id, cover_image: [])
+    params.require(:restaurant).permit(:name, :address, :city, :latitude, :longitude, :category_id, cover_image: [])
   end
 
   def update_restaurant_address

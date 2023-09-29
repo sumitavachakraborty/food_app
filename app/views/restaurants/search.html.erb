@@ -18,8 +18,8 @@
       <%= link_to 'Add new Restaurants' , new_restaurant_path , class: "btn btn-success mt-4"%>
     <%end%>
     <h2 class="text-center mt-4"> Restaurants near - <strong class=""><%= @location.upcase %></strong></h2>
-    <% if params[:categories_id].present? %>
-      <p class="btn btn-warning disabled">Selected category: <%= Category.find(params[:categories_id]).category_name %></p>
+    <% if params[:category_id].present? %>
+      <p class="btn btn-warning disabled">Selected category: <%= Category.find(params[:category_id]).category_name %></p>
     <% end %>
     <% @nearest_locations.each do |restaurant,distance| %>
       <div class="container">
@@ -27,7 +27,7 @@
           <div class="container col-md-8 col-lg-7">
             <div class="card text-center shadow p-3 mb-5 bg-white rounded">
               <div class="card-header fst-italic d-flex justify-content-around"> <span>  Restaurant name : <%= link_to restaurant.name, restaurant_path(restaurant)%> </span>
-                <% if restaurant.categories_id.present? %>
+                <% if restaurant.category_id.present? %>
                   <span> <strong>Category  : </strong> <%= Category.category_name(restaurant) %> </span>
                 <% end %>
               </div>

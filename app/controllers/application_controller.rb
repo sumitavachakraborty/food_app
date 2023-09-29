@@ -48,6 +48,6 @@ class ApplicationController < ActionController::Base
   end
 
   def notification_count
-    Notification.find_notification_count(current_user)
+    Notification.unread_notifications(current_user)
   end
 end

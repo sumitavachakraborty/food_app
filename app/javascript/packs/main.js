@@ -91,7 +91,7 @@ $(".approve").click(function () {
 function approvereview(review_id) {
   var id = $("#restvalue").attr("value");
   $.ajax({
-    url: "/resturants/" + id + "/approve",
+    url: "/restaurants/" + id + "/approve",
     method: "POST",
     data: {
       id: review_id,

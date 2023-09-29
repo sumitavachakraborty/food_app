@@ -5,11 +5,12 @@ class BookTable < ApplicationRecord
   paginates_per 3
   belongs_to :user
   belongs_to :restaurant
+  has_many :notification, dependent: :destroy
 
   validate :book_date_cannotbe_in_the_past
   validates :book_time, presence: true
   validates :head_count, presence: true
-  validates_uniqueness_of :book_date, scope: :resturant_id
+  validates_uniqueness_of :book_date, scope: :restaurant_id
   validate :book_date_timespan
   scope :show_booking, ->(user) { where(user_id: user.id) }
 

@@ -3,7 +3,7 @@
 # Resturant Model
 class Restaurant < ApplicationRecord
   paginates_per 3
-  has_one :category
+  belongs_to :category, optional: true
   has_many_attached :cover_image
   has_many :foods, dependent: :destroy
   has_many :orders, dependent: :destroy
@@ -14,8 +14,6 @@ class Restaurant < ApplicationRecord
   validates :latitude, presence: true
   validates :longitude, presence: true
   validate :validate_image_format
-
-  scope :find_category, ->(params_id) { where(categories_id: params_id) }
 
   def validate_image_format
     if cover_image.attached?

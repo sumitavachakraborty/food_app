@@ -2,11 +2,11 @@
 
 # Users Controller
 class UsersController < ApplicationController
-  include ApplicationHelper
   before_action :set_user, only: %i[show edit update destroy location makeadmin change_address]
   before_action :require_user, only: %i[show edit update destroy]
   before_action :same_user, only: %i[show edit update destroy]
   before_action :admin_user, only: %i[index]
+  include ApplicationHelper
 
   def index
     @user = User.order(created_at: :asc)
