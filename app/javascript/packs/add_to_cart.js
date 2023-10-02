@@ -21,32 +21,36 @@ function showAlert(message) {
       alertContainer.removeChild(alertElement);
   }, 2000);
 }
-$(document).on("click", ".submit-order", function () {
-  var orderItem = $(this).closest(".order-item");
-  var quantity = orderItem.find(".order-quantity").val();
-  var id = $(this).val();
-  var price = parseFloat(orderItem.find(".card-text").text());
-  var name = orderItem.find(".foodname").text();
-  
-  if (!carts[restid]) {
-    carts[restid] = {};
-    showAlert(`Successfully added ${name} to cart`);
-  } else if (!carts[restid][id]) {
-    showAlert(`Successfully added ${name} to cart`);
-  } else if (carts[restid][id]) {
-    showAlert("Item already added in the cart");
-  }
+$(document).ready(function () {
+  $(".submit-order").click( function () {
+    var orderItem = $(this).closest(".order-item");
+    var quantity = orderItem.find(".order-quantity").val();
+    var id = $(this).val();
+    var price = parseFloat(orderItem.find(".card-text").text());
+    var name = orderItem.find(".foodname").text();
 
-  var item = {
-    q: parseInt(quantity),
-    p: price,
-    n: name,
-  };
-  carts[restid][id] = item;
+    if (!carts[restid]) {
+      carts[restid] = {};
+      showAlert(`Successfully added ${name} to cart`);
+    } else if (!carts[restid][id]) {
+      showAlert(`Successfully added ${name} to cart`);
+    } else{
+      showAlert("Item already added in the cart");
+    }
+    
+    var item = {
+      q: parseInt(quantity),
+      p: price,
+      n: name,
+    };
+    carts[restid][id] = item;
+    
 
-  updateCartItemCount();
-  updateCart();
-  updateConfirmButtonStatus();
+    updateCartItemCount();
+    updateCart();
+    updateConfirmButtonStatus();
+    console.log("end ininitalization");
+  });
 });
 function initializeCarts() {
   if (localStorage.getItem("carts")) {
@@ -72,6 +76,7 @@ $(document).on("click", ".remove-item", function () {
   var itemKey = $(this).data("item-key");
   delete carts[restid][itemKey];
   $("#" + itemKey).remove();
+  updateCartItemCount();
   updateCart();
   updateConfirmButtonStatus();
 });
@@ -98,6 +103,7 @@ $(document).on("input", ".order-quantity", function () {
 
 function updateCartItemCount() {
   var cartItemCount = carts[restid] ? Object.keys(carts[restid]).length : 0;
+  if(cartItemCount==0) carts[restid] = {}
   $("#cart-item-count").text(cartItemCount);
 }
 

@@ -38,7 +38,7 @@
           <div class="btn-group d-flex flex-wrap" role="group" aria-label="Basic outlined example">
             <% if logged_in? && current_user.admin? %>
               <a href="#"><%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-outline-success"%></a>
-              <a href="#"><%= link_to 'Delete', restaurant_path(@restaurant), method: :delete ,data: {turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
+              <a href="#"><%= link_to 'Delete', restaurant_path(@restaurant), method: :delete ,data: {confirm: "Are you sure?" }, class: "btn btn-outline-danger"%></a>
               <a href="#"><%= link_to 'Add Food', new_restaurant_food_path(@restaurant), class: "btn btn-outline-primary"%></a>
             <% end %>
             <%= link_to 'Order Online', restaurant_orders_path(@restaurant), class: "btn btn-outline-primary"%>

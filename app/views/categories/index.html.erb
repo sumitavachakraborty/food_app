@@ -6,7 +6,7 @@
     <% @categories.each do |category| %>
       <div class="card d-flex shadow p-3 mb-2 bg-white rounded col-3">
         <div class="span pb-3"> <strong> <%= category.category_name.capitalize %></strong> </div>
-        <div class="span"> <%= link_to 'Delete', category_path(category), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger"%></div>
+        <div class="span"> <%= link_to 'Delete', category_path(category), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger"%></div>
       </div>
     <% end %>
   </div>
