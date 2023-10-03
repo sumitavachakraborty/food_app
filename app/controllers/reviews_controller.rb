@@ -7,10 +7,6 @@ class ReviewsController < ApplicationController
   before_action :set_restaurant
   before_action :same_user, only: %i[edit update destroy]
 
-  def index; end
-
-  def show; end
-
   def new
     @review = @restaurant.reviews.new
   end

@@ -4,8 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe RestaurantsController, type: :controller do
-  let(:user) { FactoryBot.create(:user, admin: true) } # You may need to define a user factory
-  
+  let(:user) { FactoryBot.create(:user, admin: true) }
   
   describe 'GET #show' do
     before do
