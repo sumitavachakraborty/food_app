@@ -1,5 +1,4 @@
 #rubocop:disable all
-# spec/controllers/users_controller_spec.rb
 
 require 'rails_helper'
 

@@ -1,5 +1,4 @@
 #rubocop:disable allrestaurant
-# spec/controllers/restaurants_controller_spec.rb
 
 require 'rails_helper'
 
@@ -197,23 +196,22 @@ RSpec.describe RestaurantsController, type: :controller do
     before do
       session[:user_id] = user.id
     end
-    Restaurant.delete_all
-    restaurant = FactoryBot.build(:restaurant, name: 'ABC Restaurant', latitude: 40.7128, longitude: -74.006)
-    restaurant.cover_image.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'food2.jpg')),
+    restaurant1 = FactoryBot.build(:restaurant, name: 'ABC Restaurant', latitude: 40.7128, longitude: -74.006)
+    restaurant1.cover_image.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'food2.jpg')),
                                     filename: 'food2.jpg', content_type: 'image/jpg')
-    restaurant.save
+    restaurant1.save
 
     it 'returns results when searching by name' do
-      get :search, params: { search: restaurant.name }
-      expect(assigns(:restaurant)).to include(restaurant)
+      get :search, params: { search: restaurant1.name }
+      expect(assigns(:restaurant)).to include(restaurant1)
     end
 
     it 'returns results when filtering by category' do
       category = FactoryBot.create(:category)
-      restaurant.update(category_id: category.id)
+      restaurant1.update(category_id: category.id)
 
       get :search, params: { category_id: category.id }
-      expect(assigns(:restaurant)).to include(restaurant)
+      expect(assigns(:restaurant)).to include(restaurant1)
     end
   end
 end

@@ -56,7 +56,7 @@ rails c
 
 Then, inside rails console, run the following commands:
 
-Resturant.import force: true
+Restaurant.import force: true
 
 ### 6. Finally, run the server
 

@@ -1,5 +1,4 @@
 #rubocop:disable all
-# categories_controller_spec.rb
 
 require 'rails_helper'
 
