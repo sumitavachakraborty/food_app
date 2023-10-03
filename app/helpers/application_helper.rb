@@ -20,9 +20,11 @@ module ApplicationHelper
       user.latitude, user.longitude = @results.coordinates
       user.save
       flash[:success] = 'location has been updated'
-      redirect_to user
+      # redirect_to user
+      true
     else
-      redirect_to change_address_user_path(user), danger: 'enter pincode not found'
+      # redirect_to change_address_user_path(user), danger: 'enter pincode not found'
+      false
     end
   end
 end

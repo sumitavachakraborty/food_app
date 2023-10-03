@@ -72,8 +72,13 @@ class UsersController < ApplicationController
   def change_address; end
 
   def location
-    Restaurant.get_address(params, @user)
-    coordinates_from_pincode(@user, params[:pincode]) if params[:pincode].present?
+    User.set_address(params, @user)
+    status = coordinates_from_pincode(@user, params[:pincode]) if params[:pincode].present?
+    if status == true
+      redirect_to @user
+    else
+      redirect_to change_address_user_path(@user), danger: 'enter pincode not found'
+    end
   end
 
   def admin_login; end

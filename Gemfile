@@ -35,6 +35,8 @@ gem 'kaminari'
 gem 'prawn'
 gem 'prawn-table'
 
+gem 'rails-controller-testing'
+
 gem 'httparty'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

@@ -2,5 +2,6 @@
 
 FactoryBot.define do
   factory :category do
+    category_name { 'Cafe' }
   end
 end

@@ -25,4 +25,11 @@ class User < ApplicationRecord
 
     errors.add(:city, 'entered is not valid')
   end
+
+  def self.set_address(params, user)
+    @address = [params[:address_line1].gsub(',', ''), params[:address_line2].gsub(',', '')].compact.join(', ')
+    user.address = @address
+    user.city = params[:city]
+    user.save
+  end
 end

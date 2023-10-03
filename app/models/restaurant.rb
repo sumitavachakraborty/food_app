@@ -65,11 +65,4 @@ class Restaurant < ApplicationRecord
       }
     )
   end
-
-  def self.get_address(params, user)
-    @address = [params[:address_line1].gsub(',', ''), params[:address_line2].gsub(',', '')].compact.join(', ')
-    user.address = @address
-    user.city = params[:city]
-    user.save
-  end
 end
