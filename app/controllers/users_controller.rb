@@ -72,9 +72,9 @@ class UsersController < ApplicationController
   def change_address; end
 
   def location
-    User.set_address(params, @user)
     status = coordinates_from_pincode(@user, params[:pincode]) if params[:pincode].present?
     if status == true
+      User.set_address(params, @user)
       redirect_to @user
     else
       redirect_to change_address_user_path(@user), danger: 'enter pincode not found'
