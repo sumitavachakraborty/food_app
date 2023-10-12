@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 2023_08_09_142712) do
     t.integer "rating"
     t.bigint "restaurant_id", null: false
     t.string "review_images"
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id"
@@ -159,5 +159,4 @@ ActiveRecord::Schema.define(version: 2023_08_09_142712) do
   add_foreign_key "reviews", "restaurants"
   add_foreign_key "reviews", "users"
 end
-
 #rubocop:enable all
